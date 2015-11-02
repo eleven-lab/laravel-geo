@@ -1,16 +1,18 @@
 {
-  "name": "lorenzogiust/laravel-geo",
+  "name": "lorenzoasr/laravel-geo",
   "description": "Geospatial integration for Laravel 5.1",
   "license": "MIT",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
-  "version": "1.0.0",
   "authors": [
     {
       "name": "Lorenzo Giustozzi",
       "email": "giustozzi@lorenzo.im"
     }
   ],
-  "require": {},
+  "minimum-stability": "dev",
+  "require": {
+     "php": ">=5.3.0"
+  },
   "require-dev": {
     "phpunit/phpunit": "4.0.*"
   },
