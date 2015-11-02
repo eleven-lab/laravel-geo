@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MovEax\GeoSpatial;
+namespace LorenzoGiust\GeoLaravel;
 
 
 /**

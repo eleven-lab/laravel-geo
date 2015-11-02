@@ -7,7 +7,7 @@
  */
 
 
-namespace MovEax\GeoSpatial;
+namespace LorenzoGiust\GeoLaravel;
 
 abstract class Geometry implements GeoInterface
 {

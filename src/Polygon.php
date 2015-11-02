@@ -6,7 +6,7 @@
  * Time: 9.54
  */
 
-namespace MovEax\GeoSpatial;
+namespace LorenzoGiust\GeoLaravel;
 
 
 class Polygon extends Geometry implements \Countable

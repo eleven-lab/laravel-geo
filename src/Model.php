@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MovEax\GeoSpatial;
+namespace LorenzoGiust\GeoLaravel;
 
 use DB;
 
@@ -28,7 +28,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 if( ! in_array($geotype, static::$geotypes ))
                     throw new \Exception('Unknown geotype: ' . $geotype);
 
-                $classname = "MovEax\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
+                $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
                     if(! $model->$attrname instanceof $classname)
                         throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
@@ -49,7 +49,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 if( ! in_array($geotype, static::$geotypes ))
                     throw new \Exception('Unknown geotype: ' . $geotype);
 
-                $classname = "MovEax\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
+                $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
                     if(! $model->$attrname instanceof $classname)
                         throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
@@ -73,7 +73,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
             if( ! isset( $model->geometries) ) return;
             foreach($model->geometries as $geotype => $attrnames){
 
-                $classname = "MovEax\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
+                $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
                     $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
                 }

@@ -7,7 +7,7 @@
  */
 
 
-namespace MovEax\GeoSpatial\Exceptions;
+namespace LorenzoGiust\GeoLaravel\Exceptions;
 
 
 class InvalidArgumentSpatialException extends \Exception{

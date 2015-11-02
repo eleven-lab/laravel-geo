@@ -6,9 +6,9 @@
  * Time: 15.48
  */
 
-namespace MovEax\GeoSpatial;
+namespace LorenzoGiust\GeoLaravel;
 
-use MovEax\GeoSpatial\Point as Point;
+use LorenzoGiust\GeoLaravel\Point as Point;
 use \Carbon\Carbon as Carbon;
 
 class Geo {
