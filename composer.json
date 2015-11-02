@@ -1,8 +1,9 @@
 {
-  "name": "moveax/laravel-geospatial",
+  "name": "lorenzogiust/laravel-geo",
   "description": "Geospatial integration for Laravel 5.1",
   "license": "MIT",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
+  "version": "1.0.0",
   "authors": [
     {
       "name": "Lorenzo Giustozzi",
@@ -15,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "MovEax\\GeoSpatial\\": "src/"
+      "LorenzoGiust\\GeoLaravel": "src/"
     }
   }
 }
