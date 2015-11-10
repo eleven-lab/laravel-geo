@@ -20,6 +20,8 @@ class Geo {
 
     public static function getPathInfo(array $points, array $options = []){
         $start_time = round(microtime(true) * 1000); // usato per calcolo durata query
+        if(count($points) < 2)
+            throw new \Exception('A path needs 2+ points to be calculated');
         // Google Api Parameters
         // url: https://developers.google.com/maps/documentation/directions/intro
         $base_url = "https://maps.googleapis.com/maps/api/directions/";
@@ -33,6 +35,9 @@ class Geo {
             'origin' => [
                 'default' => reset($points)->toGoogleAPIFormat()
             ],
+            'waypoints' => [            // punti intermedi separati da |
+                'default' => false
+            ],
             'destination' => [
                 'default' => end($points)->toGoogleAPIFormat()
             ],
@@ -43,9 +48,7 @@ class Geo {
                 'default' => 'driving',
                 'choice' => ['walking', 'bycicling', 'transit']
             ],
-            'waypoints' => [            // punti intermedi separati da |
-                'default' => false
-            ],
+
             'alternatives' => [
                 'default' => false,
                 'choice' => ['true', 'false']
@@ -72,6 +75,11 @@ class Geo {
             ]
         ];
 
+        if( count($points) > 2 ){
+            $tmp = array_slice($points, 1, count($points)-2);
+            $options['waypoints'] = implode('|', array_map(function($p){ return $p->toGoogleAPIFormat(); }, $tmp) );
+        }
+
         foreach( $option_list as $option => $value){
             if( isset($options[$option]) && $options[$option] != "" ){
                 if( isset( $value['choice'] ) ){
@@ -80,17 +88,15 @@ class Geo {
                 }
                 $params[$option] = $options[$option];
             }else
-            $params[$option] = $value['default'];
+                $params[$option] = $value['default'];
         }
 
         $url = $base_url . $params['output_format'] . "?";
+
         foreach($params as $key=>$value){
             if($value)
                 $url .= '&'.$key.'='.$value;
         }
-
-        echo $url;
-        return;
 
         try{
             $data = file_get_contents($url);
@@ -100,19 +106,10 @@ class Geo {
             throw new Exception("Error loading MAPS API");
         }
 
-        $distance = $data->routes[0]->legs[0]->distance->value; // metri
-        $duration = $data->routes[0]->legs[0]->duration->value; // secondi
-        $polyline = \Polyline::decode($data->routes[0]->overview_polyline->points);
-
-        $points = [];
-        while(count($polyline) > 0){
-            array_push($points, new Point(array_shift($polyline), array_shift($polyline)));
-        }
-        $path = new LineString($points);
-
         $end_time = round(microtime(true) * 1000);
 
-        return ["distance" => $distance, "duration" => $duration, "path" => $path, "query_time" => ($end_time-$start_time)];
+        return new GoogleDirectionResponse($data, $end_time-$start_time);
+
     }
 
 
@@ -125,6 +122,7 @@ class Geo {
 
 
     // GEOMETRY OPERATION
+    // TODO: aggiungere tipi di operazioni ed eventuali ritorni
 
     public static function intersect(Geometry $g1, Geometry $g2){
         $points = [];
@@ -132,19 +130,20 @@ class Geo {
 
         $multipoint = \DB::select("select AsText( ST_Intersection(".$g1->toRawQuery().",".$g2->toRawQuery().") ) as x")[0]->x;
 
+
         if (is_null($multipoint)) return [];
 
-        if(strpos($multipoint, "MULTIPOINT(") == 0){
+        if(strpos($multipoint, "MULTIPOINT(") === 0){
             $tmp = explode(",", substr(substr($multipoint, 11), 0, -1));
 
-        }else if(strpos($multipoint, "POINT(") == 0){
+        }else if(strpos($multipoint, "POINT(") === 0){
             $tmp = explode(",", substr(substr($multipoint, 6), 0, -1));
         }else{
             // TODO: rimuovere assert, debug only
             assert('ne null, ne multipoint ne point !!!');
         }
 
-        foreach( $tmp as $point){
+        foreach( $tmp as $point ){
             $tmp2 = explode(" ", $point);
             array_push($points, new Point($tmp2[0], $tmp2[1]));
         }
@@ -155,5 +154,52 @@ class Geo {
         return (bool)\DB::select("select ST_contains(".$polygon->toRawQuery().",".$point->toRawQuery().") as x")[0]->x;
     }
 
+    public static function distance(Point $p1, Point $p2){
+        return self::haversineGreatCircleDistance($p1, $p2);
+    }
+
+    private static function vincentyGreatCircleDistance(Point $from, Point $to, $earthRadius = 6371000){
+        // convert from degrees to radians
+        $latFrom = deg2rad($from->lat);
+        $lonFrom = deg2rad($from->lon);
+        $latTo = deg2rad($to->lat);
+        $lonTo = deg2rad($to->lon);
+
+        $lonDelta = $lonTo - $lonFrom;
+        $a = pow(cos($latTo) * sin($lonDelta), 2) +
+            pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+        $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+        $angle = atan2(sqrt($a), $b);
+        return $angle * $earthRadius;
+    }
+
+    private static function haversineGreatCircleDistance(Point $from, Point $to, $earthRadius = 6371000){
+        // convert from degrees to radians
+        $latFrom = deg2rad($from->lat);
+        $lonFrom = deg2rad($from->lon);
+        $latTo = deg2rad($to->lat);
+        $lonTo = deg2rad($to->lon);
+
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
+
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+        return $angle * $earthRadius;
+    }
+
+    public static function georeverse($address)
+    {
+        $api_url = "https://maps.google.com/maps/api/geocode/json?language=it&&address=".urlencode($address);
+        $response = file_get_contents($api_url);
+        if ($json = json_decode($response, true)) {
+            return [
+                $json['results'][0]['geometry']['location']['lat'],
+                $json['results'][0]['geometry']['location']['lng']
+            ];
+        }
+        return null;
+    }
 }
 

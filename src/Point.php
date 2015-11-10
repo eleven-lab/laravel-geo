@@ -9,7 +9,11 @@ class Point extends Geometry
     public $lat;
 	public $lon;
 	
-	public function __construct($lat, $lon){
+	public function __construct($lat, $lon, $address = null){
+        if( is_string($address)){
+            list($lat, $lon) = Geo::georeverse($address);
+        }
+
         if( ! ( is_numeric($lat) && is_numeric($lon)) )
             throw new \Exception('Points must be constructed with numeric latitude/longitude, given: ' .$lat.' '.$lon);
 

@@ -12,6 +12,21 @@ Add package to package.json
     "lorenzogiust/geo-laravel": "~1.0"
 }
 
+(se su bitbucket, usare ->
+    require:{
+    "lorenzoasr/laravel-geo":"dev-master"
+    }
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@bitbucket.org:lorenzoasr/laravel-geo.git"
+        }
+    ],
+
+
+    )
+
 Do not forget to run composer install or composer update rafis/schema-extended after modifying package.json.
 
 Replace Schema "alias" in the configuration file config/app.php and, if needed, insert a reference to GeoModel too:
