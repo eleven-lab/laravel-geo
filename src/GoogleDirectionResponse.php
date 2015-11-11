@@ -40,6 +40,9 @@ class GoogleDirectionResponse {
             $this->legs[$i]['duration'] = $leg->duration->value; //s
             $this->duration += $this->legs[$i]['duration'];
 
+            $this->legs[$i]['start'] = new Point($leg->start_location->lat, $leg->start_location->lng);
+            $this->legs[$i]['end'] = new Point($leg->end_location->lat, $leg->end_location->lng);
+
             $i++;
         }
 

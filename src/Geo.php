@@ -19,6 +19,7 @@ class Geo {
      */
 
     public static function getPathInfo(array $points, array $options = []){
+
         $start_time = round(microtime(true) * 1000); // usato per calcolo durata query
         if(count($points) < 2)
             throw new \Exception('A path needs 2+ points to be calculated');

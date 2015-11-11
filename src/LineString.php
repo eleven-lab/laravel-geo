@@ -104,8 +104,11 @@ class LineString extends Geometry implements \Countable
      */
      public function insertPoint(Point $p){
 
+         //echo "aggiungo punto p:$p\n";
+         //echo "lunghezz attuale ls: " . count($this)."\n";
          // Se il punto è già presente nella LineString non faccio modifiche
          if(array_search($p, $this->points) !== false){
+             //echo "punto già presente";
              return;
          }
 
@@ -114,8 +117,8 @@ class LineString extends Geometry implements \Countable
 
             //echo "valuto $i-esima coppia di punti: " .$this->points[$i]. " " .$this->points[$i+1]. "\n";
 
-            $distance       = static::haversineGreatCircleDistance($this->points[$i], $p) + static::haversineGreatCircleDistance($p, $this->points[$i + 1]);
-            $step_distance  = static::haversineGreatCircleDistance($this->points[$i], $this->points[$i + 1]);
+            $distance       = Geo::distance($this->points[$i], $p) + Geo::distance($p, $this->points[$i + 1]);
+            $step_distance  = Geo::distance($this->points[$i], $this->points[$i + 1]);
 
             //echo "distanza totale: \t\t $distance\n";
             //echo "step distance: \t\t\t $step_distance\n";
@@ -129,6 +132,8 @@ class LineString extends Geometry implements \Countable
 
             }
         }
+
+         //echo "lunghezza finale ls: " . count($this)."\n";
     }
 
 
@@ -147,19 +152,24 @@ class LineString extends Geometry implements \Countable
 
         // se il punto di split è all'inizio o alla fine, ritorna la linestring intera
         reset($this->points);
-        if( $this->points[0] == $split)
+        if( $this->points[0] == $split){
+            echo "uguale al primo punto, niente split\n";
             return [$split, $this];
+        }
 
-        if ($this->points[count($this->points)-1] == $split)
+        if ($this->points[count($this->points)-1] == $split){
+            echo "uguale all'ultimo punto, niente split\n";
             return [$this, $split];
+        }
 
         $splitted = [];
         $position = array_search($split, $this->points);
-        echo "pos:$position  ";
 
         // se il punto non è presente, ritorno la linestring intera
-        if($position === false)
+        if($position === false){
+            echo "punto di split non trovato\n";
             return [$this, null];
+        }
 
         else{
             array_push( $splitted, new LineString(array_slice($this->points, 0, $position+1)) );
