@@ -72,10 +72,10 @@ class Model extends \Illuminate\Database\Eloquent\Model
             $model = new static;
             if( ! isset( $model->geometries) ) return;
             foreach($model->geometries as $geotype => $attrnames){
-
                 $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
-                    $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
+                    if( isset( $item->attributes[$attrname] ) )
+                        $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
                 }
             }
         }
