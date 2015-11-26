@@ -9,9 +9,13 @@
 namespace LorenzoGiust\GeoLaravel;
 
 
+use League\Flysystem\Exception;
+
 class GoogleDirectionResponse {
 
     public $raw_response;
+    public $routes = [];
+
     public $legs = [];
 
     public $route;
@@ -22,31 +26,30 @@ class GoogleDirectionResponse {
 
         $this->raw_response = $json;
 
-        // extract complete route
-        $polyline = \Polyline::decode($json->routes[0]->overview_polyline->points);
-        $points = [];
-        while(count($polyline) > 0){
-            array_push($points, new Point(array_shift($polyline), array_shift($polyline)));
-        }
-        $this->route = new LineString($points);
-
-        // extract legs infos
-        $i = 0;
-        foreach($json->routes[0]->legs as $leg){
-
-            $this->legs[$i]['distance'] = $leg->distance->value; //mt
-            $this->distance += $this->legs[$i]['distance'];
-
-            $this->legs[$i]['duration'] = $leg->duration->value; //s
-            $this->duration += $this->legs[$i]['duration'];
-
-            $this->legs[$i]['start'] = new Point($leg->start_location->lat, $leg->start_location->lng);
-            $this->legs[$i]['end'] = new Point($leg->end_location->lat, $leg->end_location->lng);
-
-            $i++;
+        foreach($json->routes as $route){
+            $this->routes[] = new GoogleDirectionRoute($route);
         }
 
+    }
 
+
+    public function chooseRoute($typology){
+
+        if(! in_array(['fast', 'short'], $typology))
+            throw new \Exception('Unknown typology ' . $typology);
+
+        $selected_route = null;
+        $filter = $typology == "fast" ? "duration" : "distance";
+
+        $min = PHP_INT_MAX;
+        foreach($this->routes as $route){
+            if ($route[$filter] < $min ) {
+                $min = $route[$filter];
+                $selected_route = $route;
+            }
+        }
+
+        return $selected_route;
 
     }
 }

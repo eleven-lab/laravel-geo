@@ -14,33 +14,36 @@ use \Carbon\Carbon as Carbon;
 class Geo {
 
     /**
-     * @param string $point  -  Punto da controllare nel formato lat lng (separate da spazio).
-     * @return array $areas  -  Array contenente la lista di aree che contengono il punto (se presenti).
+     * @param array $params
+     * @return GoogleDirectionResponse
      */
 
-    public static function getPathInfo(array $points, array $options = []){
+    public static function getGoogleDirections(array $options = []){
 
         $start_time = round(microtime(true) * 1000); // usato per calcolo durata query
-        if(count($points) < 2)
-            throw new \Exception('A path needs 2+ points to be calculated');
+        if( !isset($options['origin']) || !isset($options['destination']) )
+            throw new \Exception('A path needs origin and destination to be calculated');
+
         // Google Api Parameters
         // url: https://developers.google.com/maps/documentation/directions/intro
         $base_url = "https://maps.googleapis.com/maps/api/directions/";
         $params = [];
 
+
+        // TODO: aggiungere config file per il package con i default
         $option_list = [
             'output_format' => [
                 'default' => 'json',
                 'choice'   => ['xml', 'json']
             ],
             'origin' => [
-                'default' => reset($points)->toGoogleAPIFormat()
+                'default' => false
             ],
             'waypoints' => [            // punti intermedi separati da |
                 'default' => false
             ],
             'destination' => [
-                'default' => end($points)->toGoogleAPIFormat()
+                'default' => false
             ],
             'key' => [
                 'default' => false
@@ -76,11 +79,6 @@ class Geo {
             ]
         ];
 
-        if( count($points) > 2 ){
-            $tmp = array_slice($points, 1, count($points)-2);
-            $options['waypoints'] = implode('|', array_map(function($p){ return $p->toGoogleAPIFormat(); }, $tmp) );
-        }
-
         foreach( $option_list as $option => $value){
             if( isset($options[$option]) && $options[$option] != "" ){
                 if( isset( $value['choice'] ) ){
@@ -92,12 +90,7 @@ class Geo {
                 $params[$option] = $value['default'];
         }
 
-        $url = $base_url . $params['output_format'] . "?";
-
-        foreach($params as $key=>$value){
-            if($value)
-                $url .= '&'.$key.'='.$value;
-        }
+        $url = $base_url . $params['output_format'] . "?" . http_build_query($params) ;
 
         try{
             $data = file_get_contents($url);
