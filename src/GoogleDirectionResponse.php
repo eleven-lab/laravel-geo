@@ -35,7 +35,7 @@ class GoogleDirectionResponse {
 
     public function chooseRoute($typology){
 
-        if(! in_array(['fast', 'short'], $typology))
+        if(! in_array($typology, ['fast', 'short']))
             throw new \Exception('Unknown typology ' . $typology);
 
         $selected_route = null;
@@ -43,8 +43,8 @@ class GoogleDirectionResponse {
 
         $min = PHP_INT_MAX;
         foreach($this->routes as $route){
-            if ($route[$filter] < $min ) {
-                $min = $route[$filter];
+            if ($route->{$filter} < $min ) {
+                $min = $route->{$filter};
                 $selected_route = $route;
             }
         }

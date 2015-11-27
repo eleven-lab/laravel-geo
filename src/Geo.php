@@ -10,6 +10,7 @@ namespace LorenzoGiust\GeoLaravel;
 
 use LorenzoGiust\GeoLaravel\Point as Point;
 use \Carbon\Carbon as Carbon;
+use LorenzoGiust\GeoLaravel\Exceptions\GoogleDirectionException as GoogleDirectionException;
 
 class Geo {
 
@@ -86,18 +87,22 @@ class Geo {
                         throw new \Exception("Invalid parameter for option $option: " . $options[$option] );
                 }
                 $params[$option] = $options[$option];
-            }else
-                $params[$option] = $value['default'];
+            }else{
+                if($value['default'] !== false)
+                    $params[$option] = $value['default'];
+            }
         }
 
         $url = $base_url . $params['output_format'] . "?" . http_build_query($params) ;
+        \Log::debug($url);
 
         try{
+
             $data = file_get_contents($url);
             $data = json_decode($data);
-        }catch(Exception $e){
+        }catch(\Exception $e){
             // TODO: creare eccezione personalizzata e gestirla nell HANDLER
-            throw new Exception("Error loading MAPS API");
+            throw new GoogleDirectionException("Error loading MAPS API - Error:" . $e->getMessage());
         }
 
         $end_time = round(microtime(true) * 1000);
