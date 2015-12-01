@@ -17,22 +17,6 @@ class Point extends Geometry
 		$this->lon = (float)$lon;
 	}
 
-    public static function fromAddress($address){
-        if( ! is_string($address) )
-            throw new \Exception('To instantiate a Point from an address a string parameter is needed');
-
-        list($lat, $lon) = Geo::georeverse($address);
-        return new self($lat, $lon);
-    }
-	
-
-
-	// TODO: implement
-	public function getParking(){
-
-		return 0;
-	}
-
     public function toGoogleAPIFormat(){
         return $this->lat.",".$this->lon;
     }
@@ -62,5 +46,13 @@ class Point extends Geometry
     public static function importFromText($string){
         $tmp = substr(substr($string, 6), 0, -1);
         return self::import($tmp);
+    }
+
+    public static function fromAddress($address){
+        if( ! is_string($address) )
+            throw new \Exception('To instantiate a Point from an address a string parameter is needed');
+
+        list($lat, $lon) = Geo::georeverse($address);
+        return new self($lat, $lon);
     }
 }
