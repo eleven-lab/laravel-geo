@@ -30,8 +30,21 @@ class Point extends Geometry
         return  "POINT(" . $this . ")";
     }
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Import
+    |--------------------------------------------------------------------------
+    |
+    | With those functions you can import and instantiate a Point object from
+    | various forms.
+    |
+    */
+
     /**
      * Crea un oggetto Point da una stringa del tipo "41.123123 12.123123"
+     *
      * @param $string
      */
     public static function import($string){
@@ -41,6 +54,7 @@ class Point extends Geometry
     }
     /**
      * Crea un oggetto Point da una stringa del tipo "POINT(41.123123 12.123123)"
+     *
      * @param $string
      */
     public static function importFromText($string){

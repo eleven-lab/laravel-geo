@@ -10,9 +10,12 @@ namespace LorenzoGiust\GeoLaravel;
 
 use LorenzoGiust\GeoLaravel\Point as Point;
 use \Carbon\Carbon as Carbon;
-use LorenzoGiust\GeoLaravel\Exceptions\GoogleDirectionException as GoogleDirectionException;
+use LorenzoGiust\GeoLaravel\Exceptions\GoogleDirectionException;
+use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
 
 class Geo {
+
+    protected static $greatCircleproviders = [ 'haversine', 'vincenty' ];
 
     /**
      * @param array $params
@@ -153,8 +156,39 @@ class Geo {
         return (bool)\DB::select("select ST_contains(".$polygon->toRawQuery().",".$point->toRawQuery().") as x")[0]->x;
     }
 
-    public static function distance(Point $p1, Point $p2){
-        return self::haversineGreatCircleDistance($p1, $p2);
+
+    public static function georeverse($address)
+    {
+        $api_url = "https://maps.google.com/maps/api/geocode/json?language=it&&address=".urlencode($address);
+        $response = file_get_contents($api_url);
+        if ($json = json_decode($response, true)) {
+            return [
+                $json['results'][0]['geometry']['location']['lat'],
+                $json['results'][0]['geometry']['location']['lng']
+            ];
+        }
+        return null;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Distance between points
+    |--------------------------------------------------------------------------
+    |
+    | You can get the great circle distance (https://en.wikipedia.org/wiki/Great-circle_distance)
+    | between two points  using one of the providers.
+    |
+    */
+
+    public static function distance(Point $p1, Point $p2, $provider = "haversine"){
+        if( ! in_array($provider, self::$greatCircleproviders))
+            throw new GeoException('Great circle distance provider not found');
+
+            if( $provider === "haversine" )
+                return self::haversineGreatCircleDistance($p1, $p2);
+            elseif( $provider === "vicenty" )
+                return self::vincentyGreatCircleDistance($p1, $p2);
     }
 
     private static function vincentyGreatCircleDistance(Point $from, Point $to, $earthRadius = 6371000){
@@ -188,17 +222,6 @@ class Geo {
         return $angle * $earthRadius;
     }
 
-    public static function georeverse($address)
-    {
-        $api_url = "https://maps.google.com/maps/api/geocode/json?language=it&&address=".urlencode($address);
-        $response = file_get_contents($api_url);
-        if ($json = json_decode($response, true)) {
-            return [
-                $json['results'][0]['geometry']['location']['lat'],
-                $json['results'][0]['geometry']['location']['lng']
-            ];
-        }
-        return null;
-    }
+
 }
 
