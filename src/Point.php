@@ -9,17 +9,21 @@ class Point extends Geometry
     public $lat;
 	public $lon;
 	
-	public function __construct($lat, $lon, $address = null){
-        if( is_string($address)){
-            list($lat, $lon) = Geo::georeverse($address);
-        }
-
+	public function __construct($lat, $lon){
         if( ! ( is_numeric($lat) && is_numeric($lon)) )
             throw new \Exception('Points must be constructed with numeric latitude/longitude, given: ' .$lat.' '.$lon);
 
 		$this->lat = (float)$lat;
 		$this->lon = (float)$lon;
 	}
+
+    public static function fromAddress($address){
+        if( ! is_string($address) )
+            throw new \Exception('To instantiate a Point from an address a string parameter is needed');
+
+        list($lat, $lon) = Geo::georeverse($address);
+        return new self($lat, $lon);
+    }
 	
 
 
