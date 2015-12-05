@@ -9,24 +9,12 @@ class Point extends Geometry
     public $lat;
 	public $lon;
 	
-	public function __construct($lat, $lon, $address = null){
-        if( is_string($address)){
-            list($lat, $lon) = Geo::georeverse($address);
-        }
-
+	public function __construct($lat, $lon){
         if( ! ( is_numeric($lat) && is_numeric($lon)) )
             throw new \Exception('Points must be constructed with numeric latitude/longitude, given: ' .$lat.' '.$lon);
 
 		$this->lat = (float)$lat;
 		$this->lon = (float)$lon;
-	}
-	
-
-
-	// TODO: implement
-	public function getParking(){
-
-		return 0;
 	}
 
     public function toGoogleAPIFormat(){
@@ -42,8 +30,21 @@ class Point extends Geometry
         return  "POINT(" . $this . ")";
     }
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Import
+    |--------------------------------------------------------------------------
+    |
+    | With those functions you can import and instantiate a Point object from
+    | various forms.
+    |
+    */
+
     /**
      * Crea un oggetto Point da una stringa del tipo "41.123123 12.123123"
+     *
      * @param $string
      */
     public static function import($string){
@@ -53,10 +54,19 @@ class Point extends Geometry
     }
     /**
      * Crea un oggetto Point da una stringa del tipo "POINT(41.123123 12.123123)"
+     *
      * @param $string
      */
     public static function importFromText($string){
         $tmp = substr(substr($string, 6), 0, -1);
         return self::import($tmp);
+    }
+
+    public static function fromAddress($address){
+        if( ! is_string($address) )
+            throw new \Exception('To instantiate a Point from an address a string parameter is needed');
+
+        list($lat, $lon) = Geo::georeverse($address);
+        return new self($lat, $lon);
     }
 }
