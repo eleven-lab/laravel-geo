@@ -56,6 +56,7 @@ class Point extends Geometry
      * Crea un oggetto Point da una stringa del tipo "POINT(41.123123 12.123123)"
      *
      * @param $string
+     * @return Point
      */
     public static function importFromText($string){
         $tmp = substr(substr($string, 6), 0, -1);

@@ -14,14 +14,9 @@ use League\Flysystem\Exception;
 class GoogleDirectionResponse {
 
     public $raw_response;
+
     public $routes = [];
-
-    public $legs = [];
-
-    public $route;
-    public $distance = 0;
-    public $duration = 0;
-
+    
     public function __construct($json){
 
         $this->raw_response = $json;
@@ -31,7 +26,6 @@ class GoogleDirectionResponse {
         }
 
     }
-
 
     public function chooseRoute($typology){
 
