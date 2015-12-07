@@ -170,6 +170,15 @@ class Geo {
         return null;
     }
 
+    /**
+     * @param Polygon $polygon
+     * @return \LorenzoGiust\GeoLaravel\Point
+     */
+    public static function centroid(Polygon $polygon){
+        $centroid = \DB::select('select AsText(ST_Centroid('.$polygon->toRawQuery().')) as x')[0]->x;
+        return Point::importFromText($centroid);
+    }
+
 
     /*
     |--------------------------------------------------------------------------
