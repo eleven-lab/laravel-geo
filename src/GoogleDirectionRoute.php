@@ -13,6 +13,7 @@ class GoogleDirectionRoute {
 
     public $legs = [];
     public $route;
+    public $summary;
 
     public $distance = 0;
     public $duration = 0;
@@ -22,10 +23,11 @@ class GoogleDirectionRoute {
         // extract complete route
         $polyline = \Polyline::decode($route->overview_polyline->points);
         $points = [];
-        while(count($polyline) > 0){
-            array_push($points, new Point(array_shift($polyline), array_shift($polyline)));
-        }
+        while(count($polyline) > 0)
+            $points[] = new Point(array_shift($polyline), array_shift($polyline));
+
         $this->route = new LineString($points);
+        $this->summary = $route->summary;
 
         // extract legs infos
         $j = 0;
@@ -42,5 +44,10 @@ class GoogleDirectionRoute {
 
             $j++;
         }
+    }
+
+    public function __toString()
+    {
+        return "Route summary: " . $this->summary . " distance: " . $this->distance . " duration: " . $this->duration;
     }
 }
