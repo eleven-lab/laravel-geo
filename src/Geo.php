@@ -126,7 +126,8 @@ class Geo {
     // GEOMETRY OPERATION
     // TODO: aggiungere tipi di operazioni ed eventuali ritorni
 
-    public static function intersect(Geometry $g1, Geometry $g2){
+    public static function intersect(Geometry $g1, Geometry $g2)
+    {
         $points = [];
         $tmp = [];
 
@@ -152,7 +153,8 @@ class Geo {
         return $points;
     }
 
-    public static function contains(Polygon $polygon, Point $point){
+    public static function contains(Polygon $polygon, Point $point)
+    {
         return (bool)\DB::select("select ST_contains(".$polygon->toRawQuery().",".$point->toRawQuery().") as x")[0]->x;
     }
 
@@ -174,10 +176,24 @@ class Geo {
      * @param Polygon $polygon
      * @return \LorenzoGiust\GeoLaravel\Point
      */
-    public static function centroid(Polygon $polygon){
+    public static function centroid(Polygon $polygon)
+    {
         $centroid = \DB::select('select AsText(ST_Centroid('.$polygon->toRawQuery().')) as x')[0]->x;
         return Point::importFromText($centroid);
     }
+
+
+
+    /**
+     * @param Polygon $polygon
+     * @return \LorenzoGiust\GeoLaravel\Polygon
+     */
+    public static function union( Polygon $p1, Polygon $p2 )
+    {
+        $union = \DB::select('select AsText(ST_Union('.$p1->toRawQuery().', '.$p2->toRawQuery().')) as x')[0]->x;
+        return Polygon::importFromText($union);
+    }
+
 
 
     /*

@@ -11,6 +11,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
     //TODO: aggiungere anche supporto per 'linestring', 'multipoint', 'multilinestring', 'multipolygon', 'geometrycollection'
     protected static $geotypes = ['points', 'line_strings', 'polygons'];
 
+
     /**
      * Overriding the "booting" method of the model.
      *
@@ -38,8 +39,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
                 }
             }
-
         });
+
 
         static::updating(function($model){
 
@@ -62,7 +63,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
         });
 
-        /*static::updated(function($model){
+        static::updated(function($model){
 
             if( ! isset($model->geometries) ) return;
 
@@ -75,6 +76,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
                     if(! $model->$attrname instanceof $classname)
                         throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
 
+                    // TODO: ripristinare oggetto originale al posto della query raw
                     $model->setAttribute( $attrname ,  DB::raw( $model->$attrname->toRawQuery() ) );
                     DB::statement("UPDATE " . $model->table . " SET " .$attrname. " = $model->$attrname->toRawQuery()  WHERE id = ". $model->primaryKey);
                     break;
@@ -82,7 +84,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 }
             }
 
-        });*/
+        });
 
     }
 

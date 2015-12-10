@@ -56,17 +56,23 @@ class Polygon extends Geometry implements \Countable
      * @param $string
      * @return Polygon
      */
-    public static function import($string){
+    public static function import(array $linestrings){
 
         // TODO: controllo integrità dati in input
         // TODO: prevedere import di più linestring
-        $tmp_points = explode(",", $string);
-        $points = [];
-        foreach($tmp_points as $point){
-            $points[] = Point::import($point);
+
+        $ls = [];
+
+        foreach($linestrings as $linestring){
+            $tmp_points = explode(",", $linestring);
+            $points = [];
+            foreach($tmp_points as $point){
+                $points[] = Point::import($point);
+            }
+            $ls[] = new LineString($points);
         }
-        $linestring = new LineString($points);
-        return new Polygon([$linestring]);
+
+        return new Polygon($ls);
     }
 
     /**
@@ -76,7 +82,11 @@ class Polygon extends Geometry implements \Countable
      * @return Polygon
      */
     public static function importFromText($string){
-        $tmp = substr(substr($string, 9), 0, -2);
+        $tmp = substr(substr($string, 8), 0, -1); // ELIMINO POLYGON(...)
+        $re = "/(?:([^()]+),?)*/";
+        preg_match_all($re, $tmp, $matches)[0];
+        $tmp = array_filter($matches[0], function($var){ return $var != "" && $var != ","; });
+
         return self::import($tmp);
     }
 

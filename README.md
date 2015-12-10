@@ -115,3 +115,6 @@ $p = new Polygon([$l1, $l1])
 
          'GeoModel'  => LorenzoGiust\GeoLaravel\Model::class
 
+TODO:
+* MultiGeometry - aggiungere classe per gestire oggetti geometrici multipli
+* Import da diversi formati usandone uno come normalizzazione
