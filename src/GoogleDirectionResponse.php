@@ -30,7 +30,7 @@ class GoogleDirectionResponse {
 
     public static function getBestRoute(array $routes){
         Log::debug('Entrato in getBestRoute, trovate ' . count($routes) . ' rotte');
-        $treshold = 0.8;
+        $treshold = 0.05;
 
         $merged_routes = [];
         foreach($routes as $route)
