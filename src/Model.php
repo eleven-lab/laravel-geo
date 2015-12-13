@@ -72,7 +72,6 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
                 $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
-                    echo "setting attribute $attrname : $item";
                     if( ! $item->$attrname == ""){
                         $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
                     }
