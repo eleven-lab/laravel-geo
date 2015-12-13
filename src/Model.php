@@ -10,8 +10,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     //TODO: aggiungere anche supporto per 'linestring', 'multipoint', 'multilinestring', 'multipolygon', 'geometrycollection'
     protected static $geotypes = ['points', 'line_strings', 'polygons'];
-
-
+    
     /**
      * Overriding the "booting" method of the model.
      *
@@ -31,12 +30,12 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
                 $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
-                    if(! $model->$attrname instanceof $classname)
-                        throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
+                    if( isset($model->$attrname) ){
+                        if(! $model->$attrname instanceof $classname)
+                            throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
 
-                    $model->setAttribute( $attrname ,  DB::raw( $model->$attrname->toRawQuery() ) );
-                    break;
-
+                        $model->setAttribute( $attrname ,  DB::raw( $model->$attrname->toRawQuery() ) );
+                    }
                 }
             }
         });
@@ -52,40 +51,15 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
                 $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
-                    if(! $model->$attrname instanceof $classname)
-                        throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
+                    if( isset($model->$attrname) ){
+                        if(! $model->$attrname instanceof $classname)
+                            throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
 
-                    $model->setAttribute( $attrname ,  DB::raw( $model->$attrname->toRawQuery() ) );
-                    break;
-
+                        $model->setAttribute( $attrname ,  DB::raw( $model->$attrname->toRawQuery() ) );
+                    }
                 }
             }
-
         });
-
-        static::updated(function($model){
-
-            if( ! isset($model->geometries) ) return;
-
-            foreach($model->geometries as $geotype => $attrnames){
-                if( ! in_array($geotype, static::$geotypes ))
-                    throw new \Exception('Unknown geotype: ' . $geotype);
-
-                $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
-                foreach ($attrnames as $attrname){
-                    if(! $model->$attrname instanceof $classname)
-                        throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
-
-                    // TODO: ripristinare oggetto originale al posto della query raw
-                    $model->setAttribute( $attrname ,  DB::raw( $model->$attrname->toRawQuery() ) );
-                    DB::statement("UPDATE " . $model->table . " SET " .$attrname. " = $model->$attrname->toRawQuery()  WHERE id = ". $model->primaryKey);
-                    break;
-
-                }
-            }
-
-        });
-
     }
 
     public static function hydrate(array $items, $connection = null){
@@ -98,7 +72,10 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
                 $classname = "LorenzoGiust\\GeoLaravel\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
-                    $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
+                    echo "setting attribute $attrname : $item";
+                    if( ! $item->$attrname == ""){
+                        $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
+                    }
                 }
             }
         }
