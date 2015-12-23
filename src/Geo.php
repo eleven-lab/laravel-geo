@@ -8,8 +8,8 @@
 
 namespace LorenzoGiust\GeoLaravel;
 
-use LorenzoGiust\GeoLaravel\Point as Point;
-use \Carbon\Carbon as Carbon;
+use LorenzoGiust\GeoLaravel\Point;
+use \Carbon\Carbon ;
 use LorenzoGiust\GeoLaravel\Exceptions\GoogleDirectionException;
 use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
 
