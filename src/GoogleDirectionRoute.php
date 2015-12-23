@@ -8,6 +8,8 @@
 
 namespace LorenzoGiust\GeoLaravel;
 
+use Log;
+use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
 
 class GoogleDirectionRoute {
 
@@ -20,13 +22,23 @@ class GoogleDirectionRoute {
 
     public function __construct($route){
 
+        //Log::debug('LineString construct -> ' . $route->overview_polyline->points);
+
         // extract complete route
         $polyline = \Polyline::decode($route->overview_polyline->points);
+
+        //Log::debug('Polyline: ' . json_encode($polyline));
+
         $points = [];
         while(count($polyline) > 0)
             $points[] = new Point(array_shift($polyline), array_shift($polyline));
 
-        $this->route = new LineString($points);
+        try{
+            $this->route = new LineString($points);
+        }catch(GeoException $e){
+            Log::debug('La rotta ottenuta è composta da un solo punto. Partenza e destinazione coincidono');
+            $this->route = $points[0];
+        }
         $this->summary = $route->summary;
 
         // extract legs infos

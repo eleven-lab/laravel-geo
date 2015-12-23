@@ -3,6 +3,7 @@
 
 namespace LorenzoGiust\GeoLaravel;
 use PhpParser\Node\Scalar\MagicConst\Line;
+use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
 
 
 /**
@@ -25,7 +26,7 @@ class LineString extends Geometry implements \Countable
         array_walk($points, function($p){ if( ! $p instanceof Point) throw new \Exception('A LineString instance must be constructed with Points only.'); });
 
         if( count($points) < 2 )
-            throw new \Exception("A LineString instance must be composed by at least 2 points.");
+            throw new GeoException("A LineString instance must be composed by at least 2 points.");
 
         $this->points = $points;
     }

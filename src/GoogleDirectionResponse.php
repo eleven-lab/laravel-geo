@@ -20,6 +20,8 @@ class GoogleDirectionResponse {
 
     public function __construct($json){
 
+        //Log::debug('Raw response: ' . json_encode($json));
+
         $this->raw_response = $json;
 
         foreach($json->routes as $route){
