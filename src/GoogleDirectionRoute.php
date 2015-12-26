@@ -51,11 +51,16 @@ class GoogleDirectionRoute {
             $this->legs[$j]['duration'] = $leg->duration->value; //s
             $this->duration += $this->legs[$j]['duration'];
 
-            $this->legs[$j]['start'] = new Point($leg->start_location->lat, $leg->start_location->lng);
-            $this->legs[$j]['end'] = new Point($leg->end_location->lat, $leg->end_location->lng);
+            $this->legs[$j]['start_point'] = new Point($leg->start_location->lat, $leg->start_location->lng);
+            $this->legs[$j]['start_address'] = $leg->start_address;
+            $this->legs[$j]['end_point'] = new Point($leg->end_location->lat, $leg->end_location->lng);
+            $this->legs[$j]['end_address'] = $leg->end_address;
 
             $j++;
         }
+
+        $this->start_address = reset($this->legs)['start_address'];
+        $this->end_address = last($this->legs)['end_address'];
     }
 
     public function __toString()
