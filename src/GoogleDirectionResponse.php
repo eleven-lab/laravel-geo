@@ -11,6 +11,7 @@ namespace LorenzoGiust\GeoLaravel;
 
 use League\Flysystem\Exception;
 use \Log;
+use LorenzoGiust\GeoLaravel\Exceptions\GoogleDirectionException;
 
 class GoogleDirectionResponse {
 
@@ -21,6 +22,10 @@ class GoogleDirectionResponse {
     public function __construct($json){
 
         //Log::debug('Raw response: ' . json_encode($json));
+
+        if($json->status != "OK"){
+            throw new GoogleDirectionException("Error loading MAPS API - Error:" . $json->status);
+        }
 
         $this->raw_response = $json;
 

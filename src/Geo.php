@@ -110,6 +110,8 @@ class Geo {
 
         $end_time = round(microtime(true) * 1000);
 
+
+
         return new GoogleDirectionResponse($data, $end_time-$start_time);
 
     }
