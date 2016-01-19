@@ -8,6 +8,8 @@ class Point extends Geometry
 {
     public $lat;
 	public $lon;
+
+    public $address;
 	
 	public function __construct($lat, $lon){
         if( ! ( is_numeric($lat) && is_numeric($lon)) )
@@ -68,6 +70,8 @@ class Point extends Geometry
             throw new \Exception('To instantiate a Point from an address a string parameter is needed');
 
         list($lat, $lon) = Geo::georeverse($address);
-        return new self($lat, $lon);
+        $p =  new self($lat, $lon);
+        $p->address = $address;
+        return $p;
     }
 }
