@@ -1,0 +1,4 @@
+.DS_Store
+.git
+vendor
+composer.lock
