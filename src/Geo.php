@@ -166,6 +166,10 @@ class Geo {
         $api_url = "https://maps.google.com/maps/api/geocode/json?language=it&&address=".urlencode($address);
         $response = file_get_contents($api_url);
         if ($json = json_decode($response, true)) {
+
+            if( $json['status'] != 'OK' )
+                throw new GeoException($json['status']);
+
             return [
                 $json['results'][0]['geometry']['location']['lat'],
                 $json['results'][0]['geometry']['location']['lng']
