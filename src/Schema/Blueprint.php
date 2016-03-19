@@ -6,8 +6,8 @@ use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
  * Extended version of Blueprint with
  * support of geo data type
  */
-class Blueprint extends IlluminateBlueprint {
-
+class Blueprint extends IlluminateBlueprint
+{
     /**
      * Create a new Geometry column on the table.
      *
@@ -26,5 +26,4 @@ class Blueprint extends IlluminateBlueprint {
 
         return $this->addColumn('geometry', $column, compact('geotype'));
     }
-
 }

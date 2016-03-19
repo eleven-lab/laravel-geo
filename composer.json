@@ -16,8 +16,8 @@
   "minimum-stability": "dev",
   "require": {
       "php": ">=5.4.0",
-      "illuminate/database": "~5.0"
-
+      "illuminate/database": "~5.0",
+      "lorenzoasr/php-geospatial": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "4.0.*"
@@ -25,6 +25,12 @@
   "autoload": {
     "psr-4": {
       "LorenzoGiust\\GeoLaravel\\": "src/"
-    }
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git"
+      }
+    ]
   }
 }
