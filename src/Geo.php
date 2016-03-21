@@ -139,7 +139,6 @@ class Geo {
             return new LineString($matches[0]);
 
         }elseif(stripos($query_result, "POLYGON") === 0 ){
-            dd($query_result);
             $re = "/\\(([^()]+)\\),?/";
             preg_match_all($re, $query_result, $matches);
             return new Polygon($matches[1]);
