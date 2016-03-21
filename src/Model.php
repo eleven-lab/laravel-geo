@@ -9,7 +9,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
 {
 
     //TODO: aggiungere anche supporto per 'linestring', 'multipoint', 'multilinestring', 'multipolygon', 'geometrycollection'
-    protected static $geotypes = ['points', 'line_strings', 'polygons'];
+    protected static $geotypes = ['points', 'linestrings', 'polygons'];
     
     /**
      * Overriding the "booting" method of the model.
@@ -73,7 +73,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 $classname = "LorenzoGiust\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
                 foreach ($attrnames as $attrname){
                     if( ! $item->$attrname == ""){
-                        $item->setAttribute( $attrname ,  $classname::importFromText(Geo::bin2text($item->$attrname)) );
+                        $item->setAttribute( $attrname ,  new $classname(Geo::bin2text($item->$attrname)) );
                     }
                 }
             }
