@@ -114,14 +114,16 @@ class Geo {
     private static function linestringToRawQuery(LineString $linestring)
     {
         return "LINESTRING(".implode(",", array_map(function($p){
-            return self::pointToRawQuery($p);
+            return $p->lat . " " . $p->lon;
         }, $linestring->points)).")";
     }
 
     private static function polygonToRawQuery(Polygon $polygon)
     {
         return "POLYGON(".implode(",", array_map(function($l){
-            return self::linestringToRawQuery($l);
+            return "(". implode(",", array_map(function($p){
+                return $p->lat . " " . $p->lon;
+            }, $l->points)) .")";
         }, $polygon->linestrings)).")";
     }
 
