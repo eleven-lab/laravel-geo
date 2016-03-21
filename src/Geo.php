@@ -108,25 +108,18 @@ class Geo {
 
     private static function pointToRawQuery(Point $point)
     {
-        return "POINT(".$point->lat." ".$point->lon.")";
+        return "POINT(".$point.")";
     }
 
     private static function linestringToRawQuery(LineString $linestring)
     {
-        return "LINESTRING(".implode(",", array_map(function($p){
-            return $p->lat . " " . $p->lon;
-        }, $linestring->points)).")";
+        return "LINESTRING(".$linestring.")";
     }
 
     private static function polygonToRawQuery(Polygon $polygon)
     {
-        return "POLYGON(".implode(",", array_map(function($l){
-            return "(". implode(",", array_map(function($p){
-                return $p->lat . " " . $p->lon;
-            }, $l->points)) .")";
-        }, $polygon->linestrings)).")";
+        return "POLYGON(".$polygon.")";
     }
-
 
     public static function fromQuery($query_result)
     {
@@ -148,8 +141,5 @@ class Geo {
         }else{
             throw new GeoException('Not implemented');
         }
-
     }
-
-
 }
