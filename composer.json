@@ -25,12 +25,12 @@
   "autoload": {
     "psr-4": {
       "LorenzoGiust\\GeoLaravel\\": "src/"
-    },
-    "repositories": [
-      {
-        "type": "vcs",
-        "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git"
-      }
-    ]
-  }
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git"
+    }
+  ]
 }

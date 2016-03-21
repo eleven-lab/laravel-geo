@@ -9,8 +9,8 @@
 namespace LorenzoGiust\GeoLaravel;
 
 use \Carbon\Carbon ;
-use LorenzoGiust\GeoSpatial\Exceptions\GeoException;
-use LorenzoGiust\GeoSpatial\GeoSpatial;
+use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
+use LorenzoGiust\GeoSpatial\GeoSpatialObject;
 use LorenzoGiust\GeoSpatial\Point;
 use LorenzoGiust\GeoSpatial\LineString;
 use LorenzoGiust\GeoSpatial\Polygon;
@@ -28,7 +28,7 @@ class Geo {
     // GEOMETRY OPERATION
     // TODO: aggiungere tipi di operazioni ed eventuali ritorni
 
-    public static function intersect(Geometry $g1, Geometry $g2)
+    public static function intersect(GeoSpatialObject $g1, GeoSpatialObject $g2)
     {
         $points = [];
         $tmp = [];
@@ -88,7 +88,7 @@ class Geo {
  * POLYGON( LINESTRING( POINT(x y), POINT(x y), POINT(x y) ), LINESTRING( POINT(x y), POINT(x y), POINT(x y) ) )
  *
  */
-    public static function toQuery(GeoSpatial $object)
+    public static function toQuery(GeoSpatialObject $object)
     {
         if($object instanceof Point){
             $raw = self::pointToRawQuery($object);
@@ -104,8 +104,6 @@ class Geo {
         }
 
         return "GeomFromText('" . $raw . "')";
-
-
     }
 
     private static function pointToRawQuery(Point $point)
@@ -125,6 +123,30 @@ class Geo {
         return "POLYGON(".implode(",", array_map(function($l){
             return self::linestringToRawQuery($l);
         }, $polygon->linestrings)).")";
+    }
+
+
+    public static function fromQuery($query_result)
+    {
+        if(stripos($query_result, "POINT") === 0 ){
+            $re = "/POINT\\((\\w) (\\w)\\)/";
+            preg_match_all($re, $query_result, $matches);
+            return new  Point($matches[0], $matches[1]);
+
+        }elseif(stripos($query_result, "LINESTRING") === 0 ){
+            $re = "/\\(([^()]+)\\),?/";
+            preg_match_all($re, $query_result, $matches);
+            return new LineString($matches[0]);
+
+        }elseif(stripos($query_result, "POLYGON") === 0 ){
+            $re = "/\\(([^()]+)\\),?/";
+            preg_match_all($re, $query_result, $matches);
+            return new Polygon($matches);
+
+        }else{
+            throw new GeoException('Not implemented');
+        }
+
     }
 
 
