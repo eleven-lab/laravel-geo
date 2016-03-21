@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "def19905e39e5c0cd4fc287f6e6a186d",
-    "content-hash": "7846b5ccbe16b964b5598fa88880b37a",
+    "hash": "3897883b83ff8a520f8e87424d24eca2",
+    "content-hash": "eba8dcc467d0c9df70236136a7fadd3e",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -84,7 +84,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/8845f5f0d08504527f2084136ebe99cdbf10e920",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/d9a2b7cb5b3dbec5ffdfb69e376148108497a524",
                 "reference": "8845f5f0d08504527f2084136ebe99cdbf10e920",
                 "shasum": ""
             },
@@ -127,7 +127,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/1690782764872b6953e2db691fbee3067305da1a",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/979d9419949834d5dc2d6e1b3733ecf009157746",
                 "reference": "1690782764872b6953e2db691fbee3067305da1a",
                 "shasum": ""
             },
@@ -169,7 +169,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/a42dc4a22b4dfcb594cfb8f96f8bf85ff97c1f0a",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/30ea028f7d55002129ec1cbf5f24fd1e524ec068",
                 "reference": "a42dc4a22b4dfcb594cfb8f96f8bf85ff97c1f0a",
                 "shasum": ""
             },
@@ -229,7 +229,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/f74f8e9495d759f600adde17493f4aaec483b08b",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/7f4cad5f7ebe095540a92a1c4394cd1c9db7bcc0",
                 "reference": "f74f8e9495d759f600adde17493f4aaec483b08b",
                 "shasum": ""
             },
@@ -273,6 +273,42 @@
             "description": "The Illuminate Support package.",
             "homepage": "http://laravel.com",
             "time": "2016-01-16 16:54:03"
+        },
+        {
+            "name": "lorenzoasr/php-geospatial",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git",
+                "reference": "c071f6a66250a291a4c7cd66f36a170116248957"
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LorenzoGiust\\GeoSpatial\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lorenzo Giustozzi",
+                    "email": "giustozzi@lorenzo.im"
+                }
+            ],
+            "description": "GeoSpatial objects",
+            "keywords": [
+                "geospatial",
+                "google"
+            ],
+            "time": "2016-03-21 09:44:08"
         },
         {
             "name": "nesbot/carbon",
@@ -331,7 +367,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d7f01c96a4dde264682cf36c28e62086c77a09d4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
                 "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4",
                 "shasum": ""
             },
@@ -390,7 +426,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/6e0a9d85e059226ee08ab8e8ab9a17faee9019b0",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/a515b102eec65c7215baa84573803c3c2c33ee09",
                 "reference": "6e0a9d85e059226ee08ab8e8ab9a17faee9019b0",
                 "shasum": ""
             },
@@ -876,7 +912,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e7133793a8e5a5714a551a8324337374be209df",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
                 "reference": "6e7133793a8e5a5714a551a8324337374be209df",
                 "shasum": ""
             },
@@ -1026,7 +1062,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/1548a0a971b0cc13eadab85fa7a9b1b2ee12715e",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/584e52cb8f788a887553ba82db6caacb1d6260bb",
                 "reference": "1548a0a971b0cc13eadab85fa7a9b1b2ee12715e",
                 "shasum": ""
             },
@@ -1068,7 +1104,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "lorenzoasr/php-geospatial": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
