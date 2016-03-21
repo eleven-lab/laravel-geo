@@ -124,9 +124,9 @@ class Geo {
     public static function fromQuery($query_result)
     {
         if(stripos($query_result, "POINT") === 0 ){
-            $re = "/POINT\\((\\w) (\\w)\\)/";
+            $re = "/POINT\\(([0-9.]+) ([0-9.]+)\\)/";
             preg_match_all($re, $query_result, $matches);
-            return new  Point($matches[1][0], $matches[1][1]);
+            return new  Point($matches[1][0], $matches[2][0]);
 
         }elseif(stripos($query_result, "LINESTRING") === 0 ){
             $re = "/\\(([^()]+)\\),?/";
