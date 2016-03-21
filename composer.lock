@@ -280,7 +280,7 @@
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git",
-                "reference": "c071f6a66250a291a4c7cd66f36a170116248957"
+                "reference": "696b150d909a632e1007735a952e2a61b67a37d4"
             },
             "require": {
                 "php": ">=5.4.0"
@@ -308,7 +308,7 @@
                 "geospatial",
                 "google"
             ],
-            "time": "2016-03-21 09:44:08"
+            "time": "2016-03-21 12:50:00"
         },
         {
             "name": "nesbot/carbon",
