@@ -67,7 +67,7 @@ class Geo {
     public static function centroid(Polygon $polygon)
     {
         $centroid = \DB::select('select AsText(ST_Centroid('.Geo::toQuery($polygon).')) as x')[0]->x;
-        return new Point(self::fromQuery($centroid));
+        return self::fromQuery($centroid);
     }
 
 
@@ -79,7 +79,7 @@ class Geo {
     public static function union( Polygon $p1, Polygon $p2 )
     {
         $union = \DB::select('select AsText(ST_Union('.Geo::toQuery($p1).', '.Geo::toQuery($p2).')) as x')[0]->x;
-        return new Polygon(self::fromQuery($union));
+        return self::fromQuery($union);
     }
 
     /*
