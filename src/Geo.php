@@ -27,6 +27,32 @@ class Geo {
 
     // GEOMETRY OPERATION
     // TODO: aggiungere tipi di operazioni ed eventuali ritorni
+    /**
+     *
+     *   a    b
+     *  ___ ___
+     * |   |   |
+     * |___|___| -> ST_Intersect(a, b) = false
+     *              ST_Overlaps(a, b) = true
+     *              ST_Touches(a, b) = true
+     *  _____
+     * |    _|_
+     * |   | | |
+     * |___|_| |
+     *     |___| -> ST_Intersect(a, b) = true
+     *              ST_Overlaps(a, b) = false
+     *              ST_Touches(a, b) = false
+     *
+     */
+
+
+     /*
+     *
+     * @param GeoSpatialObject $g1
+     * @param GeoSpatialObject $g2
+     * @return array
+     * @throws GeoException
+     */
 
     public static function intersect(GeoSpatialObject $g1, GeoSpatialObject $g2)
     {
@@ -57,7 +83,22 @@ class Geo {
 
     public static function contains(Polygon $polygon, Point $point)
     {
-        return (bool)\DB::select("select ST_contains(".Geo::toQuery($polygon).",".Geo::toQuery($point).") as x")[0]->x;
+        return (bool)\DB::select("select ST_Contains(".Geo::toQuery($polygon).",".Geo::toQuery($point).") as x")[0]->x;
+    }
+
+    public static function intersects(GeoSpatialObject $geo, GeoSpatialObject $geo)
+    {
+        return (bool)\DB::select("select ST_Intersects(".Geo::toQuery($geo).",".Geo::toQuery($geo).") as x")[0]->x;
+    }
+
+    public static function touches(GeoSpatialObject $geo, GeoSpatialObject $geo)
+    {
+        return (bool)\DB::select("select ST_Touches(".Geo::toQuery($geo).",".Geo::toQuery($geo).") as x")[0]->x;
+    }
+
+    public static function overlaps(GeoSpatialObject $geo, GeoSpatialObject $geo)
+    {
+        return (bool)\DB::select("select ST_Overlaps(".Geo::toQuery($geo).",".Geo::toQuery($geo).") as x")[0]->x;
     }
 
     /**
