@@ -16,6 +16,52 @@ use LorenzoGiust\GeoSpatial\Point;
 use LorenzoGiust\GeoSpatial\LineString;
 use LorenzoGiust\GeoSpatial\Polygon;
 
+
+
+/**
+ *
+ *
+ * References: https://dev.mysql.com/doc/refman/5.6/en/spatial-function-reference.html
+ *
+ *   a    b
+ *  ___ ___
+ * |   |   |
+ * |___|___| -> ST_Intersect(a, b) = false
+ *              ST_Overlaps(a, b) = true
+ *              ST_Touches(a, b) = true
+ *
+ * test mysql:
+ *
+ * SET @a = GeomFromText('POLYGON((6 7, 7 7, 7 6, 6 6, 6 7))');
+ * SET @b = GeomFromText('POLYGON((6 6, 7 6, 7 5, 6 5, 6 6))');
+ * select ST_Touches(@b, @a) as touch, ST_Intersects(@b, @a) as intersects, ST_Overlaps(@b, @a) as overlaps;
+ * ---------------------------------------------------------------------------------------------------------------
+ * ---------------------------------------------------------------------------------------------------------------
+ *
+ *  _____
+ * |    _|_
+ * |   | | |
+ * |___|_| |
+ *     |___| -> ST_Intersect(a, b) = true
+ *              ST_Overlaps(a, b) = true
+ *              ST_Touches(a, b) = false
+ * test mysql:
+ *
+ * SET @a = GeomFromText('POLYGON((6 7, 7 7, 7 6, 6 6, 6 7))');
+ * SET @b = GeomFromText('POLYGON((6 6, 7 6, 7 5, 6 5, 6 6))');
+ * select ST_Touches(@b, @a) as touch, ST_Intersects(@b, @a) as intersects, ST_Overlaps(@b, @a) as overlaps;
+ *
+ *
+ */
+
+
+/*
+*
+* @param GeoSpatialObject $g1
+* @param GeoSpatialObject $g2
+* @return array
+* @throws GeoException
+*/
 class Geo {
 
 
@@ -25,35 +71,6 @@ class Geo {
     }
 
 
-
-    // GEOMETRY OPERATION
-    // TODO: aggiungere tipi di operazioni ed eventuali ritorni
-    /**
-     *
-     *   a    b
-     *  ___ ___
-     * |   |   |
-     * |___|___| -> ST_Intersect(a, b) = false
-     *              ST_Overlaps(a, b) = true
-     *              ST_Touches(a, b) = true
-     *  _____
-     * |    _|_
-     * |   | | |
-     * |___|_| |
-     *     |___| -> ST_Intersect(a, b) = true
-     *              ST_Overlaps(a, b) = false
-     *              ST_Touches(a, b) = false
-     *
-     */
-
-
-     /*
-     *
-     * @param GeoSpatialObject $g1
-     * @param GeoSpatialObject $g2
-     * @return array
-     * @throws GeoException
-     */
 
     public static function intersection(GeoSpatialObject $g1, GeoSpatialObject $g2)
     {
