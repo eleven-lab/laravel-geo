@@ -54,7 +54,7 @@ class Geo {
      * @throws GeoException
      */
 
-    public static function intersect(GeoSpatialObject $g1, GeoSpatialObject $g2)
+    public static function intersection(GeoSpatialObject $g1, GeoSpatialObject $g2)
     {
         $points = [];
         $tmp = [];
