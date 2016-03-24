@@ -62,9 +62,8 @@ use LorenzoGiust\GeoSpatial\Polygon;
 * @return array
 * @throws GeoException
 */
-class Geo {
-
-
+class Geo
+{
     // GEOSPATIAL HELPERS
     public static function bin2text($binary){
         return \DB::select('select AsText(0x'.bin2hex($binary).') as x')[0]->x;
