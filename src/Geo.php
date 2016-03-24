@@ -11,6 +11,7 @@ namespace LorenzoGiust\GeoLaravel;
 use \Carbon\Carbon ;
 use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
 use LorenzoGiust\GeoSpatial\GeoSpatialObject;
+use LorenzoGiust\GeoSpatial\MultiPoint;
 use LorenzoGiust\GeoSpatial\Point;
 use LorenzoGiust\GeoSpatial\LineString;
 use LorenzoGiust\GeoSpatial\Polygon;
@@ -56,29 +57,8 @@ class Geo {
 
     public static function intersection(GeoSpatialObject $g1, GeoSpatialObject $g2)
     {
-        $points = [];
-        $tmp = [];
-
-        $multipoint = \DB::select("select AsText( ST_Intersection(".Geo::toQuery($g1).",".Geo::toQuery($g2).") ) as x")[0]->x;
-
-        if (is_null($multipoint)) return [];
-
-        if(strpos($multipoint, "MULTIPOINT(") === 0){
-            $tmp = explode(",", substr(substr($multipoint, 11), 0, -1));
-
-        }else if(strpos($multipoint, "POINT(") === 0){
-            $tmp = explode(",", substr(substr($multipoint, 6), 0, -1));
-
-        }else{
-            // TODO: rimuovere assert, debug only
-            assert('ne null, ne multipoint ne point !!!');
-        }
-
-        foreach( $tmp as $point ){
-            $tmp2 = explode(" ", $point);
-            array_push($points, new Point($tmp2[0], $tmp2[1]));
-        }
-        return $points;
+        $intersection = \DB::select("select AsText( ST_Intersection(".Geo::toQuery($g1).",".Geo::toQuery($g2).") ) as x")[0]->x;
+        return is_null($intersection) ? : self::fromQuery($intersection);
     }
 
     public static function contains(Polygon $polygon, Point $point)
@@ -174,10 +154,15 @@ class Geo {
             preg_match_all($re, $query_result, $matches);
             return new LineString($matches[0]);
 
-        }elseif(stripos($query_result, "POLYGON") === 0 ){
+        }elseif(stripos($query_result, "POLYGON") === 0 ) {
             $re = "/\\(([^()]+)\\),?/";
             preg_match_all($re, $query_result, $matches);
             return new Polygon($matches[1]);
+
+        }elseif(stripos($query_result, "MULTIPOINT") === 0){
+            $re = "/MULTIPOINT\\((.*)\\)/";
+            preg_match_all($re, $query_result, $matches);
+            return new MultiPoint($matches[1]);
 
         }else
             throw new GeoException('Not implemented');
