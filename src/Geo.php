@@ -77,6 +77,12 @@ class Geo
         return is_null($intersection) ? : self::fromQuery($intersection);
     }
 
+    public function difference(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
+    {
+        $difference = \DB::select("select ST_Difference(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") as x")[0]->x;
+        return is_null($difference) ? : self::fromQuery($difference);
+    }
+
     public static function contains(Polygon $polygon, Point $point)
     {
         return (bool)\DB::select("select ST_Contains(".Geo::toQuery($polygon).",".Geo::toQuery($point).") as x")[0]->x;
@@ -96,6 +102,7 @@ class Geo
     {
         return (bool)\DB::select("select ST_Overlaps(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") as x")[0]->x;
     }
+
 
     /**
      * @param Polygon $polygon
