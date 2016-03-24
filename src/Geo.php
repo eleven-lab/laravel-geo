@@ -188,7 +188,7 @@ class Geo
             return new MultiPoint($matches[1]);
 
         }else
-            throw new GeoException('Not implemented');
+            throw new GeoException('Not implemented: ' . $query_result);
     }
 
 
