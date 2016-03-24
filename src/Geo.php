@@ -77,7 +77,7 @@ class Geo
         return is_null($intersection) ? : self::fromQuery($intersection);
     }
 
-    public function difference(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
+    public static function difference(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
     {
         $difference = \DB::select("select ST_Difference(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") as x")[0]->x;
         return is_null($difference) ? : self::fromQuery($difference);
