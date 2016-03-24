@@ -74,13 +74,13 @@ class Geo
     public static function intersection(GeoSpatialObject $g1, GeoSpatialObject $g2)
     {
         $intersection = \DB::select("select ST_AsText( ST_Intersection(".Geo::toQuery($g1).",".Geo::toQuery($g2).") ) as x")[0]->x;
-        return is_null($intersection) ? : self::fromQuery($intersection);
+        return is_null($intersection) ? null : self::fromQuery($intersection);
     }
 
     public static function difference(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
     {
         $difference = \DB::select("select ST_AsText( ST_Difference(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") ) as x")[0]->x;
-        return is_null($difference) ? : self::fromQuery($difference);
+        return is_null($difference) ? null : self::fromQuery($difference);
     }
 
     public static function contains(Polygon $polygon, Point $point)
