@@ -12,6 +12,7 @@ use \Carbon\Carbon ;
 use LorenzoGiust\GeoLaravel\Exceptions\GeoException;
 use LorenzoGiust\GeoSpatial\GeoSpatialObject;
 use LorenzoGiust\GeoSpatial\MultiPoint;
+use LorenzoGiust\GeoSpatial\MultiPolygon;
 use LorenzoGiust\GeoSpatial\Point;
 use LorenzoGiust\GeoSpatial\LineString;
 use LorenzoGiust\GeoSpatial\Polygon;
@@ -186,6 +187,22 @@ class Geo
             $re = "/MULTIPOINT\\((.*)\\)/";
             preg_match_all($re, $query_result, $matches);
             return new MultiPoint($matches[1]);
+
+        }elseif(stripos($query_result, "MULTIPOLYGON") === 0){
+            // TODO: add testing
+            $re = "/\\(([^()]+)\\)(?:,\\(([^()]+)\\))*/";
+            $poly = [];
+            preg_match_all($re, $query_result, $matches);
+            for($j = 0 ; $j < sizeof($matches[0]) ; $j++){
+                for( $k = 1 ; $k < sizeof($matches) ; $k++ ){
+                    if( $matches[$k][$j] != "" ){
+                        $poly[$j][] = $matches[$k][$j];
+                    }
+                }
+            }
+            $p[] = array_map(function($po){ return new Polygon($po);  }, $poly);
+            return new MultiPolygon($p);
+
 
         }else
             throw new GeoException('Not implemented: ' . $query_result);
