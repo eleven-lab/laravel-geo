@@ -86,19 +86,19 @@ class Geo {
         return (bool)\DB::select("select ST_Contains(".Geo::toQuery($polygon).",".Geo::toQuery($point).") as x")[0]->x;
     }
 
-    public static function intersects(GeoSpatialObject $geo, GeoSpatialObject $geo)
+    public static function intersects(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
     {
-        return (bool)\DB::select("select ST_Intersects(".Geo::toQuery($geo).",".Geo::toQuery($geo).") as x")[0]->x;
+        return (bool)\DB::select("select ST_Intersects(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") as x")[0]->x;
     }
 
-    public static function touches(GeoSpatialObject $geo, GeoSpatialObject $geo)
+    public static function touches(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
     {
-        return (bool)\DB::select("select ST_Touches(".Geo::toQuery($geo).",".Geo::toQuery($geo).") as x")[0]->x;
+        return (bool)\DB::select("select ST_Touches(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") as x")[0]->x;
     }
 
-    public static function overlaps(GeoSpatialObject $geo, GeoSpatialObject $geo)
+    public static function overlaps(GeoSpatialObject $geo1, GeoSpatialObject $geo2)
     {
-        return (bool)\DB::select("select ST_Overlaps(".Geo::toQuery($geo).",".Geo::toQuery($geo).") as x")[0]->x;
+        return (bool)\DB::select("select ST_Overlaps(".Geo::toQuery($geo1).",".Geo::toQuery($geo2).") as x")[0]->x;
     }
 
     /**
