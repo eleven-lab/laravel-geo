@@ -200,13 +200,10 @@ class Geo
                     }
                 }
             }
-            $p[] = array_map(function($po){ return new Polygon($po);  }, $poly);
+            $p = array_map(function($po){ return new Polygon($po);  }, $poly);
             return new MultiPolygon($p);
-
 
         }else
             throw new GeoException('Not implemented: ' . $query_result);
     }
-
-
 }
