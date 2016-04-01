@@ -84,7 +84,7 @@ class Geo
         return is_null($difference) ? null : self::fromQuery($difference);
     }
 
-    public static function contains(Polygon $polygon, Point $point)
+    public static function contains(GeoSpatialObject $polygon, GeoSpatialObject $point)
     {
         return (bool)\DB::select("select ST_Contains(".Geo::toQuery($polygon).",".Geo::toQuery($point).") as x")[0]->x;
     }
