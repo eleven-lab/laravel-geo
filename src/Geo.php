@@ -113,7 +113,7 @@ class Geo
     {
         if (stripos($query_result, "POINT") === 0) {
             $re = "/POINT\\((-?[0-9]{1,3}(?:\\.[0-9]+)?) (-?[0-9]{1,3}(?:\\.[0-9]+)?)\\)/";
-            preg_match_all($re, $query_result, $matches);
+            preg_match($re, $query_result, $matches);
 
             return new  Point($matches[1], $matches[2]);
 
