@@ -62,22 +62,14 @@ class Model extends \Illuminate\Database\Eloquent\Model
         });
     }
 
-    public static function hydrate(array $items, $connection = null){
-        $ret = parent::hydrate($items, $connection);
-
-        foreach($ret as $item){
-            $model = new static;
-            if( ! isset( $model->geometries) ) return;
-            foreach($model->geometries as $geotype => $attrnames){
-
-//                $classname = "LorenzoGiust\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
-                foreach ($attrnames as $attrname){
-                    if( ! $item->$attrname == ""){
-                        $item->setAttribute( $attrname ,  Geo::fromQuery(Geo::bin2text($item->$attrname)) );
-                    }
-                }
-            }
+    public function __get($key)
+    {
+        echo "called getter on key $key...";
+        if(in_array($key, array_flatten($this->geometries)) && ! parent::__get($key) instanceof GeoSpatialObject){
+            echo "instantiating object...";
+            $this->setAttribute( $key ,  Geo::fromQuery(Geo::bin2text(parent::__get($key))) );
         }
-        return $ret;
+        return parent::__get($key);
     }
+
 }
