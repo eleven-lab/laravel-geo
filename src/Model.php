@@ -64,9 +64,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     public function __get($key)
     {
-        echo "called getter on key $key...";
         if(in_array($key, array_flatten($this->geometries)) && ! parent::__get($key) instanceof GeoSpatialObject){
-            echo "instantiating object...";
             $this->setAttribute( $key ,  Geo::fromQuery(Geo::bin2text(parent::__get($key))) );
         }
         return parent::__get($key);
