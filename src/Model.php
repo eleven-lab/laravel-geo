@@ -4,6 +4,7 @@
 namespace LorenzoGiust\GeoLaravel;
 
 use DB;
+use LorenzoGiust\GeoSpatial\GeoSpatialObject;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
@@ -64,7 +65,11 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     public function __get($key)
     {
-        if(in_array($key, array_flatten($this->geometries)) && ! parent::__get($key) instanceof GeoSpatialObject){
+        if(
+            in_array($key, array_flatten($this->geometries)) &&
+            ! parent::__get($key) instanceof GeoSpatialObject &&
+            parent::__get($key) != ""
+        ){
             $this->setAttribute( $key ,  Geo::fromQuery(Geo::bin2text(parent::__get($key))) );
         }
         return parent::__get($key);
