@@ -4,14 +4,19 @@
 namespace LorenzoGiust\GeoLaravel;
 
 use DB;
+use Illuminate\Database\Query\Expression;
 use LorenzoGiust\GeoSpatial\GeoSpatialObject;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
 
     //TODO: aggiungere anche supporto per 'linestring', 'multipoint', 'multilinestring', 'multipolygon', 'geometrycollection'
-    protected static $geotypes = ['points', 'linestrings', 'polygons'];
-    
+    protected static $geotypes = [
+        'points' => 'Point',
+        'linestrings' => 'LineString',
+        'polygons' => 'Polygon'
+    ];
+
     /**
      * Overriding the "booting" method of the model.
      *
@@ -21,46 +26,47 @@ class Model extends \Illuminate\Database\Eloquent\Model
     {
         parent::boot();
 
+
         static::creating(function($model){
+            self::updateGeoAttributes($model);
+        });
 
-            if( ! isset($model->geometries) ) return;
-
-            foreach($model->geometries as $geotype => $attrnames){
-                if( ! in_array($geotype, static::$geotypes ))
-                    throw new \Exception('Unknown geotype: ' . $geotype);
-
-                $classname = "LorenzoGiust\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
-                foreach ($attrnames as $attrname){
-                    if( isset($model->$attrname) ){
-                        if(! $model->$attrname instanceof $classname)
-                            throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
-
-                        $model->setAttribute( $attrname ,  DB::raw( Geo::toQuery($model->$attrname) ) );
-                    }
-                }
-            }
+        static::created(function($model){
+            self::updateGeoAttributes($model);
         });
 
 
         static::updating(function($model){
+            self::updateGeoAttributes($model);
+        });
 
-            if( ! isset($model->geometries) ) return;
+        static::updated(function($model){
+            self::updateGeoAttributes($model);
+        });
+    }
 
-            foreach($model->geometries as $geotype => $attrnames){
-                if( ! in_array($geotype, static::$geotypes ))
-                    throw new \Exception('Unknown geotype: ' . $geotype);
+    public static function updateGeoAttributes($model)
+    {
+        if( ! isset($model->geometries) ) return;
 
-                $classname = "LorenzoGiust\\GeoSpatial\\" . ucfirst(str_singular(camel_case($geotype)));
-                foreach ($attrnames as $attrname){
-                    if( isset($model->$attrname) ){
-                        if(! $model->$attrname instanceof $classname)
-                            throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
+        foreach($model->geometries as $geotype => $attrnames){
+            if( ! in_array($geotype, array_keys(static::$geotypes) ))
+                throw new \Exception('Unknown geotype: ' . $geotype);
 
-                        $model->setAttribute( $attrname ,  DB::raw( Geo::toQuery($model->$attrname) ) );
+            $classname = "LorenzoGiust\\GeoSpatial\\" . static::$geotypes[$geotype];
+            foreach ($attrnames as $attrname){
+                if( isset($model->$attrname) ){
+
+                    if($model->$attrname instanceof Expression){
+                        $model->setAttribute( $attrname, Geo::fromQuery((string)$model->$attrname) );
+                    }else if($model->$attrname instanceof $classname){
+                        $model->setAttribute( $attrname,  \DB::raw( Geo::toQuery($model->$attrname) ));
+                    }else{
+                        throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
                     }
                 }
             }
-        });
+        }
     }
 
     public function __get($key)
@@ -68,11 +74,11 @@ class Model extends \Illuminate\Database\Eloquent\Model
         if(
             in_array($key, array_flatten($this->geometries)) &&
             ! parent::__get($key) instanceof GeoSpatialObject &&
+            ! parent::__get($key) instanceof Expression &&
             parent::__get($key) != ""
         ){
             $this->setAttribute( $key ,  Geo::fromQuery(Geo::bin2text(parent::__get($key))) );
         }
         return parent::__get($key);
     }
-
 }

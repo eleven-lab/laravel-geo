@@ -111,6 +111,12 @@ class Geo
 
     public static function fromQuery($query_result)
     {
+        if(stripos($query_result, "GeomFromText") === 0){
+            $re = "/GeomFromText\\('(.*)'\\)/";
+            preg_match($re, $query_result, $matches);
+            $query_result = $matches[1];
+        }
+
         if (stripos($query_result, "POINT") === 0) {
             $re = "/POINT\\((-?[0-9]{1,3}(?:\\.[0-9]+)?) (-?[0-9]{1,3}(?:\\.[0-9]+)?)\\)/";
             preg_match($re, $query_result, $matches);
