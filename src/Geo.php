@@ -124,10 +124,10 @@ class Geo
             return new  Point($matches[1], $matches[2]);
 
         } elseif (stripos($query_result, "LINESTRING") === 0) {
-            $re = "/\\(([^()]+)\\),?/";
-            preg_match_all($re, $query_result, $matches);
+            $re = "/\\(([^()]+)\\)?/";
+            preg_match($re, $query_result, $matches);
 
-            return new LineString($matches[0]);
+            return new LineString($matches[1]);
 
         } elseif (stripos($query_result, "POLYGON") === 0) {
             $re = "/\\(([^()]+)\\),?/";
