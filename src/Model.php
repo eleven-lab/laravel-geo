@@ -69,6 +69,24 @@ class Model extends \Illuminate\Database\Eloquent\Model
         }
     }
 
+    public function newFromBuilder($attributes = [], $connection = null)
+    {
+        $model = parent::newFromBuilder($attributes, $connection);
+        if( ! isset($model->geometries) ) return;
+
+        foreach($model->geometries as $geotype => $attrnames) {
+            if (!in_array($geotype, array_keys(static::$geotypes)))
+                throw new \Exception('Unknown geotype: ' . $geotype);
+
+            foreach ($attrnames as $attrname) {
+                if (isset($model->$attrname)) {
+                    $model->$attrname;
+                }
+            }
+        }
+        return $model;
+    }
+
     public function __get($key)
     {
         if(
