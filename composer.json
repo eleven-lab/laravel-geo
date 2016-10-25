@@ -7,7 +7,7 @@
     {
       "name": "Lorenzo Giustozzi",
       "email": "giustozzi@lorenzo.im"
-    },
+    }
   ],
   "minimum-stability": "dev",
   "require": {
