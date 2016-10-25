@@ -14,13 +14,13 @@ Add package to package.json
 
 (se su bitbucket, usare ->
     require:{
-    "lorenzoasr/laravel-geo":"dev-master"
+    "elevenlab/laravel-geo":"dev-master"
     }
 
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@bitbucket.org:lorenzoasr/laravel-geo.git"
+            "url": "git@bitbucket.org:elevenlab/laravel-geo.git"
         }
     ],
 

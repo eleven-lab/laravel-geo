@@ -275,11 +275,11 @@
             "time": "2016-01-16 16:54:03"
         },
         {
-            "name": "lorenzoasr/php-geospatial",
+            "name": "elevenlab/php-geospatial",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git",
+                "url": "git@bitbucket.org:elevenlab/php-geospatial.git",
                 "reference": "e80e5c533cfbde39b8616b81ba47bc4af9c54c4c"
             },
             "require": {
@@ -1105,7 +1105,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "lorenzoasr/php-geospatial": 20
+        "elevenlab/php-geospatial": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

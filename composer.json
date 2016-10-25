@@ -1,5 +1,5 @@
 {
-  "name": "lorenzoasr/laravel-geo",
+  "name": "elevenlab/laravel-geo",
   "description": "Geospatial integration for Laravel 5.1",
   "license": "MIT",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
@@ -8,16 +8,12 @@
       "name": "Lorenzo Giustozzi",
       "email": "giustozzi@lorenzo.im"
     },
-    {
-      "name": "Alessandro Orrù",
-      "email": "alessandro.orru@aleostudio.com"
-    }
   ],
   "minimum-stability": "dev",
   "require": {
       "php": ">=5.4.0",
       "illuminate/database": "~5.0",
-      "lorenzoasr/php-geospatial": "dev-master"
+      "elevenlab/php-geospatial": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "4.0.*"
@@ -30,7 +26,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@bitbucket.org:lorenzoasr/php-geospatial.git"
+      "url": "git@bitbucket.org:elevenlab/php-geospatial.git"
     }
   ]
 }
