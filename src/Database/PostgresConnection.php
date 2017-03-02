@@ -36,7 +36,7 @@ class PostgresConnection extends Connection
      */
     public function intersection(OGCObject $geo1, OGCObject $geo2)
     {
-        $intersection = $this->select("select ST_Intersection({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as intersection")[0]->intersection;
+        $intersection = $this->select("select ST_AsBinary(ST_Intersection({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as intersection")[0]->intersection;
 
         if(is_null($intersection))
             return null;
@@ -52,7 +52,7 @@ class PostgresConnection extends Connection
      */
     public function difference(OGCObject $geo1, OGCObject $geo2)
     {
-        $difference = $this->select("select ST_Difference({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as difference")[0]->difference;
+        $difference = $this->select("select ST_AsBinary(ST_Difference({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as difference")[0]->difference;
 
         if(is_null($difference))
             return null;
@@ -68,7 +68,7 @@ class PostgresConnection extends Connection
      */
     public function contains(Polygon $polygon, Point $point)
     {
-        return (bool)$this->select("select ST_Contains({$this->geoFromText($polygon)}::geometry,{$this->geoFromText($point)}::geometry) as contains")[0]->contains;
+        return (bool)$this->select("select ST_AsBinary(ST_Contains({$this->geoFromText($polygon)}::geometry,{$this->geoFromText($point)}::geometry)) as contains")[0]->contains;
     }
 
     /**
@@ -78,7 +78,7 @@ class PostgresConnection extends Connection
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_Intersects({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as intersects")[0]->intersects;
+        return (bool)$this->select("select ST_AsBinary(ST_Intersects({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as intersects")[0]->intersects;
     }
 
     /**
@@ -88,7 +88,7 @@ class PostgresConnection extends Connection
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_Touches({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as touches")[0]->touches;
+        return (bool)$this->select("select ST_AsBinary(ST_Touches({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as touches")[0]->touches;
     }
 
     /**
@@ -98,7 +98,7 @@ class PostgresConnection extends Connection
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_Overlaps({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as overlaps")[0]->overlaps;
+        return (bool)$this->select("select ST_AsBinary(ST_Overlaps({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as overlaps")[0]->overlaps;
     }
 
     /**
@@ -107,7 +107,7 @@ class PostgresConnection extends Connection
      */
     public function centroid(Polygon $polygon)
     {
-        $difference = $this->select("select ST_Centroid({$this->geoFromText($polygon)}::geometry) as centroid")[0]->centroid;
+        $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)}::geometry)) as centroid")[0]->centroid;
 
         $wkb_parser = new Parser;
         return OGCObject::buildOGCObject($wkb_parser->parse($difference));
