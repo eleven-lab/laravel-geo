@@ -33,8 +33,8 @@ Replace Schema "alias" in the configuration file config/app.php and, if needed, 
 
 ```
 // GeoLaravel integration
-'Schema'    => LorenzoGiust\GeoLaravel\Schema\Schema::class,
-'GeoModel'  => LorenzoGiust\GeoLaravel\Model::class
+'Schema'    => ElevenLab\GeoLaravel\Schema\Schema::class,
+'GeoModel'  => ElevenLab\GeoLaravel\Model::class
 ```
 
 # GEOSPATIAL
@@ -113,7 +113,7 @@ $p = new Polygon([$l1, $l1])
  * */
  1) aggiunto in config/app.php l'alias:
 
-         'GeoModel'  => LorenzoGiust\GeoLaravel\Model::class
+         'GeoModel'  => ElevenLab\GeoLaravel\Model::class
 
 TODO:
 * MultiGeometry - aggiungere classe per gestire oggetti geometrici multipli
