@@ -5,9 +5,8 @@ namespace ElevenLab\GeoLaravel\Database;
 use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\GeoLaravel\Schema\Builder;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Database\Connection as IlluminateConnection;
 
-class Connection extends IlluminateConnection
+Trait GeoConnection
 {
     /**
      * @return Builder

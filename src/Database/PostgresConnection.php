@@ -7,9 +7,11 @@ use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\PHPOGC\DataTypes\Point;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
 use ElevenLab\GeoLaravel\Schema\Grammars\PostgresGrammar;
+use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
 
-class PostgresConnection extends Connection
+class PostgresConnection extends IlluminatePostgresConnection
 {
+    use GeoConnection;
     /**
      * Get the default schema grammar instance.
      *
