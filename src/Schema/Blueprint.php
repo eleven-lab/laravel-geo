@@ -1,29 +1,86 @@
-<?php namespace LorenzoGiust\GeoLaravel\Schema;
+<?php namespace ElevenLab\GeoLaravel\Schema;
 
 use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 
 /**
  * Extended version of Blueprint with
  * support of geo data type
+ *
  */
 class Blueprint extends IlluminateBlueprint
 {
+
     /**
-     * Create a new Geometry column on the table.
-     *
-     * @param  string   $column
+     * @param $column
      * @return \Illuminate\Support\Fluent
      */
-    public function geometry($column, $type)
+    public function point($column)
     {
-        $spatial_types = ['point', 'linestring', 'polygon', 'multipoint', 'multilinestring', 'multipolygon', 'geometrycollection'];
-
-        if ( ! in_array( $type, $spatial_types) )
-            throw new \Exception('Unknown geometry type: ' . $type);
-
-        // necessario per non overridare type che è già usato nel namespace chiamante
-        $geotype = $type;
-
-        return $this->addColumn('geometry', $column, compact('geotype'));
+        return $this->addColumn('point', $column);
     }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function multipoint($column)
+    {
+        return $this->addColumn('multipoint', $column);
+    }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestring($column)
+    {
+        return $this->addColumn('linestring', $column);
+    }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function multilinestring($column)
+    {
+        return $this->addColumn('multilinestring', $column);
+    }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function polygon($column)
+    {
+        return $this->addColumn('polygon', $column);
+    }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function multipolygon($column)
+    {
+        return $this->addColumn('multipolygon', $column);
+    }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function geometrycollection($column)
+    {
+        return $this->addColumn('geometrycollection', $column);
+    }
+
+    /**
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function geometry($column)
+    {
+        return $this->addColumn('geometry', $column);
+    }
+
+
 }
