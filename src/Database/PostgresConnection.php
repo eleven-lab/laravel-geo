@@ -6,12 +6,33 @@ use CrEOF\Geo\WKB\Parser;
 use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\PHPOGC\DataTypes\Point;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
-use ElevenLab\GeoLaravel\Schema\Grammars\PostgresGrammar;
+use Illuminate\Database\Query\Expression;
+use ElevenLab\GeoLaravel\Database\Schema\PostgresBuilder;
+use ElevenLab\GeoLaravel\Database\Schema\Grammars\PostgresGrammar;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
 
 class PostgresConnection extends IlluminatePostgresConnection
 {
-    use GeoConnection;
+    /**
+     * @return Builder
+     */
+    public function getSchemaBuilder()
+    {
+        if (is_null($this->schemaGrammar)) {
+            $this->useDefaultSchemaGrammar();
+        }
+        return new PostgresBuilder($this);
+    }
+
+    /**
+     * @param OGCObject $geo
+     * @return Expression
+     */
+    public function rawGeo(OGCObject $geo)
+    {
+        return new Expression($this->geoFromText($geo));
+    }
+
     /**
      * Get the default schema grammar instance.
      *

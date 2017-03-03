@@ -2,6 +2,7 @@
 
 namespace ElevenLab\GeoLaravel;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\DatabaseManager;
 use ElevenLab\GeoLaravel\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
@@ -19,6 +20,12 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
      */
     public function register()
     {
+        Model::clearBootedModels();
+
+        $this->registerEloquentFactory();
+
+        $this->registerQueueableEntityResolver();
+
         // The connection factory is used to create the actual connection instances on
         // the database. We will inject the factory into the manager so that it may
         // make the connections while they are actually needed and not of before.
@@ -31,6 +38,10 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
         // interface which may be used by other components requiring connections.
         $this->app->singleton('db', function ($app) {
             return new DatabaseManager($app, $app['db.factory']);
+        });
+
+        $this->app->bind('db.connection', function ($app) {
+            return $app['db']->connection();
         });
     }
 }

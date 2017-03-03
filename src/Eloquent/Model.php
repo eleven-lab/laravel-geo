@@ -1,8 +1,7 @@
 <?php
 
-namespace ElevenLab\GeoLaravel;
+namespace ElevenLab\GeoLaravel\Eloquent;
 
-use DB;
 use ElevenLab\PHPOGC\OGCObject;
 use Illuminate\Database\Query\Expression;
 
@@ -53,10 +52,16 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return (in_array($geotype, array_keys(static::$geotypes)));
     }
 
+    /**
+     * @param $model
+     * @param $attribute
+     * @return mixed
+     * @throws \Exception
+     */
     private static function getGeoType($model, $attribute)
     {
-        foreach ($model->geometries as $geometry) {
-            if(in_array($attribute, $geometry))
+        foreach ($model->geometries as $geometry => $attributes) {
+            if(in_array($attribute, $attributes))
                 return $geometry;
         }
         throw new \Exception('Given attribute has no geotype.');

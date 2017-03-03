@@ -1,10 +1,10 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Schema;
+namespace ElevenLab\GeoLaravel\Database\Schema;
 
 use Closure;
 
-class Builder extends \Illuminate\Database\Schema\Builder
+trait GeoBuilder
 {
     /**
      * Create a new command set with a Closure.

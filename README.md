@@ -33,7 +33,7 @@ Replace Schema "alias" in the configuration file config/app.php and, if needed, 
 
 ```
 // GeoLaravel integration
-'Schema'    => ElevenLab\GeoLaravel\Schema\Schema::class,
+'Schema'    => ElevenLab\GeoLaravel\Database\Schema\Schema::class,
 'GeoModel'  => ElevenLab\GeoLaravel\Model::class
 ```
 

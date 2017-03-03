@@ -1,4 +1,4 @@
-<?php namespace ElevenLab\GeoLaravel\Schema;
+<?php namespace ElevenLab\GeoLaravel\Database\Schema;
 
 use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 

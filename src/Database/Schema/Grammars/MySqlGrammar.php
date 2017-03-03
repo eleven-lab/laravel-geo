@@ -1,13 +1,16 @@
-<?php namespace ElevenLab\GeoLaravel\Schema\Grammars;
+<?php
+
+namespace ElevenLab\GeoLaravel\Database\Schema\Grammars;
 
 use Illuminate\Support\Fluent;
-use Illuminate\Database\Schema\Grammars\PostgresGrammar as IlluminatePostgresGrammar;
+use Illuminate\Database\Schema\Grammars\MySqlGrammar as IlluminateMySqlGrammar;
 
 /**
+ *
  * Extended version of MySqlGrammar with
  * support of 'set' data type
  */
-class PostgresGrammar extends IlluminatePostgresGrammar
+class MySqlGrammar extends IlluminateMySqlGrammar
 {
     /**
      * Create the column definition for a Point type.
@@ -17,7 +20,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typePoint(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $column->type;
     }
 
     /**
@@ -28,7 +31,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeMultipoint(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $column->type;
     }
 
     /**
@@ -39,7 +42,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeLinestring(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $column->type;
     }
 
     /**
@@ -50,7 +53,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typePolygon(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $column->type;
     }
 
     /**
@@ -61,7 +64,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeMultipolygon(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $column->type;
     }
 
     /**
@@ -72,23 +75,17 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeGeometrycollection(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $column->type;
     }
 
     /**
-     * Create the column definition for a MultiPolygon type.
+     * Create the column definition for a Geometry type.
      *
      * @param  \Illuminate\Support\Fluent  $column
-     * @throws \Exception
+     * @return string
      */
     protected function typeGeometry(Fluent $column)
     {
-        throw new \Exception('Geometry data type not supported for current database engine.');
-    }
-
-
-    private function formatPostGisType($type)
-    {
-        return "GEOGRAPHY($type, 4326)";
+        return $column->type;
     }
 }

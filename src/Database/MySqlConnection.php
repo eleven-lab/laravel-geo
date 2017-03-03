@@ -5,12 +5,33 @@ namespace ElevenLab\GeoLaravel\Database;
 use CrEOF\Geo\WKB\Parser;
 use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
-use ElevenLab\GeoLaravel\Schema\Grammars\MySqlGrammar;
+use Illuminate\Database\Query\Expression;
+use ElevenLab\GeoLaravel\Database\Schema\MySqlBuilder;
+use ElevenLab\GeoLaravel\Database\Schema\Grammars\MySqlGrammar;
 use \Illuminate\Database\MySqlConnection as IlluminateMySqlConnection;
 
 class MySqlConnection extends IlluminateMySqlConnection
 {
-    use GeoConnection;
+    /**
+     * @return Builder
+     */
+    public function getSchemaBuilder()
+    {
+        if (is_null($this->schemaGrammar)) {
+            $this->useDefaultSchemaGrammar();
+        }
+        return new MySqlBuilder($this);
+    }
+
+    /**
+     * @param OGCObject $geo
+     * @return Expression
+     */
+    public function rawGeo(OGCObject $geo)
+    {
+        return new Expression($this->geoFromText($geo));
+    }
+
     /**
      * Get the default schema grammar instance.
      *
