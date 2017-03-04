@@ -42,12 +42,20 @@ class MySqlConnection extends IlluminateMySqlConnection
         return $this->withTablePrefix(new MySqlGrammar);
     }
 
+    /**
+     * @param $raw_geo
+     * @return mixed
+     */
+    public function fromRawToWKB($raw_geo)
+    {
+        return $this->select('select ST_AsWKB(0x'.bin2hex($raw_geo).') as x')[0]->x;
+    }
 
     /**
      * @param OGCObject $geo
      * @return string
      */
-    protected function geoFromText(OGCObject $geo)
+    public function geoFromText(OGCObject $geo)
     {
         return "ST_GeomFromText('{$geo->toWKT()}')";
     }

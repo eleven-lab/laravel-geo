@@ -17,6 +17,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
         'geometrycollection'    => 'ElevenLab\PHPOGC\DataTypes\GeometryCollection'
     ];
 
+    public $tmp_geo = [];
+
     /**
      * Overriding the "booting" method of the model.
      *
@@ -85,9 +87,11 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 if( isset($model->$attrname) ){
 
                     if($model->$attrname instanceof Expression){
-                        $model->setAttribute( $attrname, $classname::fromWKT($model->$attrname) );
+                        $model->setAttribute( $attrname,  $model->tmp_geo[$attrname] );
+                        unset($model->tmp_geo[$attrname]);
 
                     }else if($model->$attrname instanceof $classname){
+                        $model->tmp_geo[$attrname] = $model->$attrname;
                         $model->setAttribute( $attrname,  \DB::rawGeo( $model->$attrname ));
 
                     }else{
@@ -106,6 +110,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     public function newFromBuilder($attributes = [], $connection = null)
     {
+        echo "new from builder\n";
         $model = parent::newFromBuilder($attributes, $connection);
         if( ! isset($model->geometries) ) return;
 
@@ -136,7 +141,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
         ){
             $geotype = self::getGeoType($this, $key);
             $classname = self::$geotypes[$geotype];
-            $this->setAttribute($key, $classname::fromWKB(parent::__get($key)));
+            $wkb = \DB::fromRawToWKB(parent::__get($key));
+            echo "wkb: $wkb\n";
+            $this->setAttribute($key, $classname::fromWKB($wkb)); // TODO: \DB::binaryToWKT? check postgres per vedere cosa outputta senza ST_AS*
         }
         return parent::__get($key);
     }

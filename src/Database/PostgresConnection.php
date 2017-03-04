@@ -44,10 +44,19 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
+     * @param $raw_geo
+     * @return mixed
+     */
+    public function fromRawToWKB($raw_geo)
+    {
+        return $raw_geo; // no need to manipulate, raw postgres geometry are WKB
+    }
+
+    /**
      * @param OGCObject $geo
      * @return string
      */
-    protected function geoFromText(OGCObject $geo)
+    public function geoFromText(OGCObject $geo)
     {
         return "ST_GeogFromText('{$geo->toWKT()}')";
     }
