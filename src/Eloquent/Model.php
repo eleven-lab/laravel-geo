@@ -110,7 +110,6 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     public function newFromBuilder($attributes = [], $connection = null)
     {
-        echo "new from builder\n";
         $model = parent::newFromBuilder($attributes, $connection);
         if( ! isset($model->geometries) ) return;
 
@@ -142,7 +141,6 @@ class Model extends \Illuminate\Database\Eloquent\Model
             $geotype = self::getGeoType($this, $key);
             $classname = self::$geotypes[$geotype];
             $wkb = \DB::fromRawToWKB(parent::__get($key));
-            echo "wkb: $wkb\n";
             $this->setAttribute($key, $classname::fromWKB($wkb)); // TODO: \DB::binaryToWKT? check postgres per vedere cosa outputta senza ST_AS*
         }
         return parent::__get($key);
