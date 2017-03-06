@@ -75,6 +75,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     public static function updateGeoAttributes($model)
     {
+        echo "updateGeoAttributes\n";
         if( ! isset($model->geometries) ) return;
 
         foreach($model->geometries as $geotype => $attrnames){
@@ -82,15 +83,20 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 throw new \Exception('Unknown geotype: ' . $geotype);
 
             $classname = static::$geotypes[$geotype];
+            echo "classname: $classname\n";
 
             foreach ($attrnames as $attrname){
+                echo "attrname: $attrname\n";
                 if( isset($model->$attrname) ){
+                    echo "isset true\n";
 
                     if($model->$attrname instanceof Expression){
+                        echo "expression\n";
                         $model->setAttribute( $attrname,  $model->tmp_geo[$attrname] );
                         unset($model->tmp_geo[$attrname]);
 
                     }else if($model->$attrname instanceof $classname){
+                        echo "classname\n";
                         $model->tmp_geo[$attrname] = $model->$attrname;
                         $model->setAttribute( $attrname,  \DB::rawGeo( $model->$attrname ));
 
@@ -132,16 +138,28 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     public function __get($key)
     {
+        echo "get\n";
         if(
             in_array($key, array_flatten($this->geometries)) &&     // if the attribute is a geometry
             ! parent::__get($key) instanceof OGCObject &&           // if it wasn't still converted to geo object
-            ! parent::__get($key) instanceof Expression &&          // if it is not in WKT form
+            ! parent::__get($key) instanceof Expression &&          // if it is not in DB Expression form
             parent::__get($key) != ""                               // if it is not empty
         ){
             $geotype = self::getGeoType($this, $key);
             $classname = self::$geotypes[$geotype];
-            $wkb = \DB::fromRawToWKB(parent::__get($key));
-            $this->setAttribute($key, $classname::fromWKB($wkb)); // TODO: \DB::binaryToWKT? check postgres per vedere cosa outputta senza ST_AS*
+            $data = parent::__get($key);
+
+            echo "$data\n";
+
+            if(!ctype_print($data)){ // if is binary, assuming that we just got from database
+                echo "binary\n";
+                $wkb = \DB::fromRawToWKB(parent::__get($key));
+                $this->setAttribute($key, $classname::fromWKB($wkb));
+
+            }else{ // assuming that it is in WKT
+                $this->setAttribute($key, $classname::fromWKT($data));
+            }
+
         }
         return parent::__get($key);
     }
