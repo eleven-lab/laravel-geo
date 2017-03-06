@@ -11,9 +11,9 @@
   ],
   "minimum-stability": "dev",
   "require": {
-      "php": ">=5.4.0",
-      "illuminate/database": "~5.0",
-      "elevenlab/php-ogc": "dev-master"
+    "php": ">=5.4.0",
+    "elevenlab/php-ogc": "dev-master",
+    "illuminate/database": "^5.4"
   },
   "require-dev": {
     "phpunit/phpunit": "4.0.*"
