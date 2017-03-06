@@ -3,12 +3,14 @@
 namespace ElevenLab\GeoLaravel\Database\Schema;
 
 if(version_compare(app()->version(), "5.2.31") < 0){
-    use Illuminate\Database\Schema\Builder as IlluminatePostgresBuilder;
-}else{
-    use Illuminate\Database\Schema\PostgresBuilder as IlluminatePostgresBuilder;
-}
+    class PostgresBuilder extends \Illuminate\Database\Schema\Builder
+    {
+        use GeoBuilder;
+    }
 
-class PostgresBuilder extends IlluminatePostgresBuilder
-{
-    use GeoBuilder;
+}else{
+    class PostgresBuilder extends \Illuminate\Database\Schema\PostgresBuilder
+    {
+        use GeoBuilder;
+    }
 }
