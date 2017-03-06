@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "016e8d4fb0bb5924412fc95532cc278f",
+    "content-hash": "044b4192d865ac2c429cff3e79feb907",
     "packages": [
         {
             "name": "creof/wkb-parser",
@@ -1007,7 +1007,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-02-09T06:32:56+00:00"
+            "time": "2015-02-09 06:32:56"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
