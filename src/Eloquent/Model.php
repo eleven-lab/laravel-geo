@@ -142,7 +142,12 @@ class Model extends \Illuminate\Database\Eloquent\Model
             $classname = self::$geotypes[$geotype];
             $data = parent::__get($key);
 
-            if(!ctype_print($data)){ // if is binary, assuming that we just got from database
+            # here we have 3 possible value for $data:
+            # 1) binary: we probably have a BLOB from MySQL
+            # 2) hex: PgSQL gives an hex WKB output for geo data
+            # 3) WKT: else
+            #
+            if(!ctype_print($data) or ctype_xdigit($data)){
                 $wkb = \DB::fromRawToWKB(parent::__get($key));
                 $this->setAttribute($key, $classname::fromWKB($wkb));
 
