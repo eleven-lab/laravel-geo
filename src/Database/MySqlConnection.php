@@ -178,6 +178,6 @@ class MySqlConnection extends IlluminateMySqlConnection
         $p2x = $to instanceof Point ? $to->lat : "ST_X($to)";
         $p2y = $to instanceof Point ? $to->lon : "ST_Y($to)";
         $query = "( 6378137 * acos( cos( radians($p1x) ) * cos( radians($p2x) ) * cos( radians($p2y) - radians($p1y) ) + sin( radians($p1x) ) * sin(radians($p2x) ) ) )";
-        return $this->raw($query . is_null($as) ? "" : " as $as");
+        return $this->raw($query . (is_null($as) ? "" : " as $as"));
     }
 }
