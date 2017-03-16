@@ -171,12 +171,13 @@ class MySqlConnection extends IlluminateMySqlConnection
      * @param $to
      * @return string
      */
-    public function queryDistance($from, $to)
+    public function queryDistance($from, $to, $as = null)
     {
         $p1x = $from instanceof Point ? $from->lat : "ST_X($from)";
         $p1y = $from instanceof Point ? $from->lon : "ST_Y($from)";
         $p2x = $to instanceof Point ? $to->lat : "ST_X($to)";
         $p2y = $to instanceof Point ? $to->lon : "ST_Y($to)";
-        return $this->raw("( 6378137 * acos( cos( radians($p1x) ) * cos( radians($p2x) ) * cos( radians($p2y) - radians($p1y) ) + sin( radians($p1x) ) * sin(radians($p2x) ) ) )");
+        $query = "( 6378137 * acos( cos( radians($p1x) ) * cos( radians($p2x) ) * cos( radians($p2y) - radians($p1y) ) + sin( radians($p1x) ) * sin(radians($p2x) ) ) )";
+        return $this->raw($query . is_null($as) ? "" : " as $as");
     }
 }
