@@ -155,4 +155,15 @@ class PostgresConnection extends IlluminatePostgresConnection
         $wkb_parser = new Parser;
         return OGCObject::buildOGCObject($wkb_parser->parse($difference));
     }
+
+    /**
+     * @param Point $p1
+     * @param Point $p2
+     * @return string
+     */
+    public function distance(Point $p1, Point $p2)
+    {
+        $distance = $this->select("select ST_distance_spheroid({$this->geoFromText($p1)}::geometry, {$this->geoFromText($p2)}::geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]') as distance")[0]->distance;
+        return round($distance);
+    }
 }

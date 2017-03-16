@@ -154,4 +154,15 @@ class MySqlConnection extends IlluminateMySqlConnection
         $wkb_parser = new Parser;
         return OGCObject::buildOGCObject($wkb_parser->parse($difference));
     }
+
+    /**
+     * @param Point $p1
+     * @param Point $p2
+     * @return string
+     */
+    public function distance(Point $p1, Point $p2)
+    {
+        $distance = $this->select("select ( 6371 * acos( cos( radians({$p1->lat}) ) * cos( radians( {$p2->lat} ) ) * cos( radians( {$p2->lon} ) - radians({$p1->lon}) ) + sin( radians({$p1->lat}) ) * sin(radians({$p2->lat}) ) ) ) AS distance")[0]->distance;
+        return bcmul($distance, 1000);
+    }
 }
