@@ -162,7 +162,21 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function distance(Point $p1, Point $p2)
     {
-        $distance = $this->select("select ( 6371 * acos( cos( radians({$p1->lat}) ) * cos( radians( {$p2->lat} ) ) * cos( radians( {$p2->lon} ) - radians({$p1->lon}) ) + sin( radians({$p1->lat}) ) * sin(radians({$p2->lat}) ) ) ) AS distance")[0]->distance;
-        return bcmul($distance, 1000);
+        $distance = $this->select("select " . $this->queryDistance($p1, $p2) . " as distance")[0]->distance;
+        return $distance;
+    }
+
+    /**
+     * @param $from
+     * @param $to
+     * @return string
+     */
+    public function queryDistance($from, $to)
+    {
+        $p1x = $from instanceof Point ? $from->lat : "ST_X($from)";
+        $p1y = $from instanceof Point ? $from->lon : "ST_Y($from)";
+        $p2x = $to instanceof Point ? $to->lat : "ST_X($to)";
+        $p2y = $to instanceof Point ? $to->lon : "ST_Y($to)";
+        return "( 6378137 * acos( cos( radians($p1x) ) * cos( radians($p2x) ) * cos( radians($p2y) - radians($p1y) ) + sin( radians($p1x) ) * sin(radians($p2x) ) ) )";
     }
 }
