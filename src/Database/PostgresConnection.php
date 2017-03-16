@@ -163,7 +163,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function distance(Point $p1, Point $p2)
     {
-        $distance = $this->select("select " . $this->queryDistance($p1, $p2) . " as distance")[0]->distance;
+        $distance = $this->select("select " . $this->queryDistance($p1, $p2)->getValue() . " as distance")[0]->distance;
         return $distance;
     }
 
@@ -176,6 +176,6 @@ class PostgresConnection extends IlluminatePostgresConnection
     {
         $p1 = $from instanceof Point ? $this->geoFromText($from) : $from ;
         $p2 = $to instanceof Point ? $this->geoFromText($to) : $to ;
-        return "ST_distance_spheroid($p1::geometry, $p2::geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]')";
+        return $this->raw("ST_distance_spheroid($p1::geometry, $p2::geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]')");
     }
 }
