@@ -8,8 +8,9 @@ use ElevenLab\PHPOGC\DataTypes\Point;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
 use Illuminate\Database\Query\Expression;
 use ElevenLab\GeoLaravel\Database\Schema\PostgresBuilder;
-use ElevenLab\GeoLaravel\Database\Schema\Grammars\PostgresGrammar;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
+use ElevenLab\GeoLaravel\Database\Query\Grammars\PostgresGrammar as PostgresQueryGrammar;
+use ElevenLab\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchemaGrammar;
 
 class PostgresConnection extends IlluminatePostgresConnection
 {
@@ -36,11 +37,21 @@ class PostgresConnection extends IlluminatePostgresConnection
     /**
      * Get the default schema grammar instance.
      *
-     * @return PostgresGrammar
+     * @return \Illuminate\Database\Grammar
      */
     protected function getDefaultSchemaGrammar()
     {
-        return $this->withTablePrefix(new PostgresGrammar);
+        return $this->withTablePrefix(new PostgresSchemaGrammar);
+    }
+
+    /**
+     * Get the default schema grammar instance.
+     *
+     * @return \Illuminate\Database\Grammar
+     */
+    protected function getDefaultQueryGrammar()
+    {
+        return $this->withTablePrefix(new PostgresQueryGrammar);
     }
 
     /**

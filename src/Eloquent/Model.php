@@ -2,10 +2,12 @@
 
 namespace ElevenLab\GeoLaravel\Eloquent;
 
+use ElevenLab\GeoLaravel\Database\Query\Builder;
 use ElevenLab\PHPOGC\OGCObject;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Database\Eloquent\Model as IlluminateModel;
 
-class Model extends \Illuminate\Database\Eloquent\Model
+class Model extends IlluminateModel
 {
     protected static $geotypes = [
         'points'                => 'ElevenLab\PHPOGC\DataTypes\Point',
@@ -43,6 +45,20 @@ class Model extends \Illuminate\Database\Eloquent\Model
         static::updated(function($model){
             self::updateGeoAttributes($model);
         });
+    }
+
+    /**
+     * Get a new custom query builder instance for the connection.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function newBaseQueryBuilder()
+    {
+        $conn = $this->getConnection();
+
+        $grammar = $conn->getQueryGrammar();
+
+        return new Builder($conn, $grammar, $conn->getPostProcessor());
     }
 
     /**
