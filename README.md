@@ -8,27 +8,12 @@
     - Postgres: Posgis extension Extensions (geometry types)
     - MySql: Extension for Spatial Data (geography types)
 
-### Installation
-##### Using composer
-1) Modify your composer.json to integrate the package
+### Installation & Configuration
 
-- add the requirement:
+1) Install using composer
 
-```json    
-"require": {
-    "lorenzogiust/geo-laravel": "~1.0"
-}
-```
-
-- add the repository:
-
-```json   
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/eleven-lab/laravel-geospatial"
-    }
-]
+```bash
+$ composer require elevenlab/laravel-geo
 ```
 
 2) Replace under the Service Providers section ('providers' array) in config/app.php this line
@@ -48,9 +33,6 @@ ElevenLab\GeoLaravel\DatabaseServiceProvider::class
 ```php
 'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
 ```
-    
-##### Manually
-TODO
 
 ### Quick Documentation
 
