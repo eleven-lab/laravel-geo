@@ -1,4 +1,4 @@
-### Features
+# Features
 - GeoSpatial integration on Laravel 5.2+:
     - Create geospatial columns using Schema and migrations
     - Save and retrieve geospatial attributes using directly OpenGeoConsortium Spatial Objects (this package depends from PHP-OGC)
@@ -8,7 +8,7 @@
     - Postgres: Posgis extension Extensions (geometry types)
     - MySql: Extension for Spatial Data (geography types)
 
-### Installation & Configuration
+# Installation & Configuration
 
 1) Install using composer
 
@@ -34,9 +34,9 @@ ElevenLab\GeoLaravel\DatabaseServiceProvider::class
 'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
 ```
 
-### Quick Documentation
+# Quick Documentation
 
-##### Create table with spatial references
+## Create table with spatial references
 To add a geospatial field to your migration you can use these methods:
 - point, multipoint linestring, multilinestring, polygon, multipolygon, geometrycollection
 
@@ -53,7 +53,7 @@ Schema::create('nations', function (Blueprint $table) {
     $table->linestring('highway');
 });
 ```
-##### Add spatial attributes to a Model
+## Add spatial attributes to a Model
 In order to handle dinamically geospatial attributes during CRUD operations, you need to:
 - substitute the Eloquent Model abstract object with a custom Model
 - define which attribute belongs to which geospatial type, defining the `$geometries` attribute
@@ -77,7 +77,7 @@ class Country extends GeoModel
 }
 ```
 
-##### Manipulate spatial attributes of a Model
+## Manipulate spatial attributes of a Model
 
 ```php
 <?php
@@ -114,7 +114,7 @@ echo get_class($italy->regions_capitals); // ElevenLab\PHPOGC\DataTypes\MultiPoi
 echo get_class($italy->highway); // ElevenLab\PHPOGC\DataTypes\LineString
 ```
 
-##### Builds queries
+## Builds queries
 
 There are two different groups of methods that are available, one to use the underlying database engine to perform spatial operations on existing objects, and another to build fluent queries and perform operations on database-resident data.
 
@@ -171,7 +171,7 @@ Given an illuminate Query Builder object, you can use:
 - orWhereNotOverlaps
 
 
-### ToDo
+# ToDo
 - improve documentation
     - add examples for "Build queries" section
     - add manual installation guide
