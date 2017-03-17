@@ -32,17 +32,22 @@
 ```
 
 2) Substitute under the Service Providers section ('providers' array) into your config/app.php this line
-    ```php
-    Illuminate\Database\DatabaseServiceProvider::class,
-    ```    
-    with this one:
-    ```php
-    ElevenLab\GeoLaravel\DatabaseServiceProvider::class
-    ```
+
+```php
+Illuminate\Database\DatabaseServiceProvider::class,
+```    
+
+with this one:
+
+```php
+ElevenLab\GeoLaravel\DatabaseServiceProvider::class
+```
+
 3) If you need it, under the Alias section ('aliases' array) into your config/app.php this line:
-    ```php
-    'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
-    ```
+
+```php
+'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
+```
     
 ##### Manually
 TODO
