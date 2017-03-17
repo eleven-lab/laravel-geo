@@ -59,7 +59,8 @@ To add a geospatial field to your migration you can use these methods:
 - point, multipoint linestring, multilinestring, polygon, multipolygon, geometrycollection
 
 Example (NB: the schema is over-semplified):
-```
+```php
+<?php
 Schema::create('nations', function (Blueprint $table) {
     $table->increments('id');
     $table->string('name');
@@ -192,4 +193,5 @@ Given an illuminate Query Builder object, you can use:
 - improve documentation
     - add examples for "Build queries" section
     - add manual installation guide
-- add missing ST_functions
+- add missing ST_functionsù
+- add unit tests
