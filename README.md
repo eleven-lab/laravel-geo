@@ -95,7 +95,9 @@ class Area extends GeoModel
 ```
 
 ##### Manipulate spatial attributes of a Model
+
 ```php
+<?php
 use ElevenLab\GeoLaravel\DataTypes\Point as Point;
 use ElevenLab\GeoLaravel\DataTypes\Linestring as Linestring;
 use ElevenLab\GeoLaravel\DataTypes\Polygon as Polygon;
@@ -134,32 +136,57 @@ echo get_class($italy->highway); // ElevenLab\PHPOGC\DataTypes\LineString
 There are two different groups of methods that are available, one to use the underlying database engine to perform spatial operations on existing objects, and another to build fluent queries and perform operations on database-resident data.
 
 Given two OGCObjects, you can perform those operations:
+
 - intersection
+
 - difference
+
 - contains
+
 - intersects
+
 - touches
+
 - overlaps
+
 - centroid
+
 - distance
 
 Given an illuminate Query Builder object, you can use:
+
 - whereContains
+
 - whereNotContains
+
 - orWhereContains
+
 - orWhereNotContains
+
 - whereIntersects
+
 - whereNotIntersects
+
 - orWhereIntersects
+
 - orWhereNotIntersects
+
 - whereTouches
+
 - whereNotTouches
+
 - orWhereTouches
+
 - orWhereNotTouches
+
 - whereOverlaps
+
 - whereNotOverlaps
+
 - orWhereOverlaps
+
 - orWhereNotOverlaps
+
 
 ### ToDo
 - improve documentation
