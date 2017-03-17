@@ -14,22 +14,22 @@
 
 - add the requirement:
 
-        ```json    
-        "require": {
-            "lorenzogiust/geo-laravel": "~1.0"
-        }
-        ```
+```json    
+"require": {
+    "lorenzogiust/geo-laravel": "~1.0"
+}
+```
 
 - add the repository:
 
-        ```json   
-        "repositories": [
-            {
-                "type": "vcs",
-                "url": "https://github.com/eleven-lab/laravel-geospatial"
-            }
-        ],
-        ```
+```json   
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/eleven-lab/laravel-geospatial"
+    }
+],
+```
 
 2) Substitute under the Service Providers section ('providers' array) into your config/app.php this line
     ```php
