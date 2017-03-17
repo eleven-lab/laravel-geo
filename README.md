@@ -28,7 +28,7 @@
         "type": "vcs",
         "url": "https://github.com/eleven-lab/laravel-geospatial"
     }
-],
+]
 ```
 
 2) Substitute under the Service Providers section ('providers' array) into your config/app.php this line
