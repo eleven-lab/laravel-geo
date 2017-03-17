@@ -3,7 +3,7 @@
     - Create geospatial columns using Schema and migrations
     - Save and retrieve geospatial attributes using directly OpenGeoConsortium Spatial Objects (this package depends from PHP-OGC)
     - Build spatial query directly with the laravel fluent query builder
-    - Supported types: Point, MultiPoint, Linestring, MultiLinestri, Polygon, MultiPolygon, GeometryCollection
+    - Supported types: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection
 - Supported drivers:
     - Postgres: Posgis extension Extensions (geometry types)
     - MySql: Extension for Spatial Data (geography types)
@@ -31,7 +31,7 @@
 ]
 ```
 
-2) Substitute under the Service Providers section ('providers' array) into your config/app.php this line
+2) Replace under the Service Providers section ('providers' array) in config/app.php this line
 
 ```php
 Illuminate\Database\DatabaseServiceProvider::class,
@@ -43,7 +43,7 @@ with this one:
 ElevenLab\GeoLaravel\DatabaseServiceProvider::class
 ```
 
-3) If you need it, under the Alias section ('aliases' array) into your config/app.php this line:
+3) If you need it, under the Alias section ('aliases' array) in config/app.php add this line:
 
 ```php
 'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
@@ -55,10 +55,10 @@ TODO
 ### Quick Documentation
 
 ##### Create table with spatial references
-Inside migrations you can use those methods:
+To add a geospatial field to your migration you can use these methods:
 - point, multipoint linestring, multilinestring, polygon, multipolygon, geometrycollection
 
-Let's see an example (NB: the schema is over-semplified)
+Example (NB: the schema is over-semplified):
 ```
 Schema::create('nations', function (Blueprint $table) {
     $table->increments('id');
@@ -80,9 +80,9 @@ In order to handle dinamically geospatial attributes during CRUD operations, you
 
 use ElevenLab\GeoLaravel\Eloquent\Model as GeoModel;
 
-class Area extends GeoModel
+class Country extends GeoModel
 {
-    protected $table = "nations";
+    protected $table = "countries";
 
     protected $geometries = [
         "polygons" =>   ['national_bounds'],
@@ -114,7 +114,7 @@ $molise = new LineString(getPointArrayOfMoliseBounds()); # raise MoliseNotFoundE
 $regions_bounds = new MultiPolygon([$lazio, $campania, $lombardia, ....]);
 $a1 = new LineString(getPointArrayOfA1());
 
-$italy = Nation::create([
+$italy = Country::create([
     'name' => 'Italy',
     'capital' => $rome,
     'national_bounds' => $italy_bounds,
@@ -123,7 +123,7 @@ $italy = Nation::create([
     'highway' => $a1
 ]);
 
-$italy = Nation::whereName('Italy')->first();
+$italy = Country::whereName('Italy')->first();
 echo get_class($italy->capital); // ElevenLab\PHPOGC\DataTypes\Point
 echo get_class($italy->national_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
 echo get_class($italy->regions_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
