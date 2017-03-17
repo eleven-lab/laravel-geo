@@ -13,6 +13,7 @@
 1) Modify your composer.json to integrate the package
 
 - add the requirement:
+
         ```json    
         "require": {
             "lorenzogiust/geo-laravel": "~1.0"
