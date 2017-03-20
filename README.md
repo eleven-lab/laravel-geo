@@ -8,6 +8,8 @@
     - Postgres: Posgis extension Extensions (geometry types)
     - MySql: Extension for Spatial Data (geography types)
 
+Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
+
 # Installation & Configuration
 
 1) Install using composer
