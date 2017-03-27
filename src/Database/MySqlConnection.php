@@ -110,7 +110,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function contains(Polygon $polygon, Point $point)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Contains({$this->geoFromText($polygon)},{$this->geoFromText($point)})) as contains")[0]->contains;
+        return (bool)$this->select("select ST_Contains({$this->geoFromText($polygon)},{$this->geoFromText($point)}) as contains")[0]->contains;
     }
 
     /**
@@ -120,7 +120,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Intersects({$this->geoFromText($geo1)},{$this->geoFromText($geo2)})) as intersects")[0]->intersects;
+        return (bool)$this->select("select ST_Intersects({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as intersects")[0]->intersects;
     }
 
     /**
@@ -130,7 +130,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Touches({$this->geoFromText($geo1)},{$this->geoFromText($geo2)})) as touches")[0]->touches;
+        return (bool)$this->select("select ST_Touches({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as touches")[0]->touches;
     }
 
     /**
@@ -140,7 +140,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Overlaps({$this->geoFromText($geo1)},{$this->geoFromText($geo2)})) as overlaps")[0]->overlaps;
+        return (bool)$this->select("select ST_Overlaps({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as overlaps")[0]->overlaps;
     }
 
     /**

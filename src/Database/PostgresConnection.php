@@ -111,7 +111,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function contains(Polygon $polygon, Point $point)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Contains({$this->geoFromText($polygon)}::geometry,{$this->geoFromText($point)}::geometry)) as contains")[0]->contains;
+        return (bool)$this->select("select ST_Contains({$this->geoFromText($polygon)}::geometry,{$this->geoFromText($point)}::geometry) as contains")[0]->contains;
     }
 
     /**
@@ -121,7 +121,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Intersects({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as intersects")[0]->intersects;
+        return (bool)$this->select("select ST_Intersects({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as intersects")[0]->intersects;
     }
 
     /**
@@ -131,7 +131,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Touches({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as touches")[0]->touches;
+        return (bool)$this->select("select ST_Touches({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as touches")[0]->touches;
     }
 
     /**
@@ -141,7 +141,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_AsBinary(ST_Overlaps({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as overlaps")[0]->overlaps;
+        return (bool)$this->select("select ST_Overlaps({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as overlaps")[0]->overlaps;
     }
 
     /**
