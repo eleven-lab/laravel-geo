@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model as IlluminateModel;
 
 class Model extends IlluminateModel
 {
+    protected $geometries = [];
+
     protected static $geotypes = [
         'points'                => 'ElevenLab\PHPOGC\DataTypes\Point',
         'multipoints'           => 'ElevenLab\PHPOGC\DataTypes\MultiPoints',
