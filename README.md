@@ -58,7 +58,7 @@ Schema::create('nations', function (Blueprint $table) {
 ## Add spatial attributes to a Model
 In order to handle dinamically geospatial attributes during CRUD operations, you need to:
 - substitute the Eloquent Model abstract object with a custom Model
-- define which attribute belongs to which geospatial type, defining the `$geometries` attribute
+- define which attribute belongs to which geospatial type, defining the `$geometries` attribute (you can find [here](https://github.com/eleven-lab/laravel-geo/blob/master/src/Eloquent/Model.php#L15-L21) the available types)
 
 ```php
 <?php namespace App;
@@ -71,10 +71,10 @@ class Country extends GeoModel
 
     protected $geometries = [
         "polygons" =>   ['national_bounds'],
-        "point" => ['capital'],
-        "multipolygon" => ['regions_bounds'],
-        "multipoint" => ['regions_capitals'],
-        "linestring" => ['highway']
+        "points" => ['capital'],
+        "multipolygons" => ['regions_bounds'],
+        "multipoints" => ['regions_capitals'],
+        "linestrings" => ['highway']
     ];
 }
 ```
