@@ -85,7 +85,7 @@ class PostgresConnection extends IlluminatePostgresConnection
             return null;
 
         $wkb_parser = new Parser;
-        return OGCObject::buildOGCObject($wkb_parser->parse($intersection));
+        return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($intersection)));
     }
 
     /**
@@ -101,7 +101,7 @@ class PostgresConnection extends IlluminatePostgresConnection
             return null;
 
         $wkb_parser = new Parser;
-        return OGCObject::buildOGCObject($wkb_parser->parse($difference));
+        return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($difference)));
     }
 
     /**
@@ -153,7 +153,7 @@ class PostgresConnection extends IlluminatePostgresConnection
         $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)}::geometry)) as centroid")[0]->centroid;
 
         $wkb_parser = new Parser;
-        return OGCObject::buildOGCObject($wkb_parser->parse($difference));
+        return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($difference)));
     }
 
     /**
