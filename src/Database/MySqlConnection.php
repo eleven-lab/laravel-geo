@@ -149,7 +149,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function centroid(Polygon $polygon)
     {
-        $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)}) as centroid")[0]->centroid;
+        $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)})) as centroid")[0]->centroid;
 
         $wkb_parser = new Parser;
         return OGCObject::buildOGCObject($wkb_parser->parse($difference));
