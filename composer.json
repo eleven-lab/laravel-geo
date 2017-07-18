@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.4.0",
-    "illuminate/database": "^5.2",
+    "illuminate/database": "~5.2.0",
     "elevenlab/php-ogc": "^1.0"
   },
   "require-dev": {
