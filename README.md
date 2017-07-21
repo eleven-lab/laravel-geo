@@ -138,7 +138,17 @@ Given two OGCObjects, you can perform those operations:
 
 - distance
 
+- equals
+
 Given an illuminate Query Builder object, you can use:
+
+- whereEquals
+
+- whereNotEquals
+
+- orWhereEquals
+
+- orWhereNotEquals
 
 - whereContains
 
