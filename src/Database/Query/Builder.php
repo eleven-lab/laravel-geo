@@ -7,6 +7,53 @@ use Illuminate\Database\Query\Builder as IlluminateBuilder;
 
 class Builder extends IlluminateBuilder
 {
+
+    /**
+     * @param $column
+     * @param $value
+     * @param bool $not
+     * @param string $boolean
+     * @return $this
+     */
+    public function whereEquals($column, OGCObject $value, $boolean = 'and', $not = false)
+    {
+        $type = $not ? 'NotEquals' : 'Equals';
+
+        $this->wheres[] = compact('type', 'column', 'value', 'boolean');
+
+        return $this;
+    }
+
+    /**
+     * @param $column
+     * @param OGCObject $value
+     * @return Builder
+     */
+    public function whereNotEquals($column, OGCObject $value)
+    {
+        return $this->whereEquals($column, $value, 'and', true);
+    }
+
+    /**
+     * @param $column
+     * @param OGCObject $value
+     * @return Builder
+     */
+    public function orWhereEquals($column, OGCObject $value)
+    {
+        return $this->whereEquals($column, $value, 'or');
+    }
+
+    /**
+     * @param $column
+     * @param OGCObject $value
+     * @return Builder
+     */
+    public function orWhereNotEquals($column, OGCObject $value)
+    {
+        return $this->whereEquals($column, $value, 'or', true);
+    }
+
     /**
      * @param $column
      * @param $value

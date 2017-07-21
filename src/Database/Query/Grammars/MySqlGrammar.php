@@ -7,6 +7,28 @@ use Illuminate\Database\Query\Grammars\MySqlGrammar as IlluminateMySqlGrammar;
 
 class MySqlGrammar extends IlluminateMySqlGrammar
 {
+
+    /**
+     * @param Builder $query
+     * @param $where
+     * @return string
+     */
+    public function whereEquals(Builder $query, $where)
+    {
+        return "ST_Equals({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+    }
+
+    /**
+     * @param Builder $query
+     * @param $where
+     * @return string
+     */
+    public function whereNotEquals(Builder $query, $where)
+    {
+        return "not " . $this->whereEquals($query, $where);
+    }
+
+
     /**
      * @param Builder $query
      * @param $where

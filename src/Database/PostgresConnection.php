@@ -168,6 +168,16 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
+     * @param OGCObject $g1
+     * @param OGCObject $g2
+     * @return bool
+     */
+    public function equals(OGCObject $g1, OGCObject $g2)
+    {
+        return (bool)$this->select("select ST_Equals({$this->geoFromText($g1)}::geometry,{$this->geoFromText($g2)}::geometry) as equals")[0]->equals;
+    }
+
+    /**
      * @param $from
      * @param $to
      * @return string

@@ -7,6 +7,27 @@ use Illuminate\Database\Query\Grammars\PostgresGrammar as IlluminatePostgresGram
 
 class PostgresGrammar extends IlluminatePostgresGrammar
 {
+
+    /**
+     * @param Builder $query
+     * @param $where
+     * @return string
+     */
+    public function whereEquals(Builder $query, $where)
+    {
+        return "ST_Equals({$this->wrap($where['column'])}::geometry, " . app('db.connection')->geoFromText($where['value']) . "::geometry)";
+    }
+
+    /**
+     * @param Builder $query
+     * @param $where
+     * @return string
+     */
+    public function whereNotEquals(Builder $query, $where)
+    {
+        return "not " . $this->whereEquals($query, $where);
+    }
+
     /**
      * @param Builder $query
      * @param $where
