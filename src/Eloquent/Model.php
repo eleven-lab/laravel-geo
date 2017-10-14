@@ -110,7 +110,7 @@ class Model extends IlluminateModel
 
                     }else if($model->$attrname instanceof $classname){
                         $model->tmp_geo[$attrname] = $model->$attrname;
-                        $model->setAttribute( $attrname,  \DB::rawGeo( $model->$attrname ));
+                        $model->setAttribute( $attrname,  $this->getConnection()->rawGeo( $model->$attrname ));
 
                     }else{
                         throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
@@ -166,7 +166,7 @@ class Model extends IlluminateModel
             # 3) WKT: else
             #
             if(!ctype_print($data) or ctype_xdigit($data)){
-                $wkb = \DB::fromRawToWKB(parent::__get($key));
+                $wkb = $this->getConnection()->fromRawToWKB(parent::__get($key));
                 $this->setAttribute($key, $classname::fromWKB($wkb));
 
             }else{ // assuming that it is in WKT
