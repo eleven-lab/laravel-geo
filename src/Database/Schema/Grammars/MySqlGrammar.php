@@ -18,7 +18,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typePoint(Fluent $column)
+    public function typePoint(Fluent $column)
     {
         return $column->type;
     }
@@ -29,7 +29,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeMultipoint(Fluent $column)
+    public function typeMultipoint(Fluent $column)
     {
         return $column->type;
     }
@@ -40,7 +40,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeLinestring(Fluent $column)
+    public function typeLinestring(Fluent $column)
     {
         return $column->type;
     }
@@ -51,7 +51,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typePolygon(Fluent $column)
+    public function typePolygon(Fluent $column)
     {
         return $column->type;
     }
@@ -62,7 +62,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeMultipolygon(Fluent $column)
+    public function typeMultipolygon(Fluent $column)
     {
         return $column->type;
     }
@@ -73,7 +73,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeGeometrycollection(Fluent $column)
+    public function typeGeometrycollection(Fluent $column)
     {
         return $column->type;
     }
@@ -84,7 +84,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeGeometry(Fluent $column)
+    public function typeGeometry(Fluent $column)
     {
         return $column->type;
     }
