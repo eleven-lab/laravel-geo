@@ -26,10 +26,8 @@ trait GeoTrait
      *
      * @return void
      */
-    protected static function boot()
+    protected static function bootGeoTrait()
     {
-        parent::boot();
-
         static::creating(function($model){
             self::updateGeoAttributes($model);
         });
