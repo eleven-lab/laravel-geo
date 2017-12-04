@@ -13,7 +13,7 @@ class Model extends IlluminateModel
 
     protected static $geotypes = [
         'points'                => 'ElevenLab\PHPOGC\DataTypes\Point',
-        'multipoints'           => 'ElevenLab\PHPOGC\DataTypes\MultiPoints',
+        'multipoints'           => 'ElevenLab\PHPOGC\DataTypes\MultiPoint',
         'linestrings'           => 'ElevenLab\PHPOGC\DataTypes\LineString',
         'multilinestrings'      => 'ElevenLab\PHPOGC\DataTypes\MultiLineString',
         'polygons'              => 'ElevenLab\PHPOGC\DataTypes\Polygon',
