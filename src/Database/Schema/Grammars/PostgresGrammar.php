@@ -85,12 +85,12 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeGeometry(Fluent $column)
     {
-        throw new \Exception('Geometry data type not supported for current database engine.');
+        return $this->formatPostGisType($column->type);
     }
 
 
     private function formatPostGisType($type)
     {
-        return "GEOGRAPHY($type, 4326)";
+        return "GEOMETRY($type, 4326)";
     }
 }
