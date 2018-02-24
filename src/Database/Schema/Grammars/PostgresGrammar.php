@@ -91,6 +91,8 @@ class PostgresGrammar extends IlluminatePostgresGrammar
 
     private function formatPostGisType($type)
     {
-        return "GEOMETRY($type, 4326)";
+        $srid = config('geo.srid', 4326);
+        $column_type = config('geo.geometry', true) ? 'GEOMETRY' : 'GEOGRAPHY';
+        return "$column_type($type, $srid)";
     }
 }

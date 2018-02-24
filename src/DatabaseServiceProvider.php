@@ -14,12 +14,33 @@ use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProv
 class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
 {
     /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        parent::boot();
+
+        $configPath = __DIR__ . '/../config/geo.php';
+        if (function_exists('config_path')) {
+            $publishPath = config_path('geo.php');
+        } else {
+            $publishPath = base_path('config/geo.php');
+        }
+        $this->publishes([$configPath => $publishPath], 'config');
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
+        $configPath = __DIR__ . '/../config/geo.php';
+        $this->mergeConfigFrom($configPath, 'geo');
+
         Model::clearBootedModels();
 
         $this->registerEloquentFactory();

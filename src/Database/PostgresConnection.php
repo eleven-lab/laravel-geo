@@ -69,7 +69,12 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function geoFromText(OGCObject $geo)
     {
-        return "ST_GeomFromText('{$geo->toWKT()}', 4326)";
+        if (config('geo.geometry', true)) {
+            $srid = config('geo.srid', 4326);
+            return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
+        }
+
+        return "ST_GeogFromText('{$geo->toWKT()}')";
     }
 
     /**
