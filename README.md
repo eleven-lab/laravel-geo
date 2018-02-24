@@ -1,3 +1,8 @@
+# Geo Laravel
+This is a fork from [elevenlab/laravel-geo](https://github.com/eleven-lab/laravel-geo) with some modifications for compatibility with Laravel 5.4+
+
+> Note: In this version geometry column type is used for PostGIS instead of geography
+
 # Features
 - GeoSpatial integration on Laravel 5.2+:
     - Create geospatial columns using Schema and migrations
@@ -8,32 +13,32 @@
     - Postgres: Posgis extension Extensions (geometry types)
     - MySql: Extension for Spatial Data (geography types)
 
-Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
+Thanks to [laravel-postgis](https://github.com/njbarrett/laravel-postgis) for its original work.
 
 # Installation & Configuration
 
 1) Install using composer
 
 ```bash
-$ composer require elevenlab/laravel-geo
+$ composer require karomap/laravel-geo
 ```
 
 2) Replace under the Service Providers section ('providers' array) in config/app.php this line
 
 ```php
 Illuminate\Database\DatabaseServiceProvider::class,
-```    
+```
 
 with this one:
 
 ```php
-ElevenLab\GeoLaravel\DatabaseServiceProvider::class
+Karomap\GeoLaravel\DatabaseServiceProvider::class
 ```
 
 3) If you need it, under the Alias section ('aliases' array) in config/app.php add this line:
 
 ```php
-'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
+'GeoModel'      => Karomap\GeoLaravel\Eloquent\Model::class,
 ```
 
 # Quick Documentation
@@ -187,5 +192,5 @@ Given an illuminate Query Builder object, you can use:
 - improve documentation
     - add examples for "Build queries" section
     - add manual installation guide
-- add missing ST_functionsù
+- add missing ST_functions
 - add unit tests

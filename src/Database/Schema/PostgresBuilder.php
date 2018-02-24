@@ -1,6 +1,6 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database\Schema;
+namespace Karomap\GeoLaravel\Database\Schema;
 
 class PostgresBuilder extends \Illuminate\Database\Schema\Builder
 {

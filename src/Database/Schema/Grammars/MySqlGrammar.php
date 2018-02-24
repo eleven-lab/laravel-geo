@@ -1,6 +1,6 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database\Schema\Grammars;
+namespace Karomap\GeoLaravel\Database\Schema\Grammars;
 
 use Illuminate\Support\Fluent;
 use Illuminate\Database\Schema\Grammars\MySqlGrammar as IlluminateMySqlGrammar;

@@ -1,8 +1,8 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database\Query\Grammars;
+namespace Karomap\GeoLaravel\Database\Query\Grammars;
 
-use ElevenLab\GeoLaravel\Database\Query\Builder;
+use Karomap\GeoLaravel\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar as IlluminatePostgresGrammar;
 
 class PostgresGrammar extends IlluminatePostgresGrammar

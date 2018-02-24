@@ -7,7 +7,7 @@
  */
 
 
-namespace ElevenLab\GeoLaravel\Exceptions;
+namespace Karomap\GeoLaravel\Exceptions;
 
 
 class GeoException extends \Exception{

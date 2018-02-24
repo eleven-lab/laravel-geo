@@ -1,16 +1,16 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database;
+namespace Karomap\GeoLaravel\Database;
 
 use CrEOF\Geo\WKB\Parser;
 use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\PHPOGC\DataTypes\Point;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
 use Illuminate\Database\Query\Expression;
-use ElevenLab\GeoLaravel\Database\Schema\MySqlBuilder;
+use Karomap\GeoLaravel\Database\Schema\MySqlBuilder;
 use \Illuminate\Database\MySqlConnection as IlluminateMySqlConnection;
-use ElevenLab\GeoLaravel\Database\Query\Grammars\MySqlGrammar as MysqlQueryGrammar;
-use ElevenLab\GeoLaravel\Database\Schema\Grammars\MySqlGrammar as MysqlSchemaGrammar;
+use Karomap\GeoLaravel\Database\Query\Grammars\MySqlGrammar as MysqlQueryGrammar;
+use Karomap\GeoLaravel\Database\Schema\Grammars\MySqlGrammar as MysqlSchemaGrammar;
 
 class MySqlConnection extends IlluminateMySqlConnection
 {

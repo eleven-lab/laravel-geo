@@ -1,9 +1,9 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database\Connectors;
+namespace Karomap\GeoLaravel\Database\Connectors;
 
-use ElevenLab\GeoLaravel\Database\MySqlConnection;
-use ElevenLab\GeoLaravel\Database\PostgresConnection;
+use Karomap\GeoLaravel\Database\MySqlConnection;
+use Karomap\GeoLaravel\Database\PostgresConnection;
 use Illuminate\Database\Connectors\ConnectionFactory as IlluminateConnectionFactory;
 
 class ConnectionFactory extends IlluminateConnectionFactory

@@ -1,10 +1,10 @@
 <?php
 
-namespace ElevenLab\GeoLaravel;
+namespace Karomap\GeoLaravel;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\DatabaseManager;
-use ElevenLab\GeoLaravel\Database\Connectors\ConnectionFactory;
+use Karomap\GeoLaravel\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
 
 /**

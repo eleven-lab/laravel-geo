@@ -1,8 +1,8 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Eloquent;
+namespace Karomap\GeoLaravel\Eloquent;
 
-use ElevenLab\GeoLaravel\Database\Query\Builder;
+use Karomap\GeoLaravel\Database\Query\Builder;
 use ElevenLab\PHPOGC\OGCObject;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;

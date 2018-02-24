@@ -1,6 +1,6 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database\Query;
+namespace Karomap\GeoLaravel\Database\Query;
 
 use ElevenLab\PHPOGC\OGCObject;
 use Illuminate\Database\Query\Builder as IlluminateBuilder;

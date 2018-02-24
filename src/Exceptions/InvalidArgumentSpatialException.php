@@ -7,7 +7,7 @@
  */
 
 
-namespace ElevenLab\GeoLaravel\Exceptions;
+namespace Karomap\GeoLaravel\Exceptions;
 
 
 class InvalidArgumentSpatialException extends \Exception{

@@ -1,16 +1,16 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database;
+namespace Karomap\GeoLaravel\Database;
 
 use CrEOF\Geo\WKB\Parser;
 use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\PHPOGC\DataTypes\Point;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
 use Illuminate\Database\Query\Expression;
-use ElevenLab\GeoLaravel\Database\Schema\PostgresBuilder;
+use Karomap\GeoLaravel\Database\Schema\PostgresBuilder;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
-use ElevenLab\GeoLaravel\Database\Query\Grammars\PostgresGrammar as PostgresQueryGrammar;
-use ElevenLab\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchemaGrammar;
+use Karomap\GeoLaravel\Database\Query\Grammars\PostgresGrammar as PostgresQueryGrammar;
+use Karomap\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchemaGrammar;
 
 class PostgresConnection extends IlluminatePostgresConnection
 {

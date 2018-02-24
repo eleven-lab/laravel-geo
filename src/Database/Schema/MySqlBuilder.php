@@ -1,6 +1,6 @@
 <?php
 
-namespace ElevenLab\GeoLaravel\Database\Schema;
+namespace Karomap\GeoLaravel\Database\Schema;
 
 use Illuminate\Database\Schema\MySqlBuilder as IlluminateMySqlBuilder;
 
