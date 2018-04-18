@@ -1,12 +1,12 @@
 {
-  "name": "anilahir/laravel-geo",
+  "name": "elevenlab/laravel-geo",
   "description": "Spatial OGC objects integration for Laravel 5.*",
   "license": "GNU GPL v3.0",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
   "authors": [
     {
-      "name": "Anil Ahir",
-      "email": "anil220.306@gmail.com"
+      "name": "Lorenzo Giustozzi",
+      "email": "giustozzi@lorenzo.im"
     }
   ],
   "minimum-stability": "stable",
