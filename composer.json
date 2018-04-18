@@ -1,7 +1,7 @@
 {
   "name": "anilahir/laravel-geo",
   "description": "Spatial OGC objects integration for Laravel 5.*",
-  "license": "MIT",
+  "license": "GNU GPL v3.0",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
   "authors": [
     {
