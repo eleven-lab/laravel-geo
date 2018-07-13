@@ -14,7 +14,7 @@ class Blueprint extends IlluminateBlueprint
      * @param $column
      * @return \Illuminate\Support\Fluent
      */
-    public function point($column)
+    public function point($column, $srid = null)
     {
         return $this->addColumn('point', $column);
     }
