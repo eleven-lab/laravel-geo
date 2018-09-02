@@ -3,11 +3,11 @@
 namespace Karomap\GeoLaravel\Eloquent;
 
 use CrEOF\Geo\WKT\Parser as WKTParser;
-use ElevenLab\PHPOGC\OGCObject;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
 use Illuminate\Database\Query\Expression;
 use Karomap\GeoLaravel\Database\Query\Builder;
 use Karomap\GeoLaravel\Exceptions\GeoException;
+use Karomap\PHPOGC\OGCObject;
 
 class Model extends IlluminateModel
 {
@@ -24,13 +24,13 @@ class Model extends IlluminateModel
      * @var array
      */
     protected static $geoTypes = [
-        'points'                => 'ElevenLab\PHPOGC\DataTypes\Point',
-        'multipoints'           => 'ElevenLab\PHPOGC\DataTypes\MultiPoint',
-        'linestrings'           => 'ElevenLab\PHPOGC\DataTypes\LineString',
-        'multilinestrings'      => 'ElevenLab\PHPOGC\DataTypes\MultiLineString',
-        'polygons'              => 'ElevenLab\PHPOGC\DataTypes\Polygon',
-        'multipolygons'         => 'ElevenLab\PHPOGC\DataTypes\MultiPolygon',
-        'geometrycollection'    => 'ElevenLab\PHPOGC\DataTypes\GeometryCollection',
+        'points'                => 'Karomap\PHPOGC\DataTypes\Point',
+        'multipoints'           => 'Karomap\PHPOGC\DataTypes\MultiPoint',
+        'linestrings'           => 'Karomap\PHPOGC\DataTypes\LineString',
+        'multilinestrings'      => 'Karomap\PHPOGC\DataTypes\MultiLineString',
+        'polygons'              => 'Karomap\PHPOGC\DataTypes\Polygon',
+        'multipolygons'         => 'Karomap\PHPOGC\DataTypes\MultiPolygon',
+        'geometrycollection'    => 'Karomap\PHPOGC\DataTypes\GeometryCollection',
     ];
 
     /**
@@ -281,7 +281,7 @@ class Model extends IlluminateModel
     /**
      * Convert model to GeoJSON feature.
      *
-     * @param  \ElevenLab\PHPOGC\OGCObject $ogc  Geometry attribute to convert.
+     * @param  \Karomap\PHPOGC\OGCObject $ogc  Geometry attribute to convert.
      * @param  array $properties  GeoJSON properties as array.
      * @return array  GeoJSON feature as array.
      */

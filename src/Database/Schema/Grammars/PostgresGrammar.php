@@ -2,8 +2,8 @@
 
 namespace Karomap\GeoLaravel\Database\Schema\Grammars;
 
-use Illuminate\Support\Fluent;
 use Illuminate\Database\Schema\Grammars\PostgresGrammar as IlluminatePostgresGrammar;
+use Illuminate\Support\Fluent;
 
 /**
  * Extended version of MySqlGrammar with

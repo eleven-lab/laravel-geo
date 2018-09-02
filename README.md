@@ -63,12 +63,12 @@ Schema::create('nations', function (Blueprint $table) {
 ## Add spatial attributes to a Model
 In order to handle dinamically geospatial attributes during CRUD operations, you need to:
 - substitute the Eloquent Model abstract object with a custom Model
-- define which attribute belongs to which geospatial type, defining the `$geometries` attribute (you can find [here](https://github.com/eleven-lab/laravel-geo/blob/master/src/Eloquent/Model.php#L15-L21) the available types)
+- define which attribute belongs to which geospatial type, defining the `$geometries` attribute (you can find [here](https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L15-L21) the available types)
 
 ```php
 <?php namespace App;
 
-use ElevenLab\GeoLaravel\Eloquent\Model as GeoModel;
+use Karomap\GeoLaravel\Eloquent\Model as GeoModel;
 
 class Country extends GeoModel
 {
@@ -88,9 +88,9 @@ class Country extends GeoModel
 
 ```php
 <?php
-use ElevenLab\GeoLaravel\DataTypes\Point as Point;
-use ElevenLab\GeoLaravel\DataTypes\Linestring as Linestring;
-use ElevenLab\GeoLaravel\DataTypes\Polygon as Polygon;
+use Karomap\PHPOGC\DataTypes\Point as Point;
+use Karomap\PHPOGC\DataTypes\Linestring as Linestring;
+use Karomap\PHPOGC\DataTypes\Polygon as Polygon;
 
 $rome = new Point(41.9102415,12.3959149);
 $milan = new Point(45.4628328,9.1076927);
@@ -114,11 +114,11 @@ $italy = Country::create([
 ]);
 
 $italy = Country::whereName('Italy')->first();
-echo get_class($italy->capital); // ElevenLab\PHPOGC\DataTypes\Point
-echo get_class($italy->national_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
-echo get_class($italy->regions_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
-echo get_class($italy->regions_capitals); // ElevenLab\PHPOGC\DataTypes\MultiPoint
-echo get_class($italy->highway); // ElevenLab\PHPOGC\DataTypes\LineString
+echo get_class($italy->capital); // Karomap\PHPOGC\DataTypes\Point
+echo get_class($italy->national_bounds); // Karomap\PHPOGC\DataTypes\Polygon
+echo get_class($italy->regions_bounds); // Karomap\PHPOGC\DataTypes\Polygon
+echo get_class($italy->regions_capitals); // Karomap\PHPOGC\DataTypes\MultiPoint
+echo get_class($italy->highway); // Karomap\PHPOGC\DataTypes\LineString
 ```
 
 ## Builds queries

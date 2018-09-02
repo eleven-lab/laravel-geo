@@ -1,4 +1,6 @@
-<?php namespace Karomap\GeoLaravel\Database\Schema;
+<?php
+
+namespace Karomap\GeoLaravel\Database\Schema;
 
 use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 

@@ -2,10 +2,10 @@
 
 namespace Karomap\GeoLaravel;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\DatabaseManager;
-use Karomap\GeoLaravel\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
+use Illuminate\Database\Eloquent\Model;
+use Karomap\GeoLaravel\Database\Connectors\ConnectionFactory;
 
 class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
 {

@@ -2,8 +2,8 @@
 
 namespace Karomap\GeoLaravel\Database\Query\Grammars;
 
-use Karomap\GeoLaravel\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\MySqlGrammar as IlluminateMySqlGrammar;
+use Karomap\GeoLaravel\Database\Query\Builder;
 
 class MySqlGrammar extends IlluminateMySqlGrammar
 {

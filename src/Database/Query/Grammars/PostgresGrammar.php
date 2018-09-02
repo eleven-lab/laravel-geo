@@ -2,8 +2,8 @@
 
 namespace Karomap\GeoLaravel\Database\Query\Grammars;
 
-use Karomap\GeoLaravel\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar as IlluminatePostgresGrammar;
+use Karomap\GeoLaravel\Database\Query\Builder;
 
 class PostgresGrammar extends IlluminatePostgresGrammar
 {

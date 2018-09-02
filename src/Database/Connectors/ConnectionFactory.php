@@ -2,9 +2,9 @@
 
 namespace Karomap\GeoLaravel\Database\Connectors;
 
+use Illuminate\Database\Connectors\ConnectionFactory as IlluminateConnectionFactory;
 use Karomap\GeoLaravel\Database\MySqlConnection;
 use Karomap\GeoLaravel\Database\PostgresConnection;
-use Illuminate\Database\Connectors\ConnectionFactory as IlluminateConnectionFactory;
 
 class ConnectionFactory extends IlluminateConnectionFactory
 {
