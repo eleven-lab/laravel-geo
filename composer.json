@@ -9,11 +9,11 @@
             "email": "giustozzi@lorenzo.im"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
         "illuminate/database": "^5.2",
-        "elevenlab/php-ogc": "^1.0"
+        "karomap/php-ogc": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
