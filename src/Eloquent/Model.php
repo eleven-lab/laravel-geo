@@ -2,29 +2,53 @@
 
 namespace Karomap\GeoLaravel\Eloquent;
 
-use Karomap\GeoLaravel\Database\Query\Builder;
+use CrEOF\Geo\WKT\Parser as WKTParser;
 use ElevenLab\PHPOGC\OGCObject;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
+use Illuminate\Database\Query\Expression;
+use Karomap\GeoLaravel\Database\Query\Builder;
+use Karomap\GeoLaravel\Exceptions\GeoException;
 
 class Model extends IlluminateModel
 {
+    /**
+     * Geometry attributes definitions.
+     *
+     * @var array
+     */
     protected $geometries = [];
 
-    protected static $geotypes = [
+    /**
+     * Geometry type class map.
+     *
+     * @var array
+     */
+    protected static $geoTypes = [
         'points'                => 'ElevenLab\PHPOGC\DataTypes\Point',
         'multipoints'           => 'ElevenLab\PHPOGC\DataTypes\MultiPoint',
         'linestrings'           => 'ElevenLab\PHPOGC\DataTypes\LineString',
         'multilinestrings'      => 'ElevenLab\PHPOGC\DataTypes\MultiLineString',
         'polygons'              => 'ElevenLab\PHPOGC\DataTypes\Polygon',
         'multipolygons'         => 'ElevenLab\PHPOGC\DataTypes\MultiPolygon',
-        'geometrycollection'    => 'ElevenLab\PHPOGC\DataTypes\GeometryCollection'
+        'geometrycollection'    => 'ElevenLab\PHPOGC\DataTypes\GeometryCollection',
     ];
 
-    public $tmp_geo = [];
+    /**
+     * Temporary storage.
+     *
+     * @var array
+     */
+    public $tmpGeo = [];
 
     /**
-     * Overriding the "booting" method of the model.
+     * WKT Parser.
+     *
+     * @var \CrEOF\Geo\WKT\Parser
+     */
+    protected $wktParser;
+
+    /**
+     * Override the "boot" method of the model.
      *
      * @return void
      */
@@ -32,19 +56,19 @@ class Model extends IlluminateModel
     {
         parent::boot();
 
-        static::creating(function($model){
+        static::creating(function($model) {
             self::updateGeoAttributes($model);
         });
 
-        static::created(function($model){
+        static::created(function($model) {
             self::updateGeoAttributes($model);
         });
 
-        static::updating(function($model){
+        static::updating(function($model) {
             self::updateGeoAttributes($model);
         });
 
-        static::updated(function($model){
+        static::updated(function($model) {
             self::updateGeoAttributes($model);
         });
     }
@@ -64,55 +88,64 @@ class Model extends IlluminateModel
     }
 
     /**
-     * @param $geotype
+     * Validate geometry type.
+     *
+     * @param  string  $geotype
      * @return bool
      */
     private static function isValidGeotype($geotype)
     {
-        return (in_array($geotype, array_keys(static::$geotypes)));
+        return (in_array($geotype, array_keys(static::$geoTypes)));
     }
 
     /**
-     * @param $model
-     * @param $attribute
+     * Get geometry type of an attribute.
+     *
+     * @param  \Karomap\GeoLaravel\Eloquent\Model  $model
+     * @param  string  $attribute
      * @return mixed
+     *
      * @throws \Exception
      */
     private static function getGeoType($model, $attribute)
     {
         foreach ($model->geometries as $geometry => $attributes) {
-            if(in_array($attribute, $attributes))
+            if (in_array($attribute, $attributes))
                 return $geometry;
         }
         throw new \Exception('Given attribute has no geotype.');
     }
 
     /**
-     * @param $model
+     * Update geometry attributes.
+     *
+     * @param  \Karomap\GeoLaravel\Eloquent\Model  $model
+     * @return void
+     *
      * @throws \Exception
      */
     public static function updateGeoAttributes($model)
     {
-        if( ! isset($model->geometries) ) return;
+        if (!isset($model->geometries)) return;
 
-        foreach($model->geometries as $geotype => $attrnames){
-            if(!self::isValidGeotype($geotype))
+        foreach ($model->geometries as $geotype => $attrnames) {
+            if (!self::isValidGeotype($geotype))
                 throw new \Exception('Unknown geotype: ' . $geotype);
 
-            $classname = static::$geotypes[$geotype];
+            $classname = static::$geoTypes[$geotype];
 
-            foreach ($attrnames as $attrname){
-                if( isset($model->$attrname) ){
+            foreach ($attrnames as $attrname) {
+                if ( isset($model->$attrname) ) {
 
-                    if($model->$attrname instanceof Expression){
-                        $model->setAttribute( $attrname,  $model->tmp_geo[$attrname] );
-                        unset($model->tmp_geo[$attrname]);
+                    if ($model->$attrname instanceof Expression) {
+                        $model->setAttribute( $attrname,  $model->tmpGeo[$attrname] );
+                        unset($model->tmpGeo[$attrname]);
 
-                    }else if($model->$attrname instanceof $classname){
-                        $model->tmp_geo[$attrname] = $model->$attrname;
+                    } elseif ($model->$attrname instanceof $classname) {
+                        $model->tmpGeo[$attrname] = $model->$attrname;
                         $model->setAttribute( $attrname,  \DB::rawGeo( $model->$attrname ));
 
-                    }else{
+                    } else {
                         throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
                     }
                 }
@@ -121,18 +154,21 @@ class Model extends IlluminateModel
     }
 
     /**
-     * @param array $attributes
-     * @param null $connection
-     * @return \Illuminate\Database\Eloquent\Model
+     * Create a new model instance that is existing.
+     *
+     * @param  array  $attributes
+     * @param  string|null  $connection
+     * @return static
+     *
      * @throws \Exception
      */
     public function newFromBuilder($attributes = [], $connection = null)
     {
         $model = parent::newFromBuilder($attributes, $connection);
-        if( ! isset($model->geometries) ) return;
+        if (!isset($model->geometries)) return;
 
-        foreach($model->geometries as $geotype => $attrnames) {
-            if(!self::isValidGeotype($geotype))
+        foreach ($model->geometries as $geotype => $attrnames) {
+            if (!self::isValidGeotype($geotype))
                 throw new \Exception('Unknown geotype: ' . $geotype);
 
             foreach ($attrnames as $attrname) {
@@ -145,19 +181,21 @@ class Model extends IlluminateModel
     }
 
     /**
-     * @param string $key
+     * Dynamically retrieve attributes on the model.
+     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
     {
-        if(
+        if (
             in_array($key, array_flatten($this->geometries)) &&     // if the attribute is a geometry
             ! parent::__get($key) instanceof OGCObject &&           // if it wasn't still converted to geo object
             ! parent::__get($key) instanceof Expression &&          // if it is not in DB Expression form
             parent::__get($key) != ""                               // if it is not empty
-        ){
+        ) {
             $geotype = self::getGeoType($this, $key);
-            $classname = self::$geotypes[$geotype];
+            $classname = self::$geoTypes[$geotype];
             $data = parent::__get($key);
 
             # here we have 3 possible value for $data:
@@ -165,15 +203,102 @@ class Model extends IlluminateModel
             # 2) hex: PgSQL gives an hex WKB output for geo data
             # 3) WKT: else
             #
-            if(!ctype_print($data) or ctype_xdigit($data)){
+            if (!ctype_print($data) or ctype_xdigit($data)){
                 $wkb = \DB::fromRawToWKB(parent::__get($key));
                 $this->setAttribute($key, $classname::fromWKB($wkb));
 
-            }else{ // assuming that it is in WKT
+            } else { // assuming that it is in WKT
                 $this->setAttribute($key, $classname::fromWKT($data));
             }
 
         }
+
         return parent::__get($key);
+    }
+
+    /**
+     * Convert the model's attributes to an array.
+     *
+     * @return array
+     */
+    public function attributesToArray()
+    {
+        $attributes = parent::attributesToArray();
+
+        if (!isset($this->geometries)) return $attributes;
+
+        // Convert geometry attributes to array.
+        foreach ($this->geometries as $type => $keys) {
+            foreach ($keys as $key) {
+                if (array_key_exists($key, $attributes) && $attributes[$key] instanceof OGCObject) {
+                    $attributes[$key] = $attributes[$key]->toArray();
+                }
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Convert model to GeoJSON.
+     *
+     * @return string
+     *
+     * @throws \Karomap\GeoLaravel\Exceptions\GeoException
+     */
+    public function toGeoJson()
+    {
+        if (!isset($this->geometries))
+            throw new GeoException('Error: No visible geometry attribute found.');
+
+        $attributes = parent::attributesToArray();
+        $geometryKeys = array_flatten($this->geometries);
+        $properties = array_diff_key($attributes, array_flip($geometryKeys));
+        $geometryKeys = array_intersect(array_keys($attributes), $geometryKeys);
+
+        if (!count($geometryKeys))
+            throw new GeoException('Error: No visible geometry attribute found.');
+
+        $this->wktParser = $this->wktParser ?? new WKTParser();
+
+
+        if (count($geometryKeys) > 1) {
+            $geoArray = [
+                'type' => 'FeatureCollection',
+                'features' => [],
+            ];
+
+            foreach ($geometryKeys as $key) {
+                $geoArray['features'][] = $this->buildFeature($attributes[$key], $properties);
+            }
+        } else {
+            $geoArray = $this->buildFeature($attributes[array_values($geometryKeys)[0]], $properties);
+        }
+
+        return json_encode($geoArray);
+    }
+
+    /**
+     * Convert model to GeoJSON feature.
+     *
+     * @param  \ElevenLab\PHPOGC\OGCObject $ogc  Geometry attribute to convert.
+     * @param  array $properties  GeoJSON properties as array.
+     * @return array  GeoJSON feature as array.
+     */
+    protected function buildFeature(OGCObject $ogc, array $properties)
+    {
+        $parsed = $this->wktParser->parse($ogc->toWKT());
+        $coordinates = $parsed['value'];
+
+        $featureArray = [
+            'type' => 'Feature',
+            'geometry' => [
+                'type' => $parsed['type'],
+                'coordinates' => $coordinates,
+            ],
+            'properties' => $properties,
+        ];
+
+        return $featureArray;
     }
 }

@@ -12,87 +12,98 @@ use Illuminate\Database\Schema\Grammars\PostgresGrammar as IlluminatePostgresGra
 class PostgresGrammar extends IlluminatePostgresGrammar
 {
     /**
-     * Create the column definition for a Point type.
+     * Create the column definition for a spatial Geometry type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @throws \RuntimeException
+     */
+    protected function typeGeometry(Fluent $column)
+    {
+        return $this->formatPostGisType('geometry');
+    }
+
+    /**
+     * Create the column definition for a spatial Point type.
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
     protected function typePoint(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $this->formatPostGisType('point');
     }
 
     /**
-     * Create the column definition for a Multipoint type.
+     * Create the column definition for a spatial LineString type.
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeMultipoint(Fluent $column)
+    protected function typeLineString(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $this->formatPostGisType('linestring');
     }
 
     /**
-     * Create the column definition for a Linestring type.
-     *
-     * @param  \Illuminate\Support\Fluent  $column
-     * @return string
-     */
-    protected function typeLinestring(Fluent $column)
-    {
-        return $this->formatPostGisType($column->type);
-    }
-
-    /**
-     * Create the column definition for a Polygon type.
+     * Create the column definition for a spatial Polygon type.
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
     protected function typePolygon(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $this->formatPostGisType('polygon');
     }
 
     /**
-     * Create the column definition for a MultiPolygon type.
+     * Create the column definition for a spatial GeometryCollection type.
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeMultipolygon(Fluent $column)
+    protected function typeGeometryCollection(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $this->formatPostGisType('geometrycollection');
     }
 
     /**
-     * Create the column definition for a GeometryCollection type.
+     * Create the column definition for a spatial MultiPoint type.
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
-    protected function typeGeometrycollection(Fluent $column)
+    protected function typeMultiPoint(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $this->formatPostGisType('multipoint');
     }
 
     /**
-     * Create the column definition for a MultiPolygon type.
+     * Create the column definition for a spatial MultiLineString type.
      *
      * @param  \Illuminate\Support\Fluent  $column
-     * @throws \Exception
+     * @return string
      */
-    protected function typeGeometry(Fluent $column)
+    public function typeMultiLineString(Fluent $column)
     {
-        return $this->formatPostGisType($column->type);
+        return $this->formatPostGisType('multilinestring');
+    }
+
+    /**
+     * Create the column definition for a spatial MultiPolygon type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeMultiPolygon(Fluent $column)
+    {
+        return $this->formatPostGisType('multipolygon');
     }
 
 
     private function formatPostGisType($type)
     {
         $srid = config('geo.srid', 4326);
-        $column_type = config('geo.geometry', true) ? 'GEOMETRY' : 'GEOGRAPHY';
+        $column_type = config('geo.geometry', true) ? 'geometry' : 'geography';
         return "$column_type($type, $srid)";
     }
 }

@@ -14,9 +14,10 @@ use Karomap\GeoLaravel\Database\Schema\Grammars\MySqlGrammar as MysqlSchemaGramm
 
 class MySqlConnection extends IlluminateMySqlConnection
 {
-
     /**
-     * @return Builder
+     * Get a schema builder instance for the connection.
+     *
+     * @return \Karomap\GeoLaravel\Database\Schema\MySqlBuilder
      */
     public function getSchemaBuilder()
     {
@@ -27,8 +28,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $geo
-     * @return Expression
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo
+     * @return \Illuminate\Database\Query\Expression
      */
     public function rawGeo(OGCObject $geo)
     {
@@ -38,7 +39,7 @@ class MySqlConnection extends IlluminateMySqlConnection
     /**
      * Get the default schema grammar instance.
      *
-     * @return \Illuminate\Database\Grammar
+     * @return \Karomap\GeoLaravel\Database\MysqlSchemaGrammar
      */
     protected function getDefaultSchemaGrammar()
     {
@@ -46,7 +47,9 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @return \Illuminate\Database\Grammar
+     * Get the default query grammar instance.
+     *
+     * @return \Karomap\GeoLaravel\Database\MysqlQueryGrammar
      */
     public function getDefaultQueryGrammar()
     {
@@ -63,17 +66,18 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $geo
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo
      * @return string
      */
     public function geoFromText(OGCObject $geo)
     {
-        return "ST_GeomFromText('{$geo->toWKT()}')";
+        $srid = config('geo.srid', 4326);
+        return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return OGCObject|null
      */
     public function intersection(OGCObject $geo1, OGCObject $geo2)
@@ -88,8 +92,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return mixed|null
      */
     public function difference(OGCObject $geo1, OGCObject $geo2)
@@ -104,8 +108,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param Polygon $polygon
-     * @param Point $point
+     * @param  \ElevenLab\PHPOGC\DataTypes\Polygon  $polygon
+     * @param  \ElevenLab\PHPOGC\DataTypes\Point  $point
      * @return bool
      */
     public function contains(Polygon $polygon, Point $point)
@@ -114,8 +118,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return bool
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
@@ -124,8 +128,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return bool
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
@@ -134,8 +138,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return bool
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
@@ -144,7 +148,7 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param Polygon $polygon
+     * @param  \ElevenLab\PHPOGC\DataTypes\Polygon  $polygon
      * @return mixed|null
      */
     public function centroid(Polygon $polygon)
@@ -156,8 +160,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param Point $p1
-     * @param Point $p2
+     * @param  \ElevenLab\PHPOGC\DataTypes\Point  $p1
+     * @param  \ElevenLab\PHPOGC\DataTypes\Point  $p2
      * @return string
      */
     public function distance(Point $p1, Point $p2)
@@ -167,8 +171,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param OGCObject $g1
-     * @param OGCObject $g2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $g1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $g2
      * @return bool
      */
     public function equals(OGCObject $g1, OGCObject $g2)
@@ -177,8 +181,8 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param $from
-     * @param $to
+     * @param  mixed  $from
+     * @param  mixed  $to
      * @return string
      */
     public function queryDistance($from, $to, $as = null)

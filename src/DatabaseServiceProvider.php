@@ -7,10 +7,6 @@ use Illuminate\Database\DatabaseManager;
 use Karomap\GeoLaravel\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
 
-/**
- * Class DatabaseServiceProvider
- * @package Phaza\LaravelPostgis
- */
 class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
 {
     /**
@@ -23,11 +19,13 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
         parent::boot();
 
         $configPath = __DIR__ . '/../config/geo.php';
+
         if (function_exists('config_path')) {
             $publishPath = config_path('geo.php');
         } else {
             $publishPath = base_path('config/geo.php');
         }
+
         $this->publishes([$configPath => $publishPath], 'config');
     }
 
@@ -39,14 +37,25 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
     public function register()
     {
         $configPath = __DIR__ . '/../config/geo.php';
+
         $this->mergeConfigFrom($configPath, 'geo');
 
         Model::clearBootedModels();
 
+        $this->registerConnectionServices();
+
         $this->registerEloquentFactory();
 
         $this->registerQueueableEntityResolver();
+    }
 
+    /**
+     * Register the primary database bindings.
+     *
+     * @return void
+     */
+    protected function registerConnectionServices()
+    {
         // The connection factory is used to create the actual connection instances on
         // the database. We will inject the factory into the manager so that it may
         // make the connections while they are actually needed and not of before.

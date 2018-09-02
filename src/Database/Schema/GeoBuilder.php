@@ -9,9 +9,9 @@ trait GeoBuilder
     /**
      * Create a new command set with a Closure.
      *
-     * @param string $table
-     * @param Closure $callback
-     * @return Blueprint
+     * @param  string  $table
+     * @param  Closure  $callback
+     * @return \Karomap\GeoLaravel\Database\Schema\Blueprint
      */
     protected function createBlueprint($table, Closure $callback = null)
     {

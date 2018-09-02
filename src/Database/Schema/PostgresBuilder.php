@@ -2,10 +2,12 @@
 
 namespace Karomap\GeoLaravel\Database\Schema;
 
-class PostgresBuilder extends \Illuminate\Database\Schema\Builder
-{
+use Illuminate\Database\Schema\PostgresBuilder as IlluminatePostgresBuilder;
 
+class PostgresBuilder extends IlluminatePostgresBuilder
+{
     use GeoBuilder;
+
     /**
      * Determine if the given table exists.
      *
@@ -14,16 +16,33 @@ class PostgresBuilder extends \Illuminate\Database\Schema\Builder
      */
     public function hasTable($table)
     {
-        if (is_array($schema = $this->connection->getConfig('schema'))) {
-            $schema = head($schema);
-        }
-
-        $schema = $schema ? $schema : 'public';
+        list($schema, $table) = $this->parseSchemaAndTable($table);
 
         $table = $this->connection->getTablePrefix().$table;
 
         return count($this->connection->select(
-                $this->grammar->compileTableExists(), [$schema, $table]
-            )) > 0;
+            $this->grammar->compileTableExists(), [$schema, $table]
+        )) > 0;
+    }
+
+    /**
+     * Parse the table name and extract the schema and table.
+     *
+     * @param  string  $table
+     * @return array
+     */
+    protected function parseSchemaAndTable($table)
+    {
+        $table = explode('.', $table);
+
+        if (is_array($schema = $this->connection->getConfig('schema'))) {
+            if (in_array($table[0], $schema)) {
+                return [array_shift($table), implode('.', $table)];
+            }
+
+            $schema = head($schema);
+        }
+
+        return [$schema ?: 'public', implode('.', $table)];
     }
 }

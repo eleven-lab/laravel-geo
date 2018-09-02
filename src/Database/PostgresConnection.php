@@ -15,7 +15,9 @@ use Karomap\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchem
 class PostgresConnection extends IlluminatePostgresConnection
 {
     /**
-     * @return Builder
+     * Get a schema builder instance for the connection.
+     *
+     * @return \Karomap\GeoLaravel\Database\Schema\PostgresBuilder
      */
     public function getSchemaBuilder()
     {
@@ -26,8 +28,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $geo
-     * @return Expression
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo
+     * @return \Illuminate\Database\Query\Expression
      */
     public function rawGeo(OGCObject $geo)
     {
@@ -37,7 +39,7 @@ class PostgresConnection extends IlluminatePostgresConnection
     /**
      * Get the default schema grammar instance.
      *
-     * @return \Illuminate\Database\Grammar
+     * @return \Karomap\GeoLaravel\Database\PostgresSchemaGrammar
      */
     protected function getDefaultSchemaGrammar()
     {
@@ -45,9 +47,9 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * Get the default schema grammar instance.
+     * Get the default query grammar instance.
      *
-     * @return \Illuminate\Database\Grammar
+     * @return \Karomap\GeoLaravel\Database\PostgresQueryGrammar
      */
     protected function getDefaultQueryGrammar()
     {
@@ -55,7 +57,9 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param $raw_geo
+     * Convert raw database value to WKB.
+     *
+     * @param  mixed  $raw_geo
      * @return mixed
      */
     public function fromRawToWKB($raw_geo)
@@ -64,23 +68,26 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $geo
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo
      * @return string
      */
     public function geoFromText(OGCObject $geo)
     {
+        $srid = config('geo.srid', 4326);
+
         if (config('geo.geometry', true)) {
-            $srid = config('geo.srid', 4326);
             return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
         }
 
-        return "ST_GeogFromText('{$geo->toWKT()}')";
+        return "ST_GeogFromText('SRID=$srid;{$geo->toWKT()}')";
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
-     * @return OGCObject|null
+     * Get intersection from 2 geometries.
+     *
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
+     * @return \ElevenLab\PHPOGC\OGCObject|null
      */
     public function intersection(OGCObject $geo1, OGCObject $geo2)
     {
@@ -94,8 +101,10 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * Get difference from 2 geometries.
+     *
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return mixed|null
      */
     public function difference(OGCObject $geo1, OGCObject $geo2)
@@ -110,8 +119,10 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param Polygon $polygon
-     * @param Point $point
+     * Check wether a polygon contains a point.
+     *
+     * @param  \ElevenLab\PHPOGC\DataTypes\Polygon  $polygon
+     * @param  \ElevenLab\PHPOGC\DataTypes\Point  $point
      * @return bool
      */
     public function contains(Polygon $polygon, Point $point)
@@ -120,8 +131,10 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * Check wether geometry 1 intersects geometry 2.
+     *
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return bool
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
@@ -130,8 +143,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return bool
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
@@ -140,8 +153,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $geo1
-     * @param OGCObject $geo2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $geo2
      * @return bool
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
@@ -150,7 +163,7 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param Polygon $polygon
+     * @param  \ElevenLab\PHPOGC\DataTypes\Polygon  $polygon
      * @return mixed|null
      */
     public function centroid(Polygon $polygon)
@@ -162,8 +175,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param Point $p1
-     * @param Point $p2
+     * @param  \ElevenLab\PHPOGC\DataTypes\Point  $p1
+     * @param  \ElevenLab\PHPOGC\DataTypes\Point  $p2
      * @return string
      */
     public function distance(Point $p1, Point $p2)
@@ -173,8 +186,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param OGCObject $g1
-     * @param OGCObject $g2
+     * @param  \ElevenLab\PHPOGC\OGCObject  $g1
+     * @param  \ElevenLab\PHPOGC\OGCObject  $g2
      * @return bool
      */
     public function equals(OGCObject $g1, OGCObject $g2)
@@ -183,8 +196,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param $from
-     * @param $to
+     * @param  mixed  $from
+     * @param  mixed  $to
      * @return string
      */
     public function queryDistance($from, $to, $as = null)
