@@ -7,12 +7,12 @@ return [
      | PostGIS SRID
      |--------------------------------------------------------------------------
      |
-     | Default PostGIS SRID is set to 4326 (WGS 84)
+     | Default fallback PostGIS SRID is set to 4326 (EPSG:4326 / WGS 84)
      | You can override the value by setting to valid SRID
      |
      */
 
-     'srid' => 4326,
+    'srid' => 4326,
 
     /*
      |--------------------------------------------------------------------------
@@ -24,6 +24,6 @@ return [
      |
      */
 
-     'geometry' => true,
+    'geometry' => true,
 
 ];

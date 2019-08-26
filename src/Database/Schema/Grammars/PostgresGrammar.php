@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Grammars\PostgresGrammar as IlluminatePostgresGra
 use Illuminate\Support\Fluent;
 
 /**
- * Extended version of MySqlGrammar with
+ * Extended version of PostgressGrammar with
  * support of 'set' data type
  */
 class PostgresGrammar extends IlluminatePostgresGrammar
@@ -19,7 +19,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeGeometry(Fluent $column)
     {
-        return $this->formatPostGisType('geometry');
+        return $this->formatPostGisType('geometry', $column->srid);
     }
 
     /**
@@ -30,7 +30,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typePoint(Fluent $column)
     {
-        return $this->formatPostGisType('point');
+        return $this->formatPostGisType('point', $column->srid);
     }
 
     /**
@@ -41,7 +41,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeLineString(Fluent $column)
     {
-        return $this->formatPostGisType('linestring');
+        return $this->formatPostGisType('linestring', $column->srid);
     }
 
     /**
@@ -52,7 +52,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typePolygon(Fluent $column)
     {
-        return $this->formatPostGisType('polygon');
+        return $this->formatPostGisType('polygon', $column->srid);
     }
 
     /**
@@ -63,7 +63,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeGeometryCollection(Fluent $column)
     {
-        return $this->formatPostGisType('geometrycollection');
+        return $this->formatPostGisType('geometrycollection', $column->srid);
     }
 
     /**
@@ -74,7 +74,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeMultiPoint(Fluent $column)
     {
-        return $this->formatPostGisType('multipoint');
+        return $this->formatPostGisType('multipoint', $column->srid);
     }
 
     /**
@@ -85,7 +85,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function typeMultiLineString(Fluent $column)
     {
-        return $this->formatPostGisType('multilinestring');
+        return $this->formatPostGisType('multilinestring', $column->srid);
     }
 
     /**
@@ -96,13 +96,19 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     protected function typeMultiPolygon(Fluent $column)
     {
-        return $this->formatPostGisType('multipolygon');
+        return $this->formatPostGisType('multipolygon', $column->srid);
     }
 
-
-    private function formatPostGisType($type)
+    /**
+     * Format column type for PostGIS
+     *
+     * @param string $type
+     * @param int|null $srid
+     * @return string
+     */
+    private function formatPostGisType($type, $srid = null)
     {
-        $srid = config('geo.srid', 4326);
+        $srid = $srid ?? config('geo.srid', 4326);
         $column_type = config('geo.geometry', true) ? 'geometry' : 'geography';
         return "$column_type($type, $srid)";
     }
