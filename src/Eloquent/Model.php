@@ -40,6 +40,8 @@ class Model extends IlluminateModel
      */
     public $tmpGeo = [];
 
+    public $tmpSRID = [];
+
     /**
      * WKT Parser.
      *
@@ -56,19 +58,11 @@ class Model extends IlluminateModel
     {
         parent::boot();
 
-        static::creating(function($model) {
+        static::saving(function ($model) {
             self::updateGeoAttributes($model);
         });
 
-        static::created(function($model) {
-            self::updateGeoAttributes($model);
-        });
-
-        static::updating(function($model) {
-            self::updateGeoAttributes($model);
-        });
-
-        static::updated(function($model) {
+        static::saved(function ($model) {
             self::updateGeoAttributes($model);
         });
     }
@@ -135,22 +129,36 @@ class Model extends IlluminateModel
             $classname = static::$geoTypes[$geotype];
 
             foreach ($attrnames as $attrname) {
-                if ( isset($model->$attrname) ) {
+                if (!isset($model->$attrname))
+                    continue 2;
 
-                    if ($model->$attrname instanceof Expression) {
-                        $model->setAttribute( $attrname,  $model->tmpGeo[$attrname] );
-                        unset($model->tmpGeo[$attrname]);
+                $srid = $model->getSRID($attrname);
 
-                    } elseif ($model->$attrname instanceof $classname) {
-                        $model->tmpGeo[$attrname] = $model->$attrname;
-                        $model->setAttribute( $attrname,  \DB::rawGeo( $model->$attrname ));
-
-                    } else {
-                        throw new \Exception('Geometry attribute ' . $attrname .' must be an instance of ' . $classname);
-                    }
+                if ($model->$attrname instanceof Expression) {
+                    $model->setAttribute($attrname,  $model->tmpGeo[$attrname]);
+                    unset($model->tmpGeo[$attrname]);
+                } elseif ($model->$attrname instanceof $classname) {
+                    $model->tmpGeo[$attrname] = $model->$attrname;
+                    $model->setAttribute($attrname,  \DB::rawGeo($model->$attrname, $srid));
+                } else {
+                    throw new \Exception('Geometry attribute ' . $attrname . ' must be an instance of ' . $classname);
                 }
             }
         }
+    }
+
+    public function getSRID($attrname)
+    {
+        if (!in_array($attrname, array_flatten($this->geometries)))
+            throw new \Exception("Attribute $attrname is not a geometry");
+
+        if (!isset($this->tmpSRID[$attrname])) {
+            $schema = $this->getConnection()->getConfig('schema') ?? 'public';
+            $query = \DB::table($this->getTable())->selectRaw("Find_SRID('$schema', '{$this->getTable()}', '$attrname')")->first();
+            $this->tmpSRID[$attrname] = $query ? $query->find_srid : null;
+        }
+
+        return $this->tmpSRID[$attrname];
     }
 
     /**
@@ -190,9 +198,9 @@ class Model extends IlluminateModel
     {
         if (
             in_array($key, array_flatten($this->geometries)) &&     // if the attribute is a geometry
-            ! parent::__get($key) instanceof OGCObject &&           // if it wasn't still converted to geo object
-            ! parent::__get($key) instanceof Expression &&          // if it is not in DB Expression form
-            parent::__get($key) != ""                               // if it is not empty
+            !parent::__get($key) instanceof OGCObject &&           // if it wasn't still converted to geo object
+            !parent::__get($key) instanceof Expression &&          // if it is not in DB Expression form
+            !empty(parent::__get($key))                               // if it is not empty
         ) {
             $geotype = self::getGeoType($this, $key);
             $classname = self::$geoTypes[$geotype];
@@ -203,14 +211,12 @@ class Model extends IlluminateModel
             # 2) hex: PgSQL gives an hex WKB output for geo data
             # 3) WKT: else
             #
-            if (!ctype_print($data) or ctype_xdigit($data)){
+            if (!ctype_print($data) or ctype_xdigit($data)) {
                 $wkb = \DB::fromRawToWKB(parent::__get($key));
                 $this->setAttribute($key, $classname::fromWKB($wkb));
-
             } else { // assuming that it is in WKT
                 $this->setAttribute($key, $classname::fromWKT($data));
             }
-
         }
 
         return parent::__get($key);
