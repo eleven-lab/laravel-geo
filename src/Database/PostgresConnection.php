@@ -5,7 +5,6 @@ namespace Karomap\GeoLaravel\Database;
 use CrEOF\Geo\WKB\Parser;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Facades\Schema;
 use Karomap\GeoLaravel\Database\Query\Grammars\PostgresGrammar as PostgresQueryGrammar;
 use Karomap\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchemaGrammar;
 use Karomap\GeoLaravel\Database\Schema\PostgresBuilder;
@@ -222,18 +221,32 @@ class PostgresConnection extends IlluminatePostgresConnection
     public function getSRID($table, $column)
     {
         $geometry = config('geo.geometry', true);
-        $schema = $this->getConfig('schema') ?: 'public';
         $tableRef = $geometry ? 'geometry_columns' : 'geography_columns';
-        if (!Schema::hasTable("$schema.$tableRef")) {
+        if (!$this->hasView($tableRef)) {
             return config('geo.srid', 4326);
         }
         $result = $this->table($tableRef)
             ->select('srid')
             ->where('f_table_catalog', $this->database)
-            ->where('f_table_schema', $schema)
+            ->where('f_table_schema', $this->getConfig('schema') ?: 'public')
             ->where('f_table_name', $table)
             ->where($geometry ? 'f_geometry_column' : 'f_geography_column', $column)
             ->first();
         return $result ? $result->srid : config('geo.srid', 4326);
+    }
+
+    /**
+     * Check view exists
+     *
+     * @param string $name
+     * @return boolean
+     */
+    protected function hasView($name)
+    {
+        return (bool) $this->table('information_schema.views')
+            ->where('table_catalog', $this->database)
+            ->where('table_schema', $this->getConfig('schema') ?: 'public')
+            ->where('table_name', $name)
+            ->count();
     }
 }
