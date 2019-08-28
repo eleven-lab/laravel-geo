@@ -2,3 +2,5 @@
 .git
 vendor
 composer.lock
+
+tests/app/.env

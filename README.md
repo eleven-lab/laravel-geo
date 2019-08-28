@@ -1,19 +1,23 @@
 # Geo Laravel
 This is a fork from [elevenlab/laravel-geo](https://github.com/eleven-lab/laravel-geo) with some modifications for compatibility with Laravel 5.4+
 
-> Note: In this version geometry column type is used for PostGIS instead of geography
+> Note: In this version you can use either geometry or geography column type for PostGIS with SRID.
+
+
 
 # Features
-- GeoSpatial integration on Laravel 5.2+:
+- GeoSpatial integration on Laravel 5.4+:
     - Create geospatial columns using Schema and migrations
     - Save and retrieve geospatial attributes using directly OpenGeoConsortium Spatial Objects (this package depends from PHP-OGC)
     - Build spatial query directly with the laravel fluent query builder
     - Supported types: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection
 - Supported drivers:
     - Postgres: Posgis extension Extensions (geometry types)
-    - MySql: Extension for Spatial Data (geography types)
+    - MySql: Extension for Spatial Data (geometry types)
 
 Thanks to [laravel-postgis](https://github.com/njbarrett/laravel-postgis) for its original work.
+
+
 
 # Installation & Configuration
 
@@ -23,7 +27,7 @@ Thanks to [laravel-postgis](https://github.com/njbarrett/laravel-postgis) for it
 $ composer require karomap/laravel-geo
 ```
 
-2) Replace under the Service Providers section ('providers' array) in config/app.php this line
+2) Replace under the Service Providers section ('providers' array) in `config/app.php` this line
 
 ```php
 Illuminate\Database\DatabaseServiceProvider::class,
@@ -41,6 +45,8 @@ Karomap\GeoLaravel\DatabaseServiceProvider::class
 'GeoModel'      => Karomap\GeoLaravel\Eloquent\Model::class,
 ```
 
+
+
 # Quick Documentation
 
 ## Create table with spatial references
@@ -50,16 +56,26 @@ To add a geospatial field to your migration you can use these methods:
 Example (NB: the schema is over-semplified):
 ```php
 <?php
-Schema::create('nations', function (Blueprint $table) {
-    $table->increments('id');
-    $table->string('name');
-    $table->polygon('national_bounds');
-    $table->point('capital');
-    $table->multipolygon('regions_bounds');
-    $table->multipoint('regions_capitals');
-    $table->linestring('highway');
-});
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Migrations\Migration;
+use Karomap\GeoLaravel\Database\Schema\Blueprint; // Replace "Illuminate\Database\Schema\Blueprint"
+
+class CreateNationsTable extends Migration {
+    public function up() {
+        Schema::create('nations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->polygon('national_bounds');
+            $table->point('capital');
+            $table->multipolygon('regions_bounds');
+            $table->multipoint('regions_capitals');
+            $table->linestring('highway');
+        });
+    }
+}
 ```
+
 ## Add spatial attributes to a Model
 In order to handle dinamically geospatial attributes during CRUD operations, you need to:
 - substitute the Eloquent Model abstract object with a custom Model
@@ -193,4 +209,3 @@ Given an illuminate Query Builder object, you can use:
     - add examples for "Build queries" section
     - add manual installation guide
 - add missing ST_functions
-- add unit tests

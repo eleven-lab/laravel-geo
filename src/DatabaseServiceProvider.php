@@ -75,4 +75,3 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
         });
     }
 }
-

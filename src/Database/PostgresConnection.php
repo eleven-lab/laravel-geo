@@ -15,6 +15,25 @@ use Karomap\PHPOGC\OGCObject;
 class PostgresConnection extends IlluminatePostgresConnection
 {
     /**
+     * {@inheritDoc}
+     */
+    public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
+    {
+        parent::__construct($pdo, $database, $tablePrefix, $config);
+        $customDoctrineTypes = [
+            'GeometryType',
+            'GeographyType',
+        ];
+
+        $doctrinePlatform = $this->getDoctrineSchemaManager()->getDatabasePlatform();
+        foreach ($customDoctrineTypes as $customDoctrineType) {
+            $typeClass = "Karomap\GeoLaravel\DoctrineTypes\\$customDoctrineType";
+            $this->getSchemaBuilder()->registerCustomDoctrineType($typeClass, $typeClass::NAME, $typeClass::NAME);
+            $doctrinePlatform->registerDoctrineTypeMapping($typeClass::NAME, $typeClass::NAME);
+        }
+    }
+
+    /**
      * Get a schema builder instance for the connection.
      *
      * @return \Karomap\GeoLaravel\Database\Schema\PostgresBuilder
