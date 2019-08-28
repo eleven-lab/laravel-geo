@@ -29,11 +29,12 @@ class MySqlConnection extends IlluminateMySqlConnection
 
     /**
      * @param  \Karomap\PHPOGC\OGCObject  $geo
+     * @param int $srid
      * @return \Illuminate\Database\Query\Expression
      */
-    public function rawGeo(OGCObject $geo)
+    public function rawGeo(OGCObject $geo, $srid = null)
     {
-        return new Expression($this->geoFromText($geo));
+        return new Expression($this->geoFromText($geo, $srid));
     }
 
     /**
@@ -62,16 +63,17 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function fromRawToWKB($raw_geo)
     {
-        return $this->select('select ST_AsWKB(0x'.bin2hex($raw_geo).') as x')[0]->x;
+        return $this->select('select ST_AsWKB(0x' . bin2hex($raw_geo) . ') as x')[0]->x;
     }
 
     /**
      * @param  \Karomap\PHPOGC\OGCObject  $geo
+     * @param int $srid
      * @return string
      */
-    public function geoFromText(OGCObject $geo)
+    public function geoFromText(OGCObject $geo, $srid = null)
     {
-        $srid = config('geo.srid', 4326);
+        $srid = $srid ?? config('geo.srid', 4326);
         return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
     }
 
@@ -84,7 +86,7 @@ class MySqlConnection extends IlluminateMySqlConnection
     {
         $intersection = $this->select("select ST_AsBinary(ST_Intersection({$this->geoFromText($geo1)},{$this->geoFromText($geo2)})) as intersection")[0]->intersection;
 
-        if(is_null($intersection))
+        if (is_null($intersection))
             return null;
 
         $wkb_parser = new Parser();
@@ -100,7 +102,7 @@ class MySqlConnection extends IlluminateMySqlConnection
     {
         $difference = $this->select("select ST_AsBinary(ST_Difference({$this->geoFromText($geo1)},{$this->geoFromText($geo2)})) as difference")[0]->difference;
 
-        if(is_null($difference))
+        if (is_null($difference))
             return null;
 
         $wkb_parser = new Parser();
@@ -114,7 +116,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function contains(Polygon $polygon, Point $point)
     {
-        return (bool)$this->select("select ST_Contains({$this->geoFromText($polygon)},{$this->geoFromText($point)}) as contains")[0]->contains;
+        return (bool) $this->select("select ST_Contains({$this->geoFromText($polygon)},{$this->geoFromText($point)}) as contains")[0]->contains;
     }
 
     /**
@@ -124,7 +126,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_Intersects({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as intersects")[0]->intersects;
+        return (bool) $this->select("select ST_Intersects({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as intersects")[0]->intersects;
     }
 
     /**
@@ -134,7 +136,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_Touches({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as touches")[0]->touches;
+        return (bool) $this->select("select ST_Touches({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as touches")[0]->touches;
     }
 
     /**
@@ -144,7 +146,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool)$this->select("select ST_Overlaps({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as overlaps")[0]->overlaps;
+        return (bool) $this->select("select ST_Overlaps({$this->geoFromText($geo1)},{$this->geoFromText($geo2)}) as overlaps")[0]->overlaps;
     }
 
     /**
@@ -177,7 +179,7 @@ class MySqlConnection extends IlluminateMySqlConnection
      */
     public function equals(OGCObject $g1, OGCObject $g2)
     {
-        return (bool)$this->select("select ST_Equals({$this->geoFromText($g1)},{$this->geoFromText($g2)}) as equals")[0]->equals;
+        return (bool) $this->select("select ST_Equals({$this->geoFromText($g1)},{$this->geoFromText($g2)}) as equals")[0]->equals;
     }
 
     /**
@@ -193,5 +195,23 @@ class MySqlConnection extends IlluminateMySqlConnection
         $p2y = $to instanceof Point ? $to->lon : "ST_Y($to)";
         $query = "( 6378137 * acos( cos( radians($p1x) ) * cos( radians($p2x) ) * cos( radians($p2y) - radians($p1y) ) + sin( radians($p1x) ) * sin(radians($p2x) ) ) )";
         return $this->raw($query . (is_null($as) ? "" : " as $as"));
+    }
+
+    /**
+     * Get column SRID
+     *
+     * @param string $table
+     * @param string $column
+     * @return int
+     */
+    public function getSRID($table, $column)
+    {
+        $result = $this->table('information_schema.ST_GEOMETRY_COLUMNS')
+            ->select('SRS_ID')
+            ->where('TABLE_SCHEMA', $this->database)
+            ->where('TABLE_NAME', $table)
+            ->where('COLUMN_NAME', $column)
+            ->first();
+        return $result ? $result->SRS_ID : config('geo.srid', 4326);
     }
 }

@@ -34,7 +34,8 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function rawGeo(OGCObject $geo, $srid = null)
     {
-        return new Expression($this->geoFromText($geo, $srid));
+        $geometry = config('geo.geometry', true);
+        return new Expression($this->geoFromText($geo, $srid, $geometry));
     }
 
     /**
@@ -73,11 +74,11 @@ class PostgresConnection extends IlluminatePostgresConnection
      * @param integer $srid
      * @return string
      */
-    public function geoFromText(OGCObject $geo, $srid = null)
+    public function geoFromText(OGCObject $geo, $srid = null, $geometry = true)
     {
         $srid = $srid ?? config('geo.srid', 4326);
 
-        if (config('geo.geometry', true)) {
+        if ($geometry) {
             return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
         }
 
@@ -208,5 +209,26 @@ class PostgresConnection extends IlluminatePostgresConnection
         $p2 = $to instanceof Point ? $this->geoFromText($to) : $to;
         $query = "ST_distance_spheroid($p1::geometry, $p2::geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]')";
         return $this->raw($query . (is_null($as) ? "" : " as $as"));
+    }
+
+    /**
+     * Get column SRID
+     *
+     * @param string $table
+     * @param string $column
+     * @return int
+     */
+    public function getSRID($table, $column)
+    {
+        $schema = $this->getConfig('schema') ?: 'public';
+        $geometry = config('geo.geometry', true);
+        $result = $this->table($geometry ? 'geometry_columns' : 'geography_columns')
+            ->select('srid')
+            ->where('f_table_catalog', $this->database)
+            ->where('f_table_schema', $schema)
+            ->where('f_table_name', $table)
+            ->where($geometry ? 'f_geometry_column' : 'f_geography_column', $column)
+            ->first();
+        return $result ? $result->srid : config('geo.srid', 4326);
     }
 }

@@ -153,9 +153,7 @@ class Model extends IlluminateModel
             throw new \Exception("Attribute $attrname is not a geometry");
 
         if (!isset($this->tmpSRID[$attrname])) {
-            $schema = $this->getConnection()->getConfig('schema') ?? 'public';
-            $query = \DB::table($this->getTable())->selectRaw("Find_SRID('$schema', '{$this->getTable()}', '$attrname')")->first();
-            $this->tmpSRID[$attrname] = $query ? $query->find_srid : null;
+            $this->tmpSRID[$attrname] = \DB::getSRID($this->getTable(), $attrname);
         }
 
         return $this->tmpSRID[$attrname];
@@ -213,13 +211,18 @@ class Model extends IlluminateModel
             #
             if (!ctype_print($data) or ctype_xdigit($data)) {
                 $wkb = \DB::fromRawToWKB(parent::__get($key));
-                $this->setAttribute($key, $classname::fromWKB($wkb));
+                $instance = $classname::fromWKB($wkb);
             } else { // assuming that it is in WKT
-                $this->setAttribute($key, $classname::fromWKT($data));
+                $instance = $classname::fromWKT($data);
             }
+            $this->setAttribute($key, $instance);
         }
 
-        return parent::__get($key);
+        $instance = parent::__get($key);
+        if ($instance instanceof OGCObject && !$instance->srid)
+            $instance->srid = $this->getSRID($key);
+
+        return $instance;
     }
 
     /**
