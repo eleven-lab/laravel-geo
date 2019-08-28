@@ -5,6 +5,7 @@ namespace Karomap\GeoLaravel\Database;
 use CrEOF\Geo\WKB\Parser;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Support\Facades\Schema;
 use Karomap\GeoLaravel\Database\Query\Grammars\PostgresGrammar as PostgresQueryGrammar;
 use Karomap\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchemaGrammar;
 use Karomap\GeoLaravel\Database\Schema\PostgresBuilder;
@@ -220,9 +221,13 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function getSRID($table, $column)
     {
-        $schema = $this->getConfig('schema') ?: 'public';
         $geometry = config('geo.geometry', true);
-        $result = $this->table($geometry ? 'geometry_columns' : 'geography_columns')
+        $schema = $this->getConfig('schema') ?: 'public';
+        $tableRef = $geometry ? 'geometry_columns' : 'geography_columns';
+        if (!Schema::hasTable("$schema.$tableRef")) {
+            return config('geo.srid', 4326);
+        }
+        $result = $this->table($tableRef)
             ->select('srid')
             ->where('f_table_catalog', $this->database)
             ->where('f_table_schema', $schema)
