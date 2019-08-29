@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Karomap\GeoLaravel\Database\Query\Builder | karomap/laravel-geo</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Karomap_GeoLaravel_Database_Query_Builder" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">karomap/laravel-geo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Karomap.html">Karomap</a></li><li class="backslash">\</li><li><a href="../../../../Karomap/GeoLaravel.html">GeoLaravel</a></li><li class="backslash">\</li><li><a href="../../../../Karomap/GeoLaravel/Database.html">Database</a></li><li class="backslash">\</li><li><a href="../../../../Karomap/GeoLaravel/Database/Query.html">Query</a></li><li class="backslash">\</li><li>Builder</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Builder
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Builder</strong>        extends <abbr title="Illuminate\Database\Query\Builder">Builder</abbr>        (<a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php">View source</a>)
+</p>
+
+        
+    
+
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereEquals">whereEquals</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereNotEquals">whereNotEquals</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereEquals">orWhereEquals</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereNotEquals">orWhereNotEquals</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereContains">whereContains</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereNotContains">whereNotContains</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereContains">orWhereContains</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereNotContains">orWhereNotContains</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereIntersects">whereIntersects</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereNotIntersects">whereNotIntersects</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereIntersects">orWhereIntersects</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereNotIntersects">orWhereNotIntersects</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereTouches">whereTouches</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereNotTouches">whereNotTouches</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereTouches">orWhereTouches</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereNotTouches">orWhereNotTouches</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    $this
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereOverlaps">whereOverlaps</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_whereNotOverlaps">whereNotOverlaps</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereOverlaps">orWhereOverlaps</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_orWhereNotOverlaps">orWhereNotOverlaps</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_whereEquals">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L18">line 18</a></div>
+        <code>                    $this
+    <strong>whereEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$boolean</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$not</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereNotEquals">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L32">line 32</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>whereNotEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereEquals">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L42">line 42</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereNotEquals">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L52">line 52</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereNotEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereContains">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L64">line 64</a></div>
+        <code>                    $this
+    <strong>whereContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$boolean</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$not</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereNotContains">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L78">line 78</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>whereNotContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereContains">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L88">line 88</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereNotContains">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L98">line 98</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereNotContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereIntersects">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L110">line 110</a></div>
+        <code>                    $this
+    <strong>whereIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$boolean</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$not</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereNotIntersects">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L124">line 124</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>whereNotIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereIntersects">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L134">line 134</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereNotIntersects">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L144">line 144</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereNotIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereTouches">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L156">line 156</a></div>
+        <code>                    $this
+    <strong>whereTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$boolean</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$not</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereNotTouches">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L170">line 170</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>whereNotTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereTouches">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L180">line 180</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereNotTouches">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L190">line 190</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereNotTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereOverlaps">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L202">line 202</a></div>
+        <code>                    $this
+    <strong>whereOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$boolean</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$not</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>$this</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_whereNotOverlaps">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L216">line 216</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>whereNotOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereOverlaps">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L226">line 226</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_orWhereNotOverlaps">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L236">line 236</a></div>
+        <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
+    <strong>orWhereNotOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

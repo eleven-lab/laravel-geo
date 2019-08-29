@@ -1,33 +1,33 @@
+[![Latest Stable Version](https://poser.pugx.org/karomap/laravel-geo/v/stable)](https://packagist.org/packages/karomap/laravel-geo) [![Latest Unstable Version](https://poser.pugx.org/karomap/laravel-geo/v/unstable)](https://packagist.org/packages/karomap/laravel-geo)
+
 # Geo Laravel
+
 This is a fork from [elevenlab/laravel-geo](https://github.com/eleven-lab/laravel-geo) with some modifications for compatibility with Laravel 5.4+
 
 > Note: In this version you can use either geometry or geography column type for PostGIS with SRID.
 
-
-
 # Features
+
 - GeoSpatial integration on Laravel 5.4+:
-    - Create geospatial columns using Schema and migrations
-    - Save and retrieve geospatial attributes using directly OpenGeoConsortium Spatial Objects (this package depends from PHP-OGC)
-    - Build spatial query directly with the laravel fluent query builder
-    - Supported types: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection
+  - Create geospatial columns using Schema and migrations
+  - Save and retrieve geospatial attributes using directly OpenGeoConsortium Spatial Objects (this package depends from PHP-OGC)
+  - Build spatial query directly with the laravel fluent query builder
+  - Supported types: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection
 - Supported drivers:
-    - Postgres: Posgis extension Extensions (geometry types)
-    - MySql: Extension for Spatial Data (geometry types)
+  - Postgres: Posgis extension Extensions (geometry types)
+  - MySql: Extension for Spatial Data (geometry types)
 
 Thanks to [laravel-postgis](https://github.com/njbarrett/laravel-postgis) for its original work.
 
-
-
 # Installation & Configuration
 
-1) Install using composer
+1. Install using composer
 
 ```bash
 $ composer require karomap/laravel-geo
 ```
 
-2) Replace under the Service Providers section ('providers' array) in `config/app.php` this line
+2. Replace under the Service Providers section ('providers' array) in `config/app.php` this line
 
 ```php
 Illuminate\Database\DatabaseServiceProvider::class,
@@ -39,21 +39,22 @@ with this one:
 Karomap\GeoLaravel\DatabaseServiceProvider::class
 ```
 
-3) If you need it, under the Alias section ('aliases' array) in config/app.php add this line:
+3. If you need it, under the Alias section ('aliases' array) in config/app.php add this line:
 
 ```php
 'GeoModel'      => Karomap\GeoLaravel\Eloquent\Model::class,
 ```
 
-
-
 # Quick Documentation
 
 ## Create table with spatial references
+
 To add a geospatial field to your migration you can use these methods:
+
 - point, multipoint linestring, multilinestring, polygon, multipolygon, geometrycollection
 
 Example (NB: the schema is over-semplified):
+
 ```php
 <?php
 
@@ -77,7 +78,9 @@ class CreateNationsTable extends Migration {
 ```
 
 ## Add spatial attributes to a Model
+
 In order to handle dinamically geospatial attributes during CRUD operations, you need to:
+
 - substitute the Eloquent Model abstract object with a custom Model
 - define which attribute belongs to which geospatial type, defining the `$geometries` attribute (you can find [here](https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L15-L21) the available types)
 
@@ -203,9 +206,9 @@ Given an illuminate Query Builder object, you can use:
 
 - orWhereNotOverlaps
 
-
 # ToDo
+
 - improve documentation
-    - add examples for "Build queries" section
-    - add manual installation guide
+  - add examples for "Build queries" section
+  - add manual installation guide
 - add missing ST_functions

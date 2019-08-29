@@ -20,6 +20,12 @@ class PostgresTest extends TestCase
         DB::statement('create extension if not exists postgis');
     }
 
+    /**
+     * Create table
+     *
+     * @param string $tableName
+     * @return void
+     */
     private function createTable($tableName)
     {
         Schema::dropIfExists($tableName);
@@ -42,10 +48,12 @@ class PostgresTest extends TestCase
 
     /**
      * Create table
+     *
+     * @group pgsql
      */
     public function testCreateTable()
     {
-        $tableName = 'geom_table';
+        $tableName = 'geom_test';
         $this->createTable($tableName);
         $this->assertTrue(Schema::hasTable($tableName));
         $this->createdTables[] = $tableName;
@@ -68,12 +76,14 @@ class PostgresTest extends TestCase
 
     /**
      * Create table using Geography as spatial column type
+     *
+     * @group pgsql
      */
     public function testGeographyColumn()
     {
         Config::set('geo.geometry', false);
 
-        $tableName = 'geog_table';
+        $tableName = 'geog_test';
         $this->createTable($tableName);
         $this->assertTrue(Schema::hasTable($tableName));
         $this->createdTables[] = $tableName;

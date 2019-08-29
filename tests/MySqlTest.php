@@ -24,10 +24,12 @@ class MySqlTest extends TestCase
 
     /**
      * Create table
+     *
+     * @group mysql
      */
     public function testCreateTable()
     {
-        $tableName = 'geo_table';
+        $tableName = 'geo_test';
 
         Schema::dropIfExists($tableName);
 

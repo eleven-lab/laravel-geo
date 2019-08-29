@@ -5,6 +5,7 @@ namespace Karomap\GeoLaravel\Database;
 use CrEOF\Geo\WKB\Parser;
 use Illuminate\Database\MySqlConnection as IlluminateMySqlConnection;
 use Illuminate\Database\Query\Expression;
+use Karomap\GeoLaravel\Database\Query\Builder as QueryBuilder;
 use Karomap\GeoLaravel\Database\Query\Grammars\MySqlGrammar as MysqlQueryGrammar;
 use Karomap\GeoLaravel\Database\Schema\Grammars\MySqlGrammar as MysqlSchemaGrammar;
 use Karomap\GeoLaravel\Database\Schema\MySqlBuilder;
@@ -54,16 +55,6 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
-     * @param  \Karomap\PHPOGC\OGCObject  $geo
-     * @param int $srid
-     * @return \Illuminate\Database\Query\Expression
-     */
-    public function rawGeo(OGCObject $geo, $srid = null)
-    {
-        return new Expression($this->geoFromText($geo, $srid));
-    }
-
-    /**
      * Get the default schema grammar instance.
      *
      * @return \Karomap\GeoLaravel\Database\MysqlSchemaGrammar
@@ -84,6 +75,29 @@ class MySqlConnection extends IlluminateMySqlConnection
     }
 
     /**
+     * Get a new query builder instance.
+     *
+     * @return \Karomap\GeoLaravel\Database\Query\Builder
+     */
+    public function query()
+    {
+        return new QueryBuilder(
+            $this,
+            $this->getQueryGrammar(),
+            $this->getPostProcessor()
+        );
+    }
+
+    /**
+     * @param  \Karomap\PHPOGC\OGCObject  $geo
+     * @return \Illuminate\Database\Query\Expression
+     */
+    public function rawGeo(OGCObject $geo)
+    {
+        return new Expression($this->geoFromText($geo));
+    }
+
+    /**
      * @param $raw_geo
      * @return mixed
      */
@@ -94,12 +108,11 @@ class MySqlConnection extends IlluminateMySqlConnection
 
     /**
      * @param  \Karomap\PHPOGC\OGCObject  $geo
-     * @param int $srid
      * @return string
      */
-    public function geoFromText(OGCObject $geo, $srid = null)
+    public function geoFromText(OGCObject $geo)
     {
-        $srid = $srid ?? config('geo.srid', 4326);
+        $srid = $geo->srid ?? config('geo.srid', 4326);
         return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
     }
 

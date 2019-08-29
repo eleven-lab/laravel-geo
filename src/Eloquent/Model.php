@@ -139,7 +139,7 @@ class Model extends IlluminateModel
                     unset($model->tmpGeo[$attrname]);
                 } elseif ($model->$attrname instanceof $classname) {
                     $model->tmpGeo[$attrname] = $model->$attrname;
-                    $model->setAttribute($attrname,  \DB::rawGeo($model->$attrname, $srid));
+                    $model->setAttribute($attrname,  \DB::rawGeo($model->$attrname));
                 } else {
                     throw new \Exception('Geometry attribute ' . $attrname . ' must be an instance of ' . $classname);
                 }

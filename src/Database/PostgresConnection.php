@@ -5,6 +5,7 @@ namespace Karomap\GeoLaravel\Database;
 use CrEOF\Geo\WKB\Parser;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
 use Illuminate\Database\Query\Expression;
+use Karomap\GeoLaravel\Database\Query\Builder as QueryBuilder;
 use Karomap\GeoLaravel\Database\Query\Grammars\PostgresGrammar as PostgresQueryGrammar;
 use Karomap\GeoLaravel\Database\Schema\Grammars\PostgresGrammar as PostgresSchemaGrammar;
 use Karomap\GeoLaravel\Database\Schema\PostgresBuilder;
@@ -47,17 +48,6 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param  \Karomap\PHPOGC\OGCObject  $geo
-     * @param integer $srid
-     * @return \Illuminate\Database\Query\Expression
-     */
-    public function rawGeo(OGCObject $geo, $srid = null)
-    {
-        $geometry = config('geo.geometry', true);
-        return new Expression($this->geoFromText($geo, $srid, $geometry));
-    }
-
-    /**
      * Get the default schema grammar instance.
      *
      * @return \Karomap\GeoLaravel\Database\PostgresSchemaGrammar
@@ -77,6 +67,31 @@ class PostgresConnection extends IlluminatePostgresConnection
         return $this->withTablePrefix(new PostgresQueryGrammar);
     }
 
+
+    /**
+     * Get a new query builder instance.
+     *
+     * @return \Karomap\GeoLaravel\Database\Query\Builder
+     */
+    public function query()
+    {
+        return new QueryBuilder(
+            $this,
+            $this->getQueryGrammar(),
+            $this->getPostProcessor()
+        );
+    }
+
+    /**
+     * @param  \Karomap\PHPOGC\OGCObject  $geo
+     * @return \Illuminate\Database\Query\Expression
+     */
+    public function rawGeo(OGCObject $geo)
+    {
+        $geometry = config('geo.geometry', true);
+        return new Expression($this->geoFromText($geo, $geometry));
+    }
+
     /**
      * Convert raw database value to WKB.
      *
@@ -90,12 +105,11 @@ class PostgresConnection extends IlluminatePostgresConnection
 
     /**
      * @param  \Karomap\PHPOGC\OGCObject  $geo
-     * @param integer $srid
      * @return string
      */
-    public function geoFromText(OGCObject $geo, $srid = null, $geometry = true)
+    public function geoFromText(OGCObject $geo, $geometry = true)
     {
-        $srid = $srid ?? config('geo.srid', 4326);
+        $srid = $geo->srid ?? config('geo.srid', 4326);
 
         if ($geometry) {
             return "ST_GeomFromText('{$geo->toWKT()}', $srid)";

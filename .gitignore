@@ -1,6 +1,7 @@
 .DS_Store
 .git
 vendor
+cache
 composer.lock
 
 tests/app/.env
