@@ -10,7 +10,12 @@ class GeometryType extends Type
     const NAME = 'geometry';
 
     /**
-     * {@inheritDoc}
+     * Gets the SQL declaration snippet for a field of this type.
+     *
+     * @param mixed[]          $fieldDeclaration The field declaration.
+     * @param AbstractPlatform $platform         The currently used database platform.
+     *
+     * @return string
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
@@ -18,7 +23,11 @@ class GeometryType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the name of this type.
+     *
+     * @return string
+     *
+     * @todo Needed?
      */
     public function getName()
     {
@@ -26,7 +35,14 @@ class GeometryType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * Does working with this column require SQL conversion functions?
+     *
+     * This is a metadata function that is required for example in the ORM.
+     * Usage of {@link convertToDatabaseValueSQL} and
+     * {@link convertToPHPValueSQL} works for any type and mostly
+     * does nothing. This method can additionally be used for optimization purposes.
+     *
+     * @return bool
      */
     public function canRequireSQLConversion()
     {
@@ -34,7 +50,13 @@ class GeometryType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * Converts a value from its database representation to its PHP representation
+     * of this type.
+     *
+     * @param mixed            $value    The value to convert.
+     * @param AbstractPlatform $platform The currently used database platform.
+     *
+     * @return mixed The PHP representation of the value.
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
@@ -42,7 +64,12 @@ class GeometryType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * Modifies the SQL expression (identifier, parameter) to convert to a PHP value.
+     *
+     * @param string           $sqlExpr
+     * @param AbstractPlatform $platform
+     *
+     * @return string
      */
     public function convertToPHPValueSQL($sqlExpr,  $platform)
     {
@@ -50,7 +77,12 @@ class GeometryType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * Modifies the SQL expression (identifier, parameter) to convert to a database value.
+     *
+     * @param string $sqlExpr
+     * @param AbstractPlatform $platform
+     *
+     * @return string
      */
     public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
     {

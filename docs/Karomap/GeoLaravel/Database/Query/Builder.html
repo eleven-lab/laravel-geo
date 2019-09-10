@@ -97,7 +97,7 @@
                     $this
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_whereEquals">whereEquals</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+                    <a href="#method_whereEquals">whereEquals</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -141,7 +141,7 @@
                     $this
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_whereContains">whereContains</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+                    <a href="#method_whereContains">whereContains</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -185,7 +185,7 @@
                     $this
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_whereIntersects">whereIntersects</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+                    <a href="#method_whereIntersects">whereIntersects</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -229,7 +229,7 @@
                     $this
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_whereTouches">whereTouches</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+                    <a href="#method_whereTouches">whereTouches</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -273,7 +273,7 @@
                     $this
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_whereOverlaps">whereOverlaps</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+                    <a href="#method_whereOverlaps">whereOverlaps</a>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -320,9 +320,9 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_whereEquals">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L18">line 18</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L19">line 19</a></div>
         <code>                    $this
-    <strong>whereEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+    <strong>whereEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         </code>
     </h3>
     <div class="details">
@@ -344,12 +344,12 @@
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$boolean</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>bool</td>
                 <td>$not</td>
                 <td></td>
             </tr>
@@ -373,7 +373,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereNotEquals">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L32">line 32</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L33">line 33</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>whereNotEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -416,7 +416,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereEquals">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L42">line 42</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L43">line 43</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -459,7 +459,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereNotEquals">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L52">line 52</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L53">line 53</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereNotEquals</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -502,9 +502,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereContains">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L64">line 64</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L66">line 66</a></div>
         <code>                    $this
-    <strong>whereContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+    <strong>whereContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         </code>
     </h3>
     <div class="details">
@@ -526,12 +526,12 @@
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$boolean</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>bool</td>
                 <td>$not</td>
                 <td></td>
             </tr>
@@ -555,7 +555,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereNotContains">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L78">line 78</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L80">line 80</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>whereNotContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -598,7 +598,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereContains">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L88">line 88</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L90">line 90</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -641,7 +641,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereNotContains">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L98">line 98</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L100">line 100</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereNotContains</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -684,9 +684,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereIntersects">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L110">line 110</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L113">line 113</a></div>
         <code>                    $this
-    <strong>whereIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+    <strong>whereIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         </code>
     </h3>
     <div class="details">
@@ -708,12 +708,12 @@
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$boolean</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>bool</td>
                 <td>$not</td>
                 <td></td>
             </tr>
@@ -737,7 +737,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereNotIntersects">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L124">line 124</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L127">line 127</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>whereNotIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -780,7 +780,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereIntersects">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L134">line 134</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L137">line 137</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -823,7 +823,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereNotIntersects">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L144">line 144</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L147">line 147</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereNotIntersects</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -866,9 +866,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereTouches">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L156">line 156</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L160">line 160</a></div>
         <code>                    $this
-    <strong>whereTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+    <strong>whereTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         </code>
     </h3>
     <div class="details">
@@ -890,12 +890,12 @@
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$boolean</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>bool</td>
                 <td>$not</td>
                 <td></td>
             </tr>
@@ -919,7 +919,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereNotTouches">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L170">line 170</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L174">line 174</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>whereNotTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -962,7 +962,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereTouches">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L180">line 180</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L184">line 184</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -1005,7 +1005,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereNotTouches">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L190">line 190</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L194">line 194</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereNotTouches</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -1048,9 +1048,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereOverlaps">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L202">line 202</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L207">line 207</a></div>
         <code>                    $this
-    <strong>whereOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, $boolean = &#039;and&#039;, $not = false)
+    <strong>whereOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value, string $boolean = &#039;and&#039;, bool $not = false)
         </code>
     </h3>
     <div class="details">
@@ -1072,12 +1072,12 @@
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$boolean</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
+                <td>bool</td>
                 <td>$not</td>
                 <td></td>
             </tr>
@@ -1101,7 +1101,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_whereNotOverlaps">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L216">line 216</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L221">line 221</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>whereNotOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -1144,7 +1144,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereOverlaps">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L226">line 226</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L231">line 231</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>
@@ -1187,7 +1187,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_orWhereNotOverlaps">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L236">line 236</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/Query/Builder.php#L241">line 241</a></div>
         <code>                    <a href="../../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>orWhereNotOverlaps</strong>($column, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $value)
         </code>

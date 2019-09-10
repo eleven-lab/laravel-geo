@@ -16,7 +16,12 @@ use Karomap\PHPOGC\OGCObject;
 class MySqlConnection extends IlluminateMySqlConnection
 {
     /**
-     * {@inheritDoc}
+     * @param mixed $pdo
+     * @param string $database
+     * @param string $tablePrefix
+     * @param array $config
+     *
+     * @return void
      */
     public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
     {
@@ -224,6 +229,7 @@ class MySqlConnection extends IlluminateMySqlConnection
     /**
      * @param  mixed  $from
      * @param  mixed  $to
+     * @param  string|null  $as
      * @return string
      */
     public function queryDistance($from, $to, $as = null)

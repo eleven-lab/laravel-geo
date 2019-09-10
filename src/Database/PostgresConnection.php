@@ -16,7 +16,12 @@ use Karomap\PHPOGC\OGCObject;
 class PostgresConnection extends IlluminatePostgresConnection
 {
     /**
-     * {@inheritDoc}
+     * @param mixed $pdo
+     * @param string $database
+     * @param string $tablePrefix
+     * @param array $config
+     *
+     * @return void
      */
     public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
     {
@@ -83,7 +88,10 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
+     * Get a new raw geo query expression.
+     *
      * @param  \Karomap\PHPOGC\OGCObject  $geo
+     *
      * @return \Illuminate\Database\Query\Expression
      */
     public function rawGeo(OGCObject $geo)
@@ -105,6 +113,7 @@ class PostgresConnection extends IlluminatePostgresConnection
 
     /**
      * @param  \Karomap\PHPOGC\OGCObject  $geo
+     * @param  bool  $geometry
      * @return string
      */
     public function geoFromText(OGCObject $geo, $geometry = true)
@@ -234,6 +243,7 @@ class PostgresConnection extends IlluminatePostgresConnection
     /**
      * @param  mixed  $from
      * @param  mixed  $to
+     * @param  string|null  $as
      * @return string
      */
     public function queryDistance($from, $to, $as = null)

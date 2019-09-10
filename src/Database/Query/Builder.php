@@ -11,8 +11,9 @@ class Builder extends IlluminateBuilder
     /**
      * @param $column
      * @param $value
-     * @param bool $not
      * @param string $boolean
+     * @param bool $not
+     *
      * @return $this
      */
     public function whereEquals($column, OGCObject $value, $boolean = 'and', $not = false)
@@ -57,8 +58,9 @@ class Builder extends IlluminateBuilder
     /**
      * @param $column
      * @param $value
-     * @param bool $not
      * @param string $boolean
+     * @param bool $not
+     *
      * @return $this
      */
     public function whereContains($column, OGCObject $value, $boolean = 'and', $not = false)
@@ -103,8 +105,9 @@ class Builder extends IlluminateBuilder
     /**
      * @param $column
      * @param $value
-     * @param bool $not
      * @param string $boolean
+     * @param bool $not
+     *
      * @return $this
      */
     public function whereIntersects($column, OGCObject $value, $boolean = 'and', $not = false)
@@ -149,8 +152,9 @@ class Builder extends IlluminateBuilder
     /**
      * @param $column
      * @param $value
-     * @param bool $not
      * @param string $boolean
+     * @param bool $not
+     *
      * @return $this
      */
     public function whereTouches($column, OGCObject $value, $boolean = 'and', $not = false)
@@ -195,8 +199,9 @@ class Builder extends IlluminateBuilder
     /**
      * @param $column
      * @param $value
-     * @param bool $not
      * @param string $boolean
+     * @param bool $not
+     *
      * @return $this
      */
     public function whereOverlaps($column, OGCObject $value, $boolean = 'and', $not = false)
@@ -237,5 +242,4 @@ class Builder extends IlluminateBuilder
     {
         return $this->whereOverlaps($column, $value, 'or', true);
     }
-
 }

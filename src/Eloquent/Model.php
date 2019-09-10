@@ -5,8 +5,6 @@ namespace Karomap\GeoLaravel\Eloquent;
 use CrEOF\Geo\WKT\Parser as WKTParser;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Facades\DB;
-use Karomap\GeoLaravel\Database\Query\Builder;
 use Karomap\GeoLaravel\Exceptions\GeoException;
 use Karomap\PHPOGC\OGCObject;
 
@@ -41,6 +39,11 @@ class Model extends IlluminateModel
      */
     public $tmpGeo = [];
 
+    /**
+     * Termporary SRID storage.
+     *
+     * @var array
+     */
     public $tmpSRID = [];
 
     /**
@@ -66,20 +69,6 @@ class Model extends IlluminateModel
         static::saved(function ($model) {
             self::updateGeoAttributes($model);
         });
-    }
-
-    /**
-     * Get a new custom query builder instance for the connection.
-     *
-     * @return \Illuminate\Database\Query\Builder
-     */
-    protected function newBaseQueryBuilder()
-    {
-        $conn = $this->getConnection();
-
-        $grammar = $conn->getQueryGrammar();
-
-        return new Builder($conn, $grammar, $conn->getPostProcessor());
     }
 
     /**
@@ -138,7 +127,7 @@ class Model extends IlluminateModel
                     unset($model->tmpGeo[$attrname]);
                 } elseif ($model->$attrname instanceof $classname) {
                     $model->tmpGeo[$attrname] = $model->$attrname;
-                    $model->setAttribute($attrname,  DB::rawGeo($model->$attrname));
+                    $model->setAttribute($attrname,  $model->getConnection()->rawGeo($model->$attrname));
                 } else {
                     throw new \Exception('Geometry attribute ' . $attrname . ' must be an instance of ' . $classname);
                 }
@@ -162,13 +151,13 @@ class Model extends IlluminateModel
      * @param string $attrname
      * @return int
      */
-    public function getSRID(string $attrname)
+    public function getSRID($attrname)
     {
         if (!in_array($attrname, array_flatten($this->getGeometries())))
             throw new \Exception("Attribute $attrname is not a geometry");
 
         if (!isset($this->tmpSRID[$attrname])) {
-            $this->tmpSRID[$attrname] = DB::getSRID($this->getTable(), $attrname);
+            $this->tmpSRID[$attrname] = $this->getConnection()->getSRID($this->getTable(), $attrname);
         }
 
         return $this->tmpSRID[$attrname];
@@ -187,7 +176,6 @@ class Model extends IlluminateModel
     {
         /** @var Model $model */
         $model = parent::newFromBuilder($attributes, $connection);
-        if (empty($model->getGeometries())) return;
 
         foreach ($model->getGeometries() as $geotype => $attrnames) {
             if (!self::isValidGeotype($geotype))
@@ -226,7 +214,7 @@ class Model extends IlluminateModel
             # 3) WKT: else
             #
             if (!ctype_print($data) or ctype_xdigit($data)) {
-                $wkb = \DB::fromRawToWKB(parent::__get($key));
+                $wkb = $this->getConnection()->fromRawToWKB(parent::__get($key));
                 $instance = $classname::fromWKB($wkb);
             } else { // assuming that it is in WKT
                 $instance = $classname::fromWKT($data);
@@ -249,8 +237,6 @@ class Model extends IlluminateModel
     public function attributesToArray()
     {
         $attributes = parent::attributesToArray();
-
-        if (empty($this->getGeometries())) return $attributes;
 
         // Convert geometry attributes to array.
         foreach ($this->getGeometries() as $keys) {
