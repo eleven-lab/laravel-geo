@@ -44,6 +44,8 @@ class PostgresTest extends TestCase
             $table->spatialIndex('point');
             $table->spatialIndex(['polygon', 'geometry']); // PostgreSQL supports multiple columns index
         });
+
+        $this->createdTables[] = $tableName;
     }
 
     /**
@@ -56,7 +58,6 @@ class PostgresTest extends TestCase
         $tableName = 'geom_test';
         $this->createTable($tableName);
         $this->assertTrue(Schema::hasTable($tableName));
-        $this->createdTables[] = $tableName;
 
         $geometryColumns = [
             'point',
@@ -86,7 +87,6 @@ class PostgresTest extends TestCase
         $tableName = 'geog_test';
         $this->createTable($tableName);
         $this->assertTrue(Schema::hasTable($tableName));
-        $this->createdTables[] = $tableName;
 
         $geometryColumns = [
             'point',

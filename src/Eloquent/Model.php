@@ -5,6 +5,7 @@ namespace Karomap\GeoLaravel\Eloquent;
 use CrEOF\Geo\WKT\Parser as WKTParser;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Support\Facades\DB;
 use Karomap\GeoLaravel\Database\Query\Builder;
 use Karomap\GeoLaravel\Exceptions\GeoException;
 use Karomap\PHPOGC\OGCObject;
@@ -103,7 +104,7 @@ class Model extends IlluminateModel
      */
     private static function getGeoType($model, $attribute)
     {
-        foreach ($model->geometries as $geometry => $attributes) {
+        foreach ($model->getGeometries() as $geometry => $attributes) {
             if (in_array($attribute, $attributes))
                 return $geometry;
         }
@@ -120,9 +121,9 @@ class Model extends IlluminateModel
      */
     public static function updateGeoAttributes($model)
     {
-        if (!isset($model->geometries)) return;
+        if (empty($model->getGeometries())) return;
 
-        foreach ($model->geometries as $geotype => $attrnames) {
+        foreach ($model->getGeometries() as $geotype => $attrnames) {
             if (!self::isValidGeotype($geotype))
                 throw new \Exception('Unknown geotype: ' . $geotype);
 
@@ -132,14 +133,12 @@ class Model extends IlluminateModel
                 if (!isset($model->$attrname))
                     continue 2;
 
-                $srid = $model->getSRID($attrname);
-
                 if ($model->$attrname instanceof Expression) {
                     $model->setAttribute($attrname,  $model->tmpGeo[$attrname]);
                     unset($model->tmpGeo[$attrname]);
                 } elseif ($model->$attrname instanceof $classname) {
                     $model->tmpGeo[$attrname] = $model->$attrname;
-                    $model->setAttribute($attrname,  \DB::rawGeo($model->$attrname));
+                    $model->setAttribute($attrname,  DB::rawGeo($model->$attrname));
                 } else {
                     throw new \Exception('Geometry attribute ' . $attrname . ' must be an instance of ' . $classname);
                 }
@@ -147,13 +146,29 @@ class Model extends IlluminateModel
         }
     }
 
-    public function getSRID($attrname)
+    /**
+     * Get geometry attributes definition.
+     *
+     * @return array
+     */
+    public function getGeometries()
     {
-        if (!in_array($attrname, array_flatten($this->geometries)))
+        return is_array($this->geometries) ? $this->geometries : [];
+    }
+
+    /**
+     * Get SRID for geometry attribute.
+     *
+     * @param string $attrname
+     * @return int
+     */
+    public function getSRID(string $attrname)
+    {
+        if (!in_array($attrname, array_flatten($this->getGeometries())))
             throw new \Exception("Attribute $attrname is not a geometry");
 
         if (!isset($this->tmpSRID[$attrname])) {
-            $this->tmpSRID[$attrname] = \DB::getSRID($this->getTable(), $attrname);
+            $this->tmpSRID[$attrname] = DB::getSRID($this->getTable(), $attrname);
         }
 
         return $this->tmpSRID[$attrname];
@@ -170,10 +185,11 @@ class Model extends IlluminateModel
      */
     public function newFromBuilder($attributes = [], $connection = null)
     {
+        /** @var Model $model */
         $model = parent::newFromBuilder($attributes, $connection);
-        if (!isset($model->geometries)) return;
+        if (empty($model->getGeometries())) return;
 
-        foreach ($model->geometries as $geotype => $attrnames) {
+        foreach ($model->getGeometries() as $geotype => $attrnames) {
             if (!self::isValidGeotype($geotype))
                 throw new \Exception('Unknown geotype: ' . $geotype);
 
@@ -195,7 +211,7 @@ class Model extends IlluminateModel
     public function __get($key)
     {
         if (
-            in_array($key, array_flatten($this->geometries)) &&     // if the attribute is a geometry
+            in_array($key, array_flatten($this->getGeometries())) &&     // if the attribute is a geometry
             !parent::__get($key) instanceof OGCObject &&           // if it wasn't still converted to geo object
             !parent::__get($key) instanceof Expression &&          // if it is not in DB Expression form
             !empty(parent::__get($key))                               // if it is not empty
@@ -234,10 +250,10 @@ class Model extends IlluminateModel
     {
         $attributes = parent::attributesToArray();
 
-        if (!isset($this->geometries)) return $attributes;
+        if (empty($this->getGeometries())) return $attributes;
 
         // Convert geometry attributes to array.
-        foreach ($this->geometries as $type => $keys) {
+        foreach ($this->getGeometries() as $keys) {
             foreach ($keys as $key) {
                 if (array_key_exists($key, $attributes) && $attributes[$key] instanceof OGCObject) {
                     $attributes[$key] = $attributes[$key]->toArray();
@@ -257,11 +273,11 @@ class Model extends IlluminateModel
      */
     public function toGeoJson()
     {
-        if (!isset($this->geometries))
+        if (empty($this->getGeometries()))
             throw new GeoException('Error: No visible geometry attribute found.');
 
         $attributes = parent::attributesToArray();
-        $geometryKeys = array_flatten($this->geometries);
+        $geometryKeys = array_flatten($this->getGeometries());
         $properties = array_diff_key($attributes, array_flip($geometryKeys));
         $geometryKeys = array_intersect(array_keys($attributes), $geometryKeys);
 
