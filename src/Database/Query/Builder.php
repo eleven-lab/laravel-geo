@@ -2,6 +2,7 @@
 
 namespace Karomap\GeoLaravel\Database\Query;
 
+use CrEOF\Geo\WKB\Parser as WKBParser;
 use Illuminate\Database\Query\Builder as IlluminateBuilder;
 use Karomap\PHPOGC\OGCObject;
 
@@ -241,5 +242,42 @@ class Builder extends IlluminateBuilder
     public function orWhereNotOverlaps($column, OGCObject $value)
     {
         return $this->whereOverlaps($column, $value, 'or', true);
+    }
+
+    /**
+     * Get query result as GeoJSON.
+     *
+     * @param string|string[] $geoms
+     * @param array $columns
+     * @return string
+     */
+    public function getGeoJson($geoms, $columns = ['*'])
+    {
+        $geoms = is_array($geoms) ? $geoms : [$geoms];
+        $geoArray = [
+            'type' => 'FeatureCollection',
+            'features' => [],
+        ];
+
+        $db = $this->getConnection();
+        $parser = new WKBParser();
+
+        foreach ($this->get($columns) as $row) {
+            $row = get_object_vars($row);
+            $properties = array_diff_key($row, array_flip($geoms));
+
+            foreach ($geoms as $geom) {
+                $parsed = $parser->parse($db->fromRawToWKB($row[$geom]));
+                $geoArray['features'][] = [
+                    'geometry' => [
+                        'type' => $parsed['type'],
+                        'coordinates' => $parsed['value'],
+                    ],
+                    'properties' => $properties,
+                ];
+            }
+        }
+
+        return json_encode($geoArray);
     }
 }

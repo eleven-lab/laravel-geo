@@ -159,22 +159,12 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    array
+                    <abbr title="Illuminate\Database\Eloquent\Builder">Builder</abbr>|<a href="../../../Karomap/GeoLaravel/Eloquent/Model.html"><abbr title="Karomap\GeoLaravel\Eloquent\Model">Model</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_getGeometries">getGeometries</a>()
+                    <a href="#method_newEloquentBuilder">newEloquentBuilder</a>(<abbr title="Illuminate\Database\Query\Builder">Builder</abbr> $query)
         
-                                            <p>Get geometry attributes definition.</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    int
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getSRID">getSRID</a>(string $attrname)
-        
-                                            <p>Get SRID for geometry attribute.</p>                </div>
+                                            <p>Create a new Eloquent query builder for the model.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -205,6 +195,26 @@
                     <a href="#method_attributesToArray">attributesToArray</a>()
         
                                             <p>Convert the model's attributes to an array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getGeometries">getGeometries</a>()
+        
+                                            <p>Get geometry attributes definition.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSRID">getSRID</a>(string $attrname)
+        
+                                            <p>Get SRID for geometry attribute.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -265,7 +275,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_updateGeoAttributes">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L111">line 111</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L93">line 93</a></div>
         <code>        static            void
     <strong>updateGeoAttributes</strong>(<a href="../../../Karomap/GeoLaravel/Eloquent/Model.html"><abbr title="Karomap\GeoLaravel\Eloquent\Model">Model</abbr></a> $model)
         </code>
@@ -313,10 +323,10 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getGeometries">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L143">line 143</a></div>
-        <code>                    array
-    <strong>getGeometries</strong>()
+                    <h3 id="method_newEloquentBuilder">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L130">line 130</a></div>
+        <code>                    <abbr title="Illuminate\Database\Eloquent\Builder">Builder</abbr>|<a href="../../../Karomap/GeoLaravel/Eloquent/Model.html"><abbr title="Karomap\GeoLaravel\Eloquent\Model">Model</abbr></a>
+    <strong>newEloquentBuilder</strong>(<abbr title="Illuminate\Database\Query\Builder">Builder</abbr> $query)
         </code>
     </h3>
     <div class="details">
@@ -324,44 +334,14 @@
     
 
                     <div class="method-description">
-                                    <p>Get geometry attributes definition.</p>                                                </div>
-                <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td>array</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_getSRID">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L154">line 154</a></div>
-        <code>                    int
-    <strong>getSRID</strong>(string $attrname)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>Get SRID for geometry attribute.</p>                                                </div>
+                                    <p>Create a new Eloquent query builder for the model.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>string</td>
-                <td>$attrname</td>
+                <td><abbr title="Illuminate\Database\Query\Builder">Builder</abbr></td>
+                <td>$query</td>
                 <td></td>
             </tr>
             </table>
@@ -371,7 +351,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td>int</td>
+            <td><abbr title="Illuminate\Database\Eloquent\Builder">Builder</abbr>|<a href="../../../Karomap/GeoLaravel/Eloquent/Model.html"><abbr title="Karomap\GeoLaravel\Eloquent\Model">Model</abbr></a></td>
             <td></td>
         </tr>
     </table>
@@ -384,7 +364,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_newFromBuilder">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L175">line 175</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L144">line 144</a></div>
         <code>                    <a href="../../../Karomap/GeoLaravel/Eloquent/Model.html"><abbr title="Karomap\GeoLaravel\Eloquent\Model">Model</abbr></a>
     <strong>newFromBuilder</strong>(array $attributes = [], string|null $connection = null)
         </code>
@@ -438,7 +418,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___get">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L200">line 200</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L169">line 169</a></div>
         <code>                    mixed
     <strong>__get</strong>(string $key)
         </code>
@@ -478,7 +458,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_attributesToArray">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L238">line 238</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L210">line 210</a></div>
         <code>                    array
     <strong>attributesToArray</strong>()
         </code>
@@ -507,8 +487,78 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_getGeometries">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L250">line 250</a></div>
+        <code>                    array
+    <strong>getGeometries</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get geometry attributes definition.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSRID">
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L261">line 261</a></div>
+        <code>                    int
+    <strong>getSRID</strong>(string $attrname)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get SRID for geometry attribute.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attrname</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_toGeoJson">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L263">line 263</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L281">line 281</a></div>
         <code>                    string
     <strong>toGeoJson</strong>()
         </code>
@@ -547,7 +597,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_buildFeature">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L302">line 302</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Eloquent/Model.php#L321">line 321</a></div>
         <code>            protected        array
     <strong>buildFeature</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $ogc, array $properties)
         </code>

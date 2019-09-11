@@ -11,13 +11,15 @@ use Karomap\PHPOGC\DataTypes\Point;
 class QueryTest extends TestCase
 {
     private $tableName = 'query_test';
-    private $srid = 0;
+    private $srid;
+    private $faker;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->srid = config('geo.srid', 4326);
+        $this->faker = Faker::create('id_ID');
 
         DB::setDefaultConnection('pgsql');
 
@@ -35,7 +37,20 @@ class QueryTest extends TestCase
             $table->spatialIndex('location');
         });
 
-        // $this->createdTables[] = self::TABLE_NAME;
+        $this->createdTables[] = $this->tableName;
+    }
+
+    protected function seedDB($count = 10)
+    {
+        for ($i = 0; $i < $count; ++$i) {
+            $address = $this->faker->address;
+            $location = new Point($this->faker->latitude, $this->faker->longitude, $this->srid);
+            $locationRaw = app('db.connection')->geoFromText($location);
+            DB::insert(
+                "insert into $this->tableName (address, location) values (?, $locationRaw)",
+                [$address]
+            );
+        }
     }
 
     /**
@@ -45,9 +60,8 @@ class QueryTest extends TestCase
      */
     public function testInsert()
     {
-        $faker = Faker::create('id_ID');
-        $address = $faker->address;
-        $location = new Point($faker->latitude, $faker->longitude, $this->srid);
+        $address = $this->faker->address;
+        $location = new Point($this->faker->latitude, $this->faker->longitude, $this->srid);
         $locationRaw = app('db.connection')->geoFromText($location);
         $ret = DB::insert(
             "insert into $this->tableName (address, location) values (?, $locationRaw)",
@@ -63,12 +77,29 @@ class QueryTest extends TestCase
      */
     public function testSelect()
     {
-        $this->testInsert();
+        $this->seedDB();
         $rows = DB::select("select * from $this->tableName");
         $this->assertNotEmpty($rows);
         $obj = $rows[0];
         $obj->location = Point::fromWKB($obj->location);
         $this->assertInstanceOf(Point::class, $obj->location);
         $this->assertEquals($obj->location->srid, $this->srid);
+    }
+
+    /**
+     * Test GeoJSON.
+     *
+     * @group query
+     * @group geojson
+     */
+    public function testGeoJson()
+    {
+        $this->seedDB();
+        $geoJson = DB::table($this->tableName)->getGeoJson('location');
+        $this->assertJson($geoJson);
+
+        $geoArray = json_decode($geoJson, true);
+        $this->assertArraySubset(['type' => 'FeatureCollection'], $geoArray);
+        $this->assertArrayHasKey('features', $geoArray);
     }
 }
