@@ -40,7 +40,7 @@ class QueryTest extends TestCase
         $this->createdTables[] = $this->tableName;
     }
 
-    protected function seedDB($count = 10)
+    private function seedDB($count = 10)
     {
         for ($i = 0; $i < $count; ++$i) {
             $address = $this->faker->address;
@@ -95,11 +95,43 @@ class QueryTest extends TestCase
     public function testGeoJson()
     {
         $this->seedDB();
-        $geoJson = DB::table($this->tableName)->getGeoJson('location');
+        $geoJson = DB::table($this->tableName)->getGeoJson('location', ['address']);
         $this->assertJson($geoJson);
 
         $geoArray = json_decode($geoJson, true);
         $this->assertArraySubset(['type' => 'FeatureCollection'], $geoArray);
         $this->assertArrayHasKey('features', $geoArray);
+    }
+
+    /**
+     * Test GeoJSON with column that doesn't exist.
+     *
+     * @group query
+     * @group geojson
+     * @group failed
+     *
+     * @expectedException \ErrorException
+     * @expectedExceptionMessage Undefined index: not_exists
+     */
+    public function testGeoJsonFail()
+    {
+        $this->seedDB();
+        DB::table($this->tableName)->getGeoJson('not_exists');
+    }
+
+    /**
+     * Test GeoJSON with non geometry column.
+     *
+     * @group query
+     * @group geojson
+     * @group failed
+     *
+     * @expectedException \ErrorException
+     * @expectedExceptionMessage pack(): Type H: illegal hex digit
+     */
+    public function testGeoJsonFail2()
+    {
+        $this->seedDB();
+        DB::table($this->tableName)->getGeoJson('address');
     }
 }

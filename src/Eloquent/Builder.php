@@ -3,6 +3,7 @@
 namespace Karomap\GeoLaravel\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as IlluminateBuilder;
+use Karomap\GeoLaravel\Exceptions\GeoException;
 
 class Builder extends IlluminateBuilder
 {
@@ -11,6 +12,7 @@ class Builder extends IlluminateBuilder
      *
      * @param array $columns
      * @return string
+     * @throws \Karomap\GeoLaravel\Exceptions\GeoException
      */
     public function getGeoJson($columns = ['*'])
     {
@@ -18,6 +20,18 @@ class Builder extends IlluminateBuilder
             'type' => 'FeatureCollection',
             'features' => [],
         ];
+
+        /** @var Model $model */
+        $model = $this->getModel();
+        $geoms = array_flatten($model->getGeometries());
+
+        if (!count($geoms)) {
+            throw new GeoException('Error: No visible geometry attribute found.');
+        }
+
+        if ($columns != ['*']) {
+            $columns = array_values(array_unique(array_merge($columns, $geoms)));
+        }
 
         foreach ($this->get($columns) as $model) {
             $data = json_decode($model->toGeoJson(), true);

@@ -16,7 +16,6 @@ class PostgresTest extends TestCase
         parent::setUp();
         DB::setDefaultConnection('pgsql');
 
-        // Create PostGIS extension if not exixts
         DB::statement('create extension if not exists postgis');
     }
 
@@ -42,7 +41,7 @@ class PostgresTest extends TestCase
             $table->timestamps();
 
             $table->spatialIndex('point');
-            $table->spatialIndex(['polygon', 'geometry']); // PostgreSQL supports multiple columns index
+            $table->spatialIndex(['polygon', 'geometry']);
         });
 
         $this->createdTables[] = $tableName;

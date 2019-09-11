@@ -23,6 +23,11 @@ class TestModel extends Model
     ];
 }
 
+class TestNonGeoModel extends TestModel
+{
+    protected $geometries = [];
+}
+
 class ModelTest extends TestCase
 {
     protected function setUp(): void
@@ -30,30 +35,20 @@ class ModelTest extends TestCase
         parent::setUp();
         DB::setDefaultConnection('pgsql');
 
-        // Create PostGIS extension if not exixts
         DB::statement('create extension if not exists postgis');
-    }
 
-    private function createTable(bool $fresh = true)
-    {
         $tablename = 'model_test';
 
-        if ($fresh) {
-            Schema::dropIfExists($tablename);
-        }
+        Schema::create($tablename, function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->point('point', 4326)->nullable();
+            $table->lineString('line', 4326)->nullable();
+            $table->polygon('polygon', 4326)->nullable();
+            $table->timestamps();
+        });
 
-        if (!Schema::hasTable($tablename)) {
-            Schema::create($tablename, function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('name');
-                $table->point('point', 4326)->nullable();
-                $table->lineString('line', 4326)->nullable();
-                $table->polygon('polygon', 4326)->nullable();
-                $table->timestamps();
-            });
-
-            $this->createdTables[] = $tablename;
-        }
+        $this->createdTables[] = $tablename;
     }
 
     /**
@@ -63,8 +58,6 @@ class ModelTest extends TestCase
      */
     public function testModel()
     {
-        $this->createTable();
-
         /** @var TestModel $instance */
         $instance = TestModel::create([
             'name' => 'Test',
@@ -86,15 +79,13 @@ class ModelTest extends TestCase
     }
 
     /**
-     * Test geojson.
+     * Test GeoJSON.
      *
      * @group model
      * @group geojson
      */
     public function testGeoJson()
     {
-        $this->createTable();
-
         $builder = TestModel::query();
 
         $this->assertInstanceOf(Builder::class, $builder);
@@ -113,5 +104,20 @@ class ModelTest extends TestCase
         $geoArray = json_decode($geoJson, true);
         $this->assertArraySubset(['type' => 'FeatureCollection'], $geoArray);
         $this->assertArrayHasKey('features', $geoArray);
+    }
+
+    /**
+     * Test GeoJSON with model that does not have geometry attributes definition.
+     *
+     * @group model
+     * @group geojson
+     * @group failed
+     *
+     * @expectedException \Karomap\GeoLaravel\Exceptions\GeoException
+     * @expectedExceptionMessage Error: No visible geometry attribute found.
+     */
+    public function testGeoJsonFailed()
+    {
+        TestNonGeoModel::getGeoJson();
     }
 }

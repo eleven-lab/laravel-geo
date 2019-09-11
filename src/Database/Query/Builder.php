@@ -250,15 +250,20 @@ class Builder extends IlluminateBuilder
      * @param string|string[] $geoms
      * @param array $columns
      * @return string
+     * @throws \ErrorException
      */
     public function getGeoJson($geoms, $columns = ['*'])
     {
         $geoms = is_array($geoms) ? $geoms : [$geoms];
+
+        if ($columns != ['*']) {
+            $columns = array_values(array_unique(array_merge($columns, $geoms)));
+        }
+
         $geoArray = [
             'type' => 'FeatureCollection',
             'features' => [],
         ];
-
         $db = $this->getConnection();
         $parser = new WKBParser();
 
