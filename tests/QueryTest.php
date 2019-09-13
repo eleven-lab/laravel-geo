@@ -99,7 +99,7 @@ class QueryTest extends TestCase
         $this->assertJson($geoJson);
 
         $geoArray = json_decode($geoJson, true);
-        $this->assertArraySubset(['type' => 'FeatureCollection'], $geoArray);
+        $this->assertArrayHasKey('type', $geoArray);
         $this->assertArrayHasKey('features', $geoArray);
     }
 
@@ -109,12 +109,12 @@ class QueryTest extends TestCase
      * @group query
      * @group geojson
      * @group failed
-     *
-     * @expectedException \ErrorException
-     * @expectedExceptionMessage Undefined index: not_exists
      */
     public function testGeoJsonFail()
     {
+        $this->expectException(\ErrorException::class);
+        $this->expectExceptionMessage('Undefined index: not_exists');
+
         $this->seedDB();
         DB::table($this->tableName)->getGeoJson('not_exists');
     }
@@ -125,12 +125,12 @@ class QueryTest extends TestCase
      * @group query
      * @group geojson
      * @group failed
-     *
-     * @expectedException \ErrorException
-     * @expectedExceptionMessage pack(): Type H: illegal hex digit
      */
     public function testGeoJsonFail2()
     {
+        $this->expectException(\ErrorException::class);
+        $this->expectExceptionMessage('pack(): Type H: illegal hex digit');
+
         $this->seedDB();
         DB::table($this->tableName)->getGeoJson('address');
     }

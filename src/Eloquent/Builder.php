@@ -3,6 +3,7 @@
 namespace Karomap\GeoLaravel\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as IlluminateBuilder;
+use Illuminate\Support\Arr;
 use Karomap\GeoLaravel\Exceptions\GeoException;
 
 class Builder extends IlluminateBuilder
@@ -23,7 +24,7 @@ class Builder extends IlluminateBuilder
 
         /** @var Model $model */
         $model = $this->getModel();
-        $geoms = array_flatten($model->getGeometries());
+        $geoms = Arr::flatten($model->getGeometries());
 
         if (!count($geoms)) {
             throw new GeoException('Error: No visible geometry attribute found.');

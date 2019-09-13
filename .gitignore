@@ -5,3 +5,4 @@ cache
 composer.lock
 
 tests/app/.env
+.phpunit.result.cache

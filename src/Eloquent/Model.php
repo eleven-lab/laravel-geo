@@ -5,6 +5,7 @@ namespace Karomap\GeoLaravel\Eloquent;
 use CrEOF\Geo\WKT\Parser as WKTParser;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Support\Arr;
 use Karomap\GeoLaravel\Exceptions\GeoException;
 use Karomap\PHPOGC\OGCObject;
 
@@ -171,7 +172,7 @@ class Model extends IlluminateModel
         $attribute = parent::__get($key);
 
         if (
-            in_array($key, array_flatten($this->getGeometries())) &&
+            in_array($key, Arr::flatten($this->getGeometries())) &&
             !$attribute instanceof OGCObject &&
             !$attribute instanceof Expression &&
             !empty($attribute)
@@ -260,7 +261,7 @@ class Model extends IlluminateModel
      */
     public function getSRID($attrname)
     {
-        if (!in_array($attrname, array_flatten($this->getGeometries()))) {
+        if (!in_array($attrname, Arr::flatten($this->getGeometries()))) {
             throw new \Exception("Attribute $attrname is not a geometry");
         }
 
@@ -285,7 +286,7 @@ class Model extends IlluminateModel
         }
 
         $attributes = parent::attributesToArray();
-        $geometryKeys = array_flatten($this->getGeometries());
+        $geometryKeys = Arr::flatten($this->getGeometries());
         $properties = array_diff_key($attributes, array_flip($geometryKeys));
         $geometryKeys = array_values(array_intersect(array_keys($attributes), $geometryKeys));
 

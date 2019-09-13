@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Karomap\GeoLaravel\Database\Schema\Blueprint;
 use Karomap\GeoLaravel\Eloquent\Builder;
 use Karomap\GeoLaravel\Eloquent\Model;
+use Karomap\GeoLaravel\Exceptions\GeoException;
 use Karomap\PHPOGC\DataTypes\LineString;
 use Karomap\PHPOGC\DataTypes\Point;
 use Karomap\PHPOGC\DataTypes\Polygon;
@@ -102,7 +103,7 @@ class ModelTest extends TestCase
         $this->assertJson($geoJson);
 
         $geoArray = json_decode($geoJson, true);
-        $this->assertArraySubset(['type' => 'FeatureCollection'], $geoArray);
+        $this->assertArrayHasKey('type', $geoArray);
         $this->assertArrayHasKey('features', $geoArray);
     }
 
@@ -112,12 +113,12 @@ class ModelTest extends TestCase
      * @group model
      * @group geojson
      * @group failed
-     *
-     * @expectedException \Karomap\GeoLaravel\Exceptions\GeoException
-     * @expectedExceptionMessage Error: No visible geometry attribute found.
      */
     public function testGeoJsonFailed()
     {
+        $this->expectException(GeoException::class);
+        $this->expectExceptionMessage('Error: No visible geometry attribute found.');
+
         TestNonGeoModel::getGeoJson();
     }
 }
