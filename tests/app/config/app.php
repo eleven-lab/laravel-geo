@@ -10,7 +10,7 @@ return [
     'locale' => 'id',
     'fallback_locale' => 'en',
     'faker_locale' => 'id_ID',
-    'key' => null,
+    'key' => 'base64:0eTa63CqxDfkDH9nM9ZcWaZK6CxOEAwZemko9LoHdag=',
     'cipher' => 'AES-256-CBC',
     'providers' => [
         Illuminate\Bus\BusServiceProvider::class,

@@ -1,4 +1,6 @@
-[![Latest Stable Version](https://poser.pugx.org/karomap/laravel-geo/v/stable)](https://packagist.org/packages/karomap/laravel-geo) [![Latest Unstable Version](https://poser.pugx.org/karomap/laravel-geo/v/unstable)](https://packagist.org/packages/karomap/laravel-geo)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/karomap/laravel-geo?style=flat-square)](https://packagist.org/packages/karomap/laravel-geo)
+[![StyleCI](https://github.styleci.io/repos/112994242/shield?branch=master)](https://github.styleci.io/repos/112994242)
+[![Total Downloads](https://img.shields.io/packagist/dt/karomap/laravel-geo?style=flat-square)](https://packagist.org/packages/karomap/laravel-geo)
 
 # Geo Laravel
 

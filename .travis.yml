@@ -1,0 +1,27 @@
+language: php
+
+php:
+  - 7.3
+
+addons:
+  postgresql: 9.6
+  apt:
+    packages:
+      - postgresql-9.6-postgis-2.3
+
+services:
+  - mysql
+
+notifications:
+  email: false
+
+before_install:
+  - mysql -e 'CREATE DATABASE laravel_geo;'
+  - psql -c 'CREATE DATABASE laravel_geo;' -U postgres
+
+install:
+  - echo 'DB_PASSWORD=' > tests/app/.env
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+
+script:
+  - phpunit -v
