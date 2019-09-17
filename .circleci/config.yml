@@ -1,0 +1,36 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.3.9-buster
+      - image: circleci/postgres:9.6.9-postgis
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1
+          POSTGRES_DB: laravel_geo
+      - image: circleci/mysql:8.0.4
+        environment:
+          MYSQL_ROOT_PASSWORD: 1
+          MYSQL_DATABASE: laravel_geo
+
+    working_directory: ~/project
+
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y libpq-dev
+      - run: sudo docker-php-ext-install pdo_pgsql
+      - run: php -m
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer install --no-interaction --prefer-dist --no-suggest
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run: echo 'DB_PASSWORD=1\n' > tests/app/.env
+      - run: ./vendor/bin/phpunit -v
