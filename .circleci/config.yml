@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run: sudo apt update
       - run: sudo apt install -y libpq-dev
-      - run: sudo docker-php-ext-install pdo_pgsql
+      - run: sudo docker-php-ext-install bcmath pdo_mysql pdo_pgsql
       - run: php -m
       - run: sudo composer self-update
       - restore_cache:
