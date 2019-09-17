@@ -42,7 +42,7 @@ class QueryTest extends TestCase
 
     private function seedDB($count = 10)
     {
-        for ($i = 0; $i < $count; ++$i) {
+        for ($i = 0; $i < $count; $i++) {
             $address = $this->faker->address;
             $location = new Point($this->faker->latitude, $this->faker->longitude, $this->srid);
             $locationRaw = app('db.connection')->geoFromText($location);
@@ -54,7 +54,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * Insert
+     * Insert.
      *
      * @group query
      */
@@ -71,7 +71,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * Select
+     * Select.
      *
      * @group query
      */

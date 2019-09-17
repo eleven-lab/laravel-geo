@@ -11,14 +11,13 @@ class ConnectionFactory extends IlluminateConnectionFactory
     /**
      * Create a new connection instance.
      *
-     * @param  string   $driver
-     * @param  \PDO|\Closure     $connection
-     * @param  string   $database
-     * @param  string   $prefix
-     * @param  array    $config
-     * @return \Illuminate\Database\Connection
-     *
+     * @param  string                          $driver
+     * @param  \PDO|\Closure                   $connection
+     * @param  string                          $database
+     * @param  string                          $prefix
+     * @param  array                           $config
      * @throws \InvalidArgumentException
+     * @return \Illuminate\Database\Connection
      */
     protected function createConnection($driver, $connection, $database, $prefix = '', array $config = [])
     {

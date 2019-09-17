@@ -7,15 +7,15 @@ use Illuminate\Database\Schema\Blueprint as IlluminateBlueprint;
 /**
  * Extended version of Blueprint with
  * support of geo data type
- * for laravel below 5.5
+ * for laravel below 5.5.
  */
 class Blueprint extends IlluminateBlueprint
 {
     /**
      * Create a new geometry column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function geometry($column, $srid = null)
@@ -26,8 +26,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new point column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function point($column, $srid = null)
@@ -38,8 +38,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new linestring column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function lineString($column, $srid = null)
@@ -50,8 +50,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new polygon column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function polygon($column, $srid = null)
@@ -62,8 +62,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new geometrycollection column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function geometryCollection($column, $srid = null)
@@ -74,8 +74,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new multipoint column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function multiPoint($column, $srid = null)
@@ -86,8 +86,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new multilinestring column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function multiLineString($column, $srid = null)
@@ -98,8 +98,8 @@ class Blueprint extends IlluminateBlueprint
     /**
      * Create a new multipolygon column on the table.
      *
-     * @param  string  $column
-     * @param  null|int  $srid
+     * @param  string                     $column
+     * @param  int|null                   $srid
      * @return \Illuminate\Support\Fluent
      */
     public function multiPolygon($column, $srid = null)

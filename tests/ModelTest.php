@@ -91,7 +91,7 @@ class ModelTest extends TestCase
 
         $this->assertInstanceOf(Builder::class, $builder);
 
-        /** @var TestModel $instance */
+        /* @var TestModel $instance */
         TestModel::create([
             'name' => 'Test',
             'point' => new Point(1, 1),

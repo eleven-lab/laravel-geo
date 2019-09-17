@@ -23,7 +23,7 @@ class MySqlTest extends TestCase
     }
 
     /**
-     * Create table
+     * Create table.
      *
      * @group mysql
      */

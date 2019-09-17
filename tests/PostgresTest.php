@@ -20,9 +20,9 @@ class PostgresTest extends TestCase
     }
 
     /**
-     * Create table
+     * Create table.
      *
-     * @param string $tableName
+     * @param  string $tableName
      * @return void
      */
     private function createTable($tableName)
@@ -48,7 +48,7 @@ class PostgresTest extends TestCase
     }
 
     /**
-     * Create table
+     * Create table.
      *
      * @group pgsql
      */
@@ -75,7 +75,7 @@ class PostgresTest extends TestCase
     }
 
     /**
-     * Create table using Geography as spatial column type
+     * Create table using Geography as spatial column type.
      *
      * @group pgsql
      */

@@ -8,12 +8,11 @@ use Karomap\PHPOGC\OGCObject;
 
 class Builder extends IlluminateBuilder
 {
-
     /**
      * @param $column
      * @param $value
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -28,7 +27,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function whereNotEquals($column, OGCObject $value)
@@ -38,7 +37,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereEquals($column, OGCObject $value)
@@ -48,7 +47,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereNotEquals($column, OGCObject $value)
@@ -60,7 +59,7 @@ class Builder extends IlluminateBuilder
      * @param $column
      * @param $value
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -75,7 +74,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function whereNotContains($column, OGCObject $value)
@@ -85,7 +84,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereContains($column, OGCObject $value)
@@ -95,7 +94,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereNotContains($column, OGCObject $value)
@@ -107,7 +106,7 @@ class Builder extends IlluminateBuilder
      * @param $column
      * @param $value
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -122,7 +121,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function whereNotIntersects($column, OGCObject $value)
@@ -132,7 +131,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereIntersects($column, OGCObject $value)
@@ -142,7 +141,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereNotIntersects($column, OGCObject $value)
@@ -154,7 +153,7 @@ class Builder extends IlluminateBuilder
      * @param $column
      * @param $value
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -169,7 +168,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function whereNotTouches($column, OGCObject $value)
@@ -179,7 +178,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereTouches($column, OGCObject $value)
@@ -189,7 +188,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereNotTouches($column, OGCObject $value)
@@ -201,7 +200,7 @@ class Builder extends IlluminateBuilder
      * @param $column
      * @param $value
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -216,7 +215,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function whereNotOverlaps($column, OGCObject $value)
@@ -226,7 +225,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereOverlaps($column, OGCObject $value)
@@ -236,7 +235,7 @@ class Builder extends IlluminateBuilder
 
     /**
      * @param $column
-     * @param OGCObject $value
+     * @param  OGCObject $value
      * @return Builder
      */
     public function orWhereNotOverlaps($column, OGCObject $value)
@@ -247,10 +246,10 @@ class Builder extends IlluminateBuilder
     /**
      * Get query result as GeoJSON.
      *
-     * @param string|string[] $geoms
-     * @param array $columns
-     * @return string
+     * @param  string|string[] $geoms
+     * @param  array           $columns
      * @throws \ErrorException
+     * @return string
      */
     public function getGeoJson($geoms, $columns = ['*'])
     {

@@ -18,7 +18,7 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
     {
         parent::boot();
 
-        $configPath = __DIR__ . '/../config/geo.php';
+        $configPath = __DIR__.'/../config/geo.php';
 
         if (function_exists('config_path')) {
             $publishPath = config_path('geo.php');
@@ -36,7 +36,7 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider
      */
     public function register()
     {
-        $configPath = __DIR__ . '/../config/geo.php';
+        $configPath = __DIR__.'/../config/geo.php';
 
         $this->mergeConfigFrom($configPath, 'geo');
 

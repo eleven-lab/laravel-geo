@@ -24,13 +24,13 @@ class Model extends IlluminateModel
      * @var array
      */
     protected static $geoTypes = [
-        'points'                => 'Karomap\PHPOGC\DataTypes\Point',
-        'multipoints'           => 'Karomap\PHPOGC\DataTypes\MultiPoint',
-        'linestrings'           => 'Karomap\PHPOGC\DataTypes\LineString',
-        'multilinestrings'      => 'Karomap\PHPOGC\DataTypes\MultiLineString',
-        'polygons'              => 'Karomap\PHPOGC\DataTypes\Polygon',
-        'multipolygons'         => 'Karomap\PHPOGC\DataTypes\MultiPolygon',
-        'geometrycollection'    => 'Karomap\PHPOGC\DataTypes\GeometryCollection',
+        'points' => 'Karomap\PHPOGC\DataTypes\Point',
+        'multipoints' => 'Karomap\PHPOGC\DataTypes\MultiPoint',
+        'linestrings' => 'Karomap\PHPOGC\DataTypes\LineString',
+        'multilinestrings' => 'Karomap\PHPOGC\DataTypes\MultiLineString',
+        'polygons' => 'Karomap\PHPOGC\DataTypes\Polygon',
+        'multipolygons' => 'Karomap\PHPOGC\DataTypes\MultiPolygon',
+        'geometrycollection' => 'Karomap\PHPOGC\DataTypes\GeometryCollection',
     ];
 
     /**
@@ -75,21 +75,20 @@ class Model extends IlluminateModel
     /**
      * Validate geometry type.
      *
-     * @param  string  $geotype
+     * @param  string $geotype
      * @return bool
      */
     private static function isValidGeotype($geotype)
     {
-        return (in_array($geotype, array_keys(static::$geoTypes)));
+        return in_array($geotype, array_keys(static::$geoTypes));
     }
 
     /**
      * Update geometry attributes.
      *
-     * @param  \Karomap\GeoLaravel\Eloquent\Model  $model
-     * @return void
-     *
+     * @param  \Karomap\GeoLaravel\Eloquent\Model $model
      * @throws \Exception
+     * @return void
      */
     public static function updateGeoAttributes($model)
     {
@@ -99,7 +98,7 @@ class Model extends IlluminateModel
 
         foreach ($model->getGeometries() as $geotype => $attrnames) {
             if (!self::isValidGeotype($geotype)) {
-                throw new \Exception('Unknown geotype: ' . $geotype);
+                throw new \Exception('Unknown geotype: '.$geotype);
             }
 
             $classname = static::$geoTypes[$geotype];
@@ -110,13 +109,13 @@ class Model extends IlluminateModel
                 }
 
                 if ($model->$attrname instanceof Expression) {
-                    $model->setAttribute($attrname,  $model->tmpGeo[$attrname]);
+                    $model->setAttribute($attrname, $model->tmpGeo[$attrname]);
                     unset($model->tmpGeo[$attrname]);
                 } elseif ($model->$attrname instanceof $classname) {
                     $model->tmpGeo[$attrname] = $model->$attrname;
-                    $model->setAttribute($attrname,  $model->getConnection()->rawGeo($model->$attrname));
+                    $model->setAttribute($attrname, $model->getConnection()->rawGeo($model->$attrname));
                 } else {
-                    throw new \Exception('Geometry attribute ' . $attrname . ' must be an instance of ' . $classname);
+                    throw new \Exception('Geometry attribute '.$attrname.' must be an instance of '.$classname);
                 }
             }
         }
@@ -125,7 +124,7 @@ class Model extends IlluminateModel
     /**
      * Create a new Eloquent query builder for the model.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder           $query
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
     public function newEloquentBuilder($query)
@@ -136,11 +135,10 @@ class Model extends IlluminateModel
     /**
      * Create a new model instance that is existing.
      *
-     * @param  array  $attributes
-     * @param  string|null  $connection
-     * @return static
-     *
+     * @param  array       $attributes
+     * @param  string|null $connection
      * @throws \Exception
+     * @return static
      */
     public function newFromBuilder($attributes = [], $connection = null)
     {
@@ -149,7 +147,7 @@ class Model extends IlluminateModel
 
         foreach ($model->getGeometries() as $geotype => $attrnames) {
             if (!self::isValidGeotype($geotype)) {
-                throw new \Exception('Unknown geotype: ' . $geotype);
+                throw new \Exception('Unknown geotype: '.$geotype);
             }
 
             foreach ($attrnames as $attrname) {
@@ -158,13 +156,14 @@ class Model extends IlluminateModel
                 }
             }
         }
+
         return $model;
     }
 
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return mixed
      */
     public function __get($key)
@@ -180,11 +179,11 @@ class Model extends IlluminateModel
             $geotype = self::getGeoType($this, $key);
             $classname = self::$geoTypes[$geotype];
 
-            # here we have 3 possible value for $data:
-            # 1) binary: we probably have a BLOB from MySQL
-            # 2) hex: PgSQL gives an hex WKB output for geo data
-            # 3) WKT: else
-            #
+            // here we have 3 possible value for $data:
+            // 1) binary: we probably have a BLOB from MySQL
+            // 2) hex: PgSQL gives an hex WKB output for geo data
+            // 3) WKT: else
+            //
             if (!ctype_print($attribute) || ctype_xdigit($attribute)) {
                 $wkb = $this->getConnection()->fromRawToWKB($attribute);
                 $ogc = $classname::fromWKB($wkb);
@@ -227,11 +226,10 @@ class Model extends IlluminateModel
     /**
      * Get geometry type of an attribute.
      *
-     * @param  \Karomap\GeoLaravel\Eloquent\Model  $model
-     * @param  string  $attribute
-     * @return mixed
-     *
+     * @param  \Karomap\GeoLaravel\Eloquent\Model $model
+     * @param  string                             $attribute
      * @throws \Exception
+     * @return mixed
      */
     private static function getGeoType($model, $attribute)
     {
@@ -256,7 +254,7 @@ class Model extends IlluminateModel
     /**
      * Get SRID for geometry attribute.
      *
-     * @param string $attrname
+     * @param  string $attrname
      * @return int
      */
     public function getSRID($attrname)
@@ -275,9 +273,8 @@ class Model extends IlluminateModel
     /**
      * Convert model to GeoJSON.
      *
-     * @return string
-     *
      * @throws \Karomap\GeoLaravel\Exceptions\GeoException
+     * @return string
      */
     public function toGeoJson()
     {
@@ -315,9 +312,9 @@ class Model extends IlluminateModel
     /**
      * Convert model to GeoJSON feature.
      *
-     * @param  \Karomap\PHPOGC\OGCObject $ogc  Geometry attribute to convert.
-     * @param  array $properties  GeoJSON properties as array.
-     * @return array  GeoJSON feature as array.
+     * @param  \Karomap\PHPOGC\OGCObject $ogc        Geometry attribute to convert.
+     * @param  array                     $properties GeoJSON properties as array.
+     * @return array                     GeoJSON feature as array.
      */
     protected function buildFeature($ogc, $properties)
     {

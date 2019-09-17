@@ -11,9 +11,9 @@ class Builder extends IlluminateBuilder
     /**
      * Get query result as GeoJSON.
      *
-     * @param array $columns
-     * @return string
+     * @param  array                                       $columns
      * @throws \Karomap\GeoLaravel\Exceptions\GeoException
+     * @return string
      */
     public function getGeoJson($columns = ['*'])
     {

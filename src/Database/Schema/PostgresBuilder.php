@@ -11,12 +11,12 @@ class PostgresBuilder extends IlluminatePostgresBuilder
     /**
      * Determine if the given table exists.
      *
-     * @param  string  $table
+     * @param  string $table
      * @return bool
      */
     public function hasTable($table)
     {
-        list($schema, $table) = $this->parseSchemaAndTable($table);
+        [$schema, $table] = $this->parseSchemaAndTable($table);
 
         $table = $this->connection->getTablePrefix().$table;
 
@@ -28,7 +28,7 @@ class PostgresBuilder extends IlluminatePostgresBuilder
     /**
      * Parse the table name and extract the schema and table.
      *
-     * @param  string  $table
+     * @param  string $table
      * @return array
      */
     protected function parseSchemaAndTable($table)

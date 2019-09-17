@@ -7,7 +7,6 @@ use Karomap\GeoLaravel\Database\Query\Builder;
 
 class MySqlGrammar extends IlluminateMySqlGrammar
 {
-
     /**
      * @param Builder $query
      * @param $where
@@ -15,7 +14,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereEquals(Builder $query, $where)
     {
-        return "ST_Equals({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+        return "ST_Equals({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
     }
 
     /**
@@ -25,9 +24,8 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereNotEquals(Builder $query, $where)
     {
-        return "not " . $this->whereEquals($query, $where);
+        return 'not '.$this->whereEquals($query, $where);
     }
-
 
     /**
      * @param Builder $query
@@ -36,7 +34,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereContains(Builder $query, $where)
     {
-        return "ST_Contains({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+        return "ST_Contains({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
     }
 
     /**
@@ -46,7 +44,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereNotContains(Builder $query, $where)
     {
-        return "not " . $this->whereContains($query, $where);
+        return 'not '.$this->whereContains($query, $where);
     }
 
     /**
@@ -56,7 +54,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereIntersects(Builder $query, $where)
     {
-        return "ST_Intersects({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+        return "ST_Intersects({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
     }
 
     /**
@@ -66,7 +64,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereNotIntersects(Builder $query, $where)
     {
-        return "not " . $this->whereIntersects($query, $where);
+        return 'not '.$this->whereIntersects($query, $where);
     }
 
     /**
@@ -76,7 +74,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereTouches(Builder $query, $where)
     {
-        return "ST_Touches({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+        return "ST_Touches({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
     }
 
     /**
@@ -86,7 +84,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereNotTouches(Builder $query, $where)
     {
-        return "not " . $this->whereTouches($query, $where);
+        return 'not '.$this->whereTouches($query, $where);
     }
 
     /**
@@ -96,7 +94,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereOverlaps(Builder $query, $where)
     {
-        return "ST_Overlaps({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+        return "ST_Overlaps({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
     }
 
     /**
@@ -106,6 +104,6 @@ class MySqlGrammar extends IlluminateMySqlGrammar
      */
     public function whereNotOverlaps(Builder $query, $where)
     {
-        return "not " . $this->whereOverlaps($query, $where);
+        return 'not '.$this->whereOverlaps($query, $where);
     }
 }

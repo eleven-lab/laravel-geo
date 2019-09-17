@@ -13,7 +13,7 @@ class ExceptionHandler extends Handler
      * @var array
      */
     protected $dontReport = [
-        //
+
     ];
 
     /**
@@ -29,7 +29,7 @@ class ExceptionHandler extends Handler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -41,7 +41,7 @@ class ExceptionHandler extends Handler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Exception                $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)

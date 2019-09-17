@@ -71,7 +71,7 @@ class GeometryType extends Type
      *
      * @return string
      */
-    public function convertToPHPValueSQL($sqlExpr,  $platform)
+    public function convertToPHPValueSQL($sqlExpr, $platform)
     {
         return "ST_AsText('$sqlExpr')";
     }
@@ -79,7 +79,7 @@ class GeometryType extends Type
     /**
      * Modifies the SQL expression (identifier, parameter) to convert to a database value.
      *
-     * @param string $sqlExpr
+     * @param string           $sqlExpr
      * @param AbstractPlatform $platform
      *
      * @return string
@@ -87,6 +87,7 @@ class GeometryType extends Type
     public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
     {
         $srid = config('geo.srid', 4326);
+
         return "ST_GeomFromText('$sqlExpr', $srid)";
     }
 }

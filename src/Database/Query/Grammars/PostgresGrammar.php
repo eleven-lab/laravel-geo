@@ -7,7 +7,6 @@ use Karomap\GeoLaravel\Database\Query\Builder;
 
 class PostgresGrammar extends IlluminatePostgresGrammar
 {
-
     /**
      * @param Builder $query
      * @param $where
@@ -15,7 +14,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereEquals(Builder $query, $where)
     {
-        return "ST_Equals({$this->wrap($where['column'])}::geometry, " . app('db.connection')->geoFromText($where['value']) . "::geometry)";
+        return "ST_Equals({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
     }
 
     /**
@@ -25,7 +24,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereNotEquals(Builder $query, $where)
     {
-        return "not " . $this->whereEquals($query, $where);
+        return 'not '.$this->whereEquals($query, $where);
     }
 
     /**
@@ -35,7 +34,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereContains(Builder $query, $where)
     {
-        return "ST_Contains({$this->wrap($where['column'])}::geometry, " . app('db.connection')->geoFromText($where['value']) . "::geometry)";
+        return "ST_Contains({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
     }
 
     /**
@@ -45,7 +44,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereNotContains(Builder $query, $where)
     {
-        return "not " . $this->whereContains($query, $where);
+        return 'not '.$this->whereContains($query, $where);
     }
 
     /**
@@ -55,7 +54,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereIntersects(Builder $query, $where)
     {
-        return "ST_Intersects({$this->wrap($where['column'])}, " . app('db.connection')->geoFromText($where['value']) . ")";
+        return "ST_Intersects({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
     }
 
     /**
@@ -65,7 +64,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereNotIntersects(Builder $query, $where)
     {
-        return "not " . $this->whereIntersects($query, $where);
+        return 'not '.$this->whereIntersects($query, $where);
     }
 
     /**
@@ -75,7 +74,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereTouches(Builder $query, $where)
     {
-        return "ST_Touches({$this->wrap($where['column'])}::geometry, " . app('db.connection')->geoFromText($where['value']) . "::geometry)";
+        return "ST_Touches({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
     }
 
     /**
@@ -85,7 +84,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereNotTouches(Builder $query, $where)
     {
-        return "not " . $this->whereTouches($query, $where);
+        return 'not '.$this->whereTouches($query, $where);
     }
 
     /**
@@ -95,7 +94,7 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereOverlaps(Builder $query, $where)
     {
-        return "ST_Overlaps({$this->wrap($where['column'])}::geometry, " . app('db.connection')->geoFromText($where['value']) . "::geometry)";
+        return "ST_Overlaps({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
     }
 
     /**
@@ -105,7 +104,6 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereNotOverlaps(Builder $query, $where)
     {
-        return "not " . $this->whereOverlaps($query, $where);
+        return 'not '.$this->whereOverlaps($query, $where);
     }
-
 }

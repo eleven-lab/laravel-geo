@@ -6,16 +6,15 @@ use Illuminate\Database\Schema\Grammars\MySqlGrammar as IlluminateMySqlGrammar;
 use Illuminate\Support\Fluent;
 
 /**
- *
  * Extended version of MySqlGrammar with
- * support of 'set' data type
+ * support of 'set' data type.
  */
 class MySqlGrammar extends IlluminateMySqlGrammar
 {
     /**
      * Create the column definition for a spatial Geometry type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeGeometry(Fluent $column)
@@ -26,7 +25,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial Point type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typePoint(Fluent $column)
@@ -37,7 +36,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial LineString type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeLineString(Fluent $column)
@@ -48,7 +47,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial Polygon type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typePolygon(Fluent $column)
@@ -59,7 +58,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial GeometryCollection type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeGeometryCollection(Fluent $column)
@@ -70,7 +69,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial MultiPoint type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeMultiPoint(Fluent $column)
@@ -81,7 +80,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial MultiLineString type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeMultiLineString(Fluent $column)
@@ -92,7 +91,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
     /**
      * Create the column definition for a spatial MultiPolygon type.
      *
-     * @param  \Illuminate\Support\Fluent  $column
+     * @param  \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeMultiPolygon(Fluent $column)

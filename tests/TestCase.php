@@ -19,10 +19,11 @@ abstract class TestCase extends BaseTestCase
      */
     public function createApplication()
     {
-        $app = new Application(__DIR__ . '/app');
+        $app = new Application(__DIR__.'/app');
         $app->singleton(Kernel::class, \TestApp\ConsoleKernel::class);
         $app->singleton(ExceptionHandler::class, \TestApp\ExceptionHandler::class);
         $app->make(Kernel::class)->bootstrap();
+
         return $app;
     }
 

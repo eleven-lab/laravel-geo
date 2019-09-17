@@ -16,10 +16,10 @@ use Karomap\PHPOGC\OGCObject;
 class PostgresConnection extends IlluminatePostgresConnection
 {
     /**
-     * @param mixed $pdo
+     * @param mixed  $pdo
      * @param string $database
      * @param string $tablePrefix
-     * @param array $config
+     * @param array  $config
      *
      * @return void
      */
@@ -49,6 +49,7 @@ class PostgresConnection extends IlluminatePostgresConnection
         if (is_null($this->schemaGrammar)) {
             $this->useDefaultSchemaGrammar();
         }
+
         return new PostgresBuilder($this);
     }
 
@@ -59,7 +60,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     protected function getDefaultSchemaGrammar()
     {
-        return $this->withTablePrefix(new PostgresSchemaGrammar);
+        return $this->withTablePrefix(new PostgresSchemaGrammar());
     }
 
     /**
@@ -69,9 +70,8 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     protected function getDefaultQueryGrammar()
     {
-        return $this->withTablePrefix(new PostgresQueryGrammar);
+        return $this->withTablePrefix(new PostgresQueryGrammar());
     }
-
 
     /**
      * Get a new query builder instance.
@@ -90,20 +90,21 @@ class PostgresConnection extends IlluminatePostgresConnection
     /**
      * Get a new raw geo query expression.
      *
-     * @param  \Karomap\PHPOGC\OGCObject  $geo
+     * @param \Karomap\PHPOGC\OGCObject $geo
      *
      * @return \Illuminate\Database\Query\Expression
      */
     public function rawGeo(OGCObject $geo)
     {
         $geometry = config('geo.geometry', true);
+
         return new Expression($this->geoFromText($geo, $geometry));
     }
 
     /**
      * Convert raw database value to WKB.
      *
-     * @param  mixed  $raw_geo
+     * @param  mixed $raw_geo
      * @return mixed
      */
     public function fromRawToWKB($raw_geo)
@@ -112,8 +113,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param  \Karomap\PHPOGC\OGCObject  $geo
-     * @param  bool  $geometry
+     * @param  \Karomap\PHPOGC\OGCObject $geo
+     * @param  bool                      $geometry
      * @return string
      */
     public function geoFromText(OGCObject $geo, $geometry = true)
@@ -130,44 +131,48 @@ class PostgresConnection extends IlluminatePostgresConnection
     /**
      * Get intersection from 2 geometries.
      *
-     * @param  \Karomap\PHPOGC\OGCObject  $geo1
-     * @param  \Karomap\PHPOGC\OGCObject  $geo2
+     * @param  \Karomap\PHPOGC\OGCObject      $geo1
+     * @param  \Karomap\PHPOGC\OGCObject      $geo2
      * @return \Karomap\PHPOGC\OGCObject|null
      */
     public function intersection(OGCObject $geo1, OGCObject $geo2)
     {
         $intersection = $this->select("select ST_AsBinary(ST_Intersection({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as intersection")[0]->intersection;
 
-        if (is_null($intersection))
-            return null;
+        if (is_null($intersection)) {
+            return;
+        }
 
-        $wkb_parser = new Parser;
+        $wkb_parser = new Parser();
+
         return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($intersection)));
     }
 
     /**
      * Get difference from 2 geometries.
      *
-     * @param  \Karomap\PHPOGC\OGCObject  $geo1
-     * @param  \Karomap\PHPOGC\OGCObject  $geo2
+     * @param  \Karomap\PHPOGC\OGCObject $geo1
+     * @param  \Karomap\PHPOGC\OGCObject $geo2
      * @return mixed|null
      */
     public function difference(OGCObject $geo1, OGCObject $geo2)
     {
         $difference = $this->select("select ST_AsBinary(ST_Difference({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as difference")[0]->difference;
 
-        if (is_null($difference))
-            return null;
+        if (is_null($difference)) {
+            return;
+        }
 
-        $wkb_parser = new Parser;
+        $wkb_parser = new Parser();
+
         return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($difference)));
     }
 
     /**
      * Check wether a polygon contains a point.
      *
-     * @param  \Karomap\PHPOGC\DataTypes\Polygon  $polygon
-     * @param  \Karomap\PHPOGC\DataTypes\Point  $point
+     * @param  \Karomap\PHPOGC\DataTypes\Polygon $polygon
+     * @param  \Karomap\PHPOGC\DataTypes\Point   $point
      * @return bool
      */
     public function contains(Polygon $polygon, Point $point)
@@ -178,8 +183,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     /**
      * Check wether geometry 1 intersects geometry 2.
      *
-     * @param  \Karomap\PHPOGC\OGCObject  $geo1
-     * @param  \Karomap\PHPOGC\OGCObject  $geo2
+     * @param  \Karomap\PHPOGC\OGCObject $geo1
+     * @param  \Karomap\PHPOGC\OGCObject $geo2
      * @return bool
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
@@ -188,8 +193,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param  \Karomap\PHPOGC\OGCObject  $geo1
-     * @param  \Karomap\PHPOGC\OGCObject  $geo2
+     * @param  \Karomap\PHPOGC\OGCObject $geo1
+     * @param  \Karomap\PHPOGC\OGCObject $geo2
      * @return bool
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
@@ -198,8 +203,8 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param  \Karomap\PHPOGC\OGCObject  $geo1
-     * @param  \Karomap\PHPOGC\OGCObject  $geo2
+     * @param  \Karomap\PHPOGC\OGCObject $geo1
+     * @param  \Karomap\PHPOGC\OGCObject $geo2
      * @return bool
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
@@ -208,31 +213,33 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param  \Karomap\PHPOGC\DataTypes\Polygon  $polygon
+     * @param  \Karomap\PHPOGC\DataTypes\Polygon $polygon
      * @return mixed|null
      */
     public function centroid(Polygon $polygon)
     {
         $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)}::geometry)) as centroid")[0]->centroid;
 
-        $wkb_parser = new Parser;
+        $wkb_parser = new Parser();
+
         return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($difference)));
     }
 
     /**
-     * @param  \Karomap\PHPOGC\DataTypes\Point  $p1
-     * @param  \Karomap\PHPOGC\DataTypes\Point  $p2
+     * @param  \Karomap\PHPOGC\DataTypes\Point $p1
+     * @param  \Karomap\PHPOGC\DataTypes\Point $p2
      * @return string
      */
     public function distance(Point $p1, Point $p2)
     {
-        $distance = $this->select("select " . $this->queryDistance($p1, $p2)->getValue() . " as distance")[0]->distance;
+        $distance = $this->select('select '.$this->queryDistance($p1, $p2)->getValue().' as distance')[0]->distance;
+
         return $distance;
     }
 
     /**
-     * @param  \Karomap\PHPOGC\OGCObject  $g1
-     * @param  \Karomap\PHPOGC\OGCObject  $g2
+     * @param  \Karomap\PHPOGC\OGCObject $g1
+     * @param  \Karomap\PHPOGC\OGCObject $g2
      * @return bool
      */
     public function equals(OGCObject $g1, OGCObject $g2)
@@ -241,9 +248,9 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param  mixed  $from
-     * @param  mixed  $to
-     * @param  string|null  $as
+     * @param  mixed       $from
+     * @param  mixed       $to
+     * @param  string|null $as
      * @return string
      */
     public function queryDistance($from, $to, $as = null)
@@ -251,14 +258,15 @@ class PostgresConnection extends IlluminatePostgresConnection
         $p1 = $from instanceof Point ? $this->geoFromText($from) : $from;
         $p2 = $to instanceof Point ? $this->geoFromText($to) : $to;
         $query = "ST_distance_spheroid($p1::geometry, $p2::geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]')";
-        return $this->raw($query . (is_null($as) ? "" : " as $as"));
+
+        return $this->raw($query.(is_null($as) ? '' : " as $as"));
     }
 
     /**
-     * Get column SRID
+     * Get column SRID.
      *
-     * @param string $table
-     * @param string $column
+     * @param  string $table
+     * @param  string $column
      * @return int
      */
     public function getSRID($table, $column)
@@ -275,14 +283,15 @@ class PostgresConnection extends IlluminatePostgresConnection
             ->where('f_table_name', $table)
             ->where($geometry ? 'f_geometry_column' : 'f_geography_column', $column)
             ->first();
+
         return $result ? $result->srid : config('geo.srid', 4326);
     }
 
     /**
-     * Check view exists
+     * Check view exists.
      *
-     * @param string $name
-     * @return boolean
+     * @param  string $name
+     * @return bool
      */
     protected function hasView($name)
     {
