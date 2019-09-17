@@ -1,6 +1,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/karomap/laravel-geo?style=flat-square)](https://packagist.org/packages/karomap/laravel-geo)
 [![StyleCI](https://github.styleci.io/repos/112994242/shield?branch=master)](https://github.styleci.io/repos/112994242)
 [![Total Downloads](https://img.shields.io/packagist/dt/karomap/laravel-geo?style=flat-square)](https://packagist.org/packages/karomap/laravel-geo)
+[![CircleCI](https://img.shields.io/circleci/build/gh/karomap/laravel-geo/master?style=flat-square)](https://circleci.com/gh/karomap/laravel-geo/tree/master)
 
 # Geo Laravel
 
