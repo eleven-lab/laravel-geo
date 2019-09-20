@@ -16,6 +16,13 @@ use Karomap\PHPOGC\OGCObject;
 class PostgresConnection extends IlluminatePostgresConnection
 {
     /**
+     * PostGIS schema.
+     *
+     * @var string
+     */
+    protected $postgisSchema;
+
+    /**
      * @param mixed  $pdo
      * @param string $database
      * @param string $tablePrefix
@@ -37,6 +44,8 @@ class PostgresConnection extends IlluminatePostgresConnection
             $this->getSchemaBuilder()->registerCustomDoctrineType($typeClass, $typeClass::NAME, $typeClass::NAME);
             $doctrinePlatform->registerDoctrineTypeMapping($typeClass::NAME, $typeClass::NAME);
         }
+
+        $this->postgisSchema = config('geo.postgis_schema', 'public');
     }
 
     /**
@@ -122,10 +131,10 @@ class PostgresConnection extends IlluminatePostgresConnection
         $srid = $geo->srid ?? config('geo.srid', 4326);
 
         if ($geometry) {
-            return "ST_GeomFromText('{$geo->toWKT()}', $srid)";
+            return "{$this->postgisSchema}.ST_GeomFromText('{$geo->toWKT()}', $srid)";
         }
 
-        return "ST_GeogFromText('SRID=$srid;{$geo->toWKT()}')";
+        return "{$this->postgisSchema}.ST_GeogFromText('SRID=$srid;{$geo->toWKT()}')";
     }
 
     /**
@@ -137,7 +146,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function intersection(OGCObject $geo1, OGCObject $geo2)
     {
-        $intersection = $this->select("select ST_AsBinary(ST_Intersection({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as intersection")[0]->intersection;
+        $intersection = $this->select("select {$this->postgisSchema}.ST_AsBinary({$this->postgisSchema}.ST_Intersection({$this->geoFromText($geo1)}::{$this->postgisSchema}.geometry,{$this->geoFromText($geo2)}::{$this->postgisSchema}.geometry)) as intersection")[0]->intersection;
 
         if (is_null($intersection)) {
             return;
@@ -157,7 +166,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function difference(OGCObject $geo1, OGCObject $geo2)
     {
-        $difference = $this->select("select ST_AsBinary(ST_Difference({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry)) as difference")[0]->difference;
+        $difference = $this->select("select {$this->postgisSchema}.ST_AsBinary({$this->postgisSchema}.ST_Difference({$this->geoFromText($geo1)}::{$this->postgisSchema}.geometry,{$this->geoFromText($geo2)}::{$this->postgisSchema}.geometry)) as difference")[0]->difference;
 
         if (is_null($difference)) {
             return;
@@ -177,7 +186,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function contains(Polygon $polygon, Point $point)
     {
-        return (bool) $this->select("select ST_Contains({$this->geoFromText($polygon)}::geometry,{$this->geoFromText($point)}::geometry) as contains")[0]->contains;
+        return (bool) $this->select("select {$this->postgisSchema}.ST_Contains({$this->geoFromText($polygon)}::{$this->postgisSchema}.geometry,{$this->geoFromText($point)}::{$this->postgisSchema}.geometry) as contains")[0]->contains;
     }
 
     /**
@@ -189,7 +198,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function intersects(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool) $this->select("select ST_Intersects({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as intersects")[0]->intersects;
+        return (bool) $this->select("select {$this->postgisSchema}.ST_Intersects({$this->geoFromText($geo1)}::{$this->postgisSchema}.geometry,{$this->geoFromText($geo2)}::{$this->postgisSchema}.geometry) as intersects")[0]->intersects;
     }
 
     /**
@@ -199,7 +208,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function touches(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool) $this->select("select ST_Touches({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as touches")[0]->touches;
+        return (bool) $this->select("select {$this->postgisSchema}.ST_Touches({$this->geoFromText($geo1)}::{$this->postgisSchema}.geometry,{$this->geoFromText($geo2)}::{$this->postgisSchema}.geometry) as touches")[0]->touches;
     }
 
     /**
@@ -209,7 +218,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function overlaps(OGCObject $geo1, OGCObject $geo2)
     {
-        return (bool) $this->select("select ST_Overlaps({$this->geoFromText($geo1)}::geometry,{$this->geoFromText($geo2)}::geometry) as overlaps")[0]->overlaps;
+        return (bool) $this->select("select {$this->postgisSchema}.ST_Overlaps({$this->geoFromText($geo1)}::{$this->postgisSchema}.geometry,{$this->geoFromText($geo2)}::{$this->postgisSchema}.geometry) as overlaps")[0]->overlaps;
     }
 
     /**
@@ -218,7 +227,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function centroid(Polygon $polygon)
     {
-        $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)}::geometry)) as centroid")[0]->centroid;
+        $difference = $this->select("select {$this->postgisSchema}.ST_AsBinary({$this->postgisSchema}.ST_Centroid({$this->geoFromText($polygon)}::{$this->postgisSchema}.geometry)) as centroid")[0]->centroid;
 
         $wkb_parser = new Parser();
 
@@ -244,7 +253,7 @@ class PostgresConnection extends IlluminatePostgresConnection
      */
     public function equals(OGCObject $g1, OGCObject $g2)
     {
-        return (bool) $this->select("select ST_Equals({$this->geoFromText($g1)}::geometry,{$this->geoFromText($g2)}::geometry) as equals")[0]->equals;
+        return (bool) $this->select("select {$this->postgisSchema}.ST_Equals({$this->geoFromText($g1)}::{$this->postgisSchema}.geometry,{$this->geoFromText($g2)}::{$this->postgisSchema}.geometry) as equals")[0]->equals;
     }
 
     /**
@@ -257,7 +266,7 @@ class PostgresConnection extends IlluminatePostgresConnection
     {
         $p1 = $from instanceof Point ? $this->geoFromText($from) : $from;
         $p2 = $to instanceof Point ? $this->geoFromText($to) : $to;
-        $query = "ST_distance_spheroid($p1::geometry, $p2::geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]')";
+        $query = "{$this->postgisSchema}.ST_distance_spheroid($p1::{$this->postgisSchema}.geometry, $p2::{$this->postgisSchema}.geometry, 'SPHEROID[\"WGS 84\",6378137,298.257223563]')";
 
         return $this->raw($query.(is_null($as) ? '' : " as $as"));
     }
@@ -272,10 +281,12 @@ class PostgresConnection extends IlluminatePostgresConnection
     public function getSRID($table, $column)
     {
         $geometry = config('geo.geometry', true);
-        $tableRef = $geometry ? 'geometry_columns' : 'geography_columns';
+        $tableRef = $geometry ? "{$this->postgisSchema}.geometry_columns" : "{$this->postgisSchema}.geography_columns";
+
         if (!$this->hasView($tableRef)) {
             return config('geo.srid', 4326);
         }
+
         $result = $this->table($tableRef)
             ->select('srid')
             ->where('f_table_catalog', $this->database)
@@ -297,7 +308,7 @@ class PostgresConnection extends IlluminatePostgresConnection
     {
         return (bool) $this->table('information_schema.views')
             ->where('table_catalog', $this->database)
-            ->where('table_schema', $this->getConfig('schema') ?: 'public')
+            ->where('table_schema', $this->postgisSchema)
             ->where('table_name', $name)
             ->count();
     }

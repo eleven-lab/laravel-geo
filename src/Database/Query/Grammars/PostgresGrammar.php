@@ -8,13 +8,30 @@ use Karomap\GeoLaravel\Database\Query\Builder;
 class PostgresGrammar extends IlluminatePostgresGrammar
 {
     /**
+     * PostGIS schema.
+     *
+     * @var string
+     */
+    protected $postgisSchema;
+
+    /**
+     * PostgresGrammar Constructor.
+     */
+    public function __construct()
+    {
+        $this->postgisSchema = config('geo.postgis_schema', 'public');
+    }
+
+    /**
      * @param Builder $query
      * @param $where
      * @return string
      */
     public function whereEquals(Builder $query, $where)
     {
-        return "ST_Equals({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
+        $value = app('db.connection')->geoFromText($where['value']);
+
+        return "{$this->postgisSchema}.ST_Equals({$this->wrap($where['column'])}::{$this->postgisSchema}.geometry, $value::{$this->postgisSchema}.geometry)";
     }
 
     /**
@@ -34,7 +51,9 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereContains(Builder $query, $where)
     {
-        return "ST_Contains({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
+        $value = app('db.connection')->geoFromText($where['value']);
+
+        return "{$this->postgisSchema}.ST_Contains({$this->wrap($where['column'])}::{$this->postgisSchema}.geometry, $value::{$this->postgisSchema}.geometry)";
     }
 
     /**
@@ -54,7 +73,9 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereIntersects(Builder $query, $where)
     {
-        return "ST_Intersects({$this->wrap($where['column'])}, ".app('db.connection')->geoFromText($where['value']).')';
+        $value = app('db.connection')->geoFromText($where['value']);
+
+        return "{$this->postgisSchema}.ST_Intersects({$this->wrap($where['column'])}, $value)";
     }
 
     /**
@@ -74,7 +95,9 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereTouches(Builder $query, $where)
     {
-        return "ST_Touches({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
+        $value = app('db.connection')->geoFromText($where['value']);
+
+        return "{$this->postgisSchema}.ST_Touches({$this->wrap($where['column'])}::{$this->postgisSchema}.geometry, $value::{$this->postgisSchema}.geometry)";
     }
 
     /**
@@ -94,7 +117,9 @@ class PostgresGrammar extends IlluminatePostgresGrammar
      */
     public function whereOverlaps(Builder $query, $where)
     {
-        return "ST_Overlaps({$this->wrap($where['column'])}::geometry, ".app('db.connection')->geoFromText($where['value']).'::geometry)';
+        $value = app('db.connection')->geoFromText($where['value']);
+
+        return "{$this->postgisSchema}.ST_Overlaps({$this->wrap($where['column'])}::{$this->postgisSchema}.geometry, $value::{$this->postgisSchema}.geometry)";
     }
 
     /**
