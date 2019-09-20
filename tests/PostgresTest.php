@@ -104,4 +104,30 @@ class PostgresTest extends TestCase
 
         Config::set('geo.geometry', true);
     }
+
+    /**
+     * Create table in other schema.
+     *
+     * @group pgsql
+     */
+    public function testCreateTableInOtherSchema()
+    {
+        $dbConfig = DB::getConfig();
+        $dbConfig['schema'] = 'test_schema';
+        $connectionName = 'pgsql_test';
+
+        DB::statement(sprintf('create schema if not exists %s;', $dbConfig['schema']));
+
+        Config::set("database.connections.$connectionName", $dbConfig);
+
+        Schema::connection($connectionName)->create('test_table', function (Blueprint $table) {
+            $table->bigIncrements('gid');
+            $table->string('name');
+            $table->geometry('geom', 4326);
+        });
+
+        $this->assertTrue(Schema::connection($connectionName)->hasTable('test_table'));
+
+        DB::statement(sprintf('drop schema if exists %s cascade;', $dbConfig['schema']));
+    }
 }

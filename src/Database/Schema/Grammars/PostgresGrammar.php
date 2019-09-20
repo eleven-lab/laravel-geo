@@ -110,7 +110,8 @@ class PostgresGrammar extends IlluminatePostgresGrammar
     {
         $srid = $srid ?? config('geo.srid', 4326);
         $column_type = config('geo.geometry', true) ? 'geometry' : 'geography';
+        $postgisSchema = config('geo.postgis_schema', 'public');
 
-        return "$column_type($type, $srid)";
+        return "$postgisSchema.$column_type($type, $srid)";
     }
 }
