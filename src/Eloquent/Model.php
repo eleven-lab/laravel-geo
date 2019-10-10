@@ -6,6 +6,7 @@ use CrEOF\Geo\WKT\Parser as WKTParser;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Karomap\GeoLaravel\Exceptions\GeoException;
 use Karomap\PHPOGC\OGCObject;
 
@@ -323,7 +324,7 @@ class Model extends IlluminateModel
         $featureArray = [
             'type' => 'Feature',
             'geometry' => [
-                'type' => $parsed['type'],
+                'type' => Str::title($parsed['type']),
                 'coordinates' => $parsed['value'],
             ],
             'properties' => $properties,

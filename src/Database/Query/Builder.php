@@ -4,6 +4,7 @@ namespace Karomap\GeoLaravel\Database\Query;
 
 use CrEOF\Geo\WKB\Parser as WKBParser;
 use Illuminate\Database\Query\Builder as IlluminateBuilder;
+use Illuminate\Support\Str;
 use Karomap\PHPOGC\OGCObject;
 
 class Builder extends IlluminateBuilder
@@ -274,7 +275,7 @@ class Builder extends IlluminateBuilder
                 $parsed = $parser->parse($db->fromRawToWKB($row[$geom]));
                 $geoArray['features'][] = [
                     'geometry' => [
-                        'type' => $parsed['type'],
+                        'type' => Str::title($parsed['type']),
                         'coordinates' => $parsed['value'],
                     ],
                     'properties' => $properties,
