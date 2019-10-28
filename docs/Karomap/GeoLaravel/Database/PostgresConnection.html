@@ -88,6 +88,19 @@
     
     
     
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_postgisSchema">
+                                        protected                                        string
+                </td>
+                <td>$postgisSchema</td>
+                <td class="last">PostGIS schema.</td>
+                <td></td>
+            </tr>
+            </table>
+
     
             <h2>Methods</h2>
 
@@ -308,7 +321,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L26">line 26</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L33">line 33</a></div>
         <code>                    void
     <strong>__construct</strong>(mixed $pdo, string $database = &#039;&#039;, string $tablePrefix = &#039;&#039;, array $config = [])
         </code>
@@ -361,7 +374,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSchemaBuilder">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L47">line 47</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L56">line 56</a></div>
         <code>                    <a href="../../../Karomap/GeoLaravel/Database/Schema/PostgresBuilder.html"><abbr title="Karomap\GeoLaravel\Database\Schema\PostgresBuilder">PostgresBuilder</abbr></a>
     <strong>getSchemaBuilder</strong>()
         </code>
@@ -391,7 +404,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getDefaultSchemaGrammar">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L61">line 61</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L70">line 70</a></div>
         <code>            protected        <abbr title="Karomap\GeoLaravel\Database\PostgresSchemaGrammar">PostgresSchemaGrammar</abbr>
     <strong>getDefaultSchemaGrammar</strong>()
         </code>
@@ -421,7 +434,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getDefaultQueryGrammar">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L71">line 71</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L80">line 80</a></div>
         <code>            protected        <abbr title="Karomap\GeoLaravel\Database\PostgresQueryGrammar">PostgresQueryGrammar</abbr>
     <strong>getDefaultQueryGrammar</strong>()
         </code>
@@ -451,7 +464,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_query">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L81">line 81</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L90">line 90</a></div>
         <code>                    <a href="../../../Karomap/GeoLaravel/Database/Query/Builder.html"><abbr title="Karomap\GeoLaravel\Database\Query\Builder">Builder</abbr></a>
     <strong>query</strong>()
         </code>
@@ -481,7 +494,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_rawGeo">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L97">line 97</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L106">line 106</a></div>
         <code>                    <abbr title="Illuminate\Database\Query\Expression">Expression</abbr>
     <strong>rawGeo</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo)
         </code>
@@ -521,7 +534,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_fromRawToWKB">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L110">line 110</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L119">line 119</a></div>
         <code>                    mixed
     <strong>fromRawToWKB</strong>(mixed $raw_geo)
         </code>
@@ -561,7 +574,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_geoFromText">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L120">line 120</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L129">line 129</a></div>
         <code>                    string
     <strong>geoFromText</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo, bool $geometry = true)
         </code>
@@ -604,7 +617,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_intersection">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L138">line 138</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L147">line 147</a></div>
         <code>                    <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr>|null
     <strong>intersection</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo1, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo2)
         </code>
@@ -649,7 +662,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_difference">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L158">line 158</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L167">line 167</a></div>
         <code>                    mixed|null
     <strong>difference</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo1, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo2)
         </code>
@@ -694,7 +707,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_contains">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L178">line 178</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L187">line 187</a></div>
         <code>                    bool
     <strong>contains</strong>(<abbr title="Karomap\PHPOGC\DataTypes\Polygon">Polygon</abbr> $polygon, <abbr title="Karomap\PHPOGC\DataTypes\Point">Point</abbr> $point)
         </code>
@@ -739,7 +752,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_intersects">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L190">line 190</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L199">line 199</a></div>
         <code>                    bool
     <strong>intersects</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo1, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo2)
         </code>
@@ -784,7 +797,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_touches">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L200">line 200</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L209">line 209</a></div>
         <code>                    bool
     <strong>touches</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo1, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo2)
         </code>
@@ -827,7 +840,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_overlaps">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L210">line 210</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L219">line 219</a></div>
         <code>                    bool
     <strong>overlaps</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo1, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $geo2)
         </code>
@@ -870,7 +883,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_centroid">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L219">line 219</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L228">line 228</a></div>
         <code>                    mixed|null
     <strong>centroid</strong>(<abbr title="Karomap\PHPOGC\DataTypes\Polygon">Polygon</abbr> $polygon)
         </code>
@@ -908,7 +921,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_distance">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L233">line 233</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L242">line 242</a></div>
         <code>                    string
     <strong>distance</strong>(<abbr title="Karomap\PHPOGC\DataTypes\Point">Point</abbr> $p1, <abbr title="Karomap\PHPOGC\DataTypes\Point">Point</abbr> $p2)
         </code>
@@ -951,7 +964,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_equals">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L245">line 245</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L254">line 254</a></div>
         <code>                    bool
     <strong>equals</strong>(<abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $g1, <abbr title="Karomap\PHPOGC\OGCObject">OGCObject</abbr> $g2)
         </code>
@@ -994,7 +1007,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_queryDistance">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L256">line 256</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L265">line 265</a></div>
         <code>                    string
     <strong>queryDistance</strong>(mixed $from, mixed $to, string|null $as = null)
         </code>
@@ -1042,7 +1055,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSRID">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L272">line 272</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L281">line 281</a></div>
         <code>                    int
     <strong>getSRID</strong>(string $table, string $column)
         </code>
@@ -1087,7 +1100,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_hasView">
-        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L296">line 296</a></div>
+        <div class="location">at         <a href="https://github.com/karomap/laravel-geo/blob/master/src/Database/PostgresConnection.php#L307">line 307</a></div>
         <code>            protected        bool
     <strong>hasView</strong>(string $name)
         </code>
