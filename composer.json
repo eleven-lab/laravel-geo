@@ -1,7 +1,7 @@
 {
   "name": "elevenlab/laravel-geo",
   "description": "Spatial OGC objects integration for Laravel 5.*",
-  "license": "GNU GPL v3.0",
+  "license": "GPL-3.0-only",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
   "abandoned": true,
   "authors": [
