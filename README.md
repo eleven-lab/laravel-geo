@@ -1,3 +1,7 @@
+# THIS PROJECT IS NO LONGER ACTIVELY MANTAINED
+
+Please refer to the official Laravel documentation since the framework now supports Geo Spatial databases.
+
 # Features
 - GeoSpatial integration on Laravel 5.2+:
     - Create geospatial columns using Schema and migrations

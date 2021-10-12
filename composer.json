@@ -3,6 +3,7 @@
   "description": "Spatial OGC objects integration for Laravel 5.*",
   "license": "GNU GPL v3.0",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
+  "abandoned": true,
   "authors": [
     {
       "name": "Lorenzo Giustozzi",
