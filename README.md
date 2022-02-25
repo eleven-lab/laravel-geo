@@ -60,7 +60,7 @@ Schema::create('nations', function (Blueprint $table) {
 });
 ```
 ## Add spatial attributes to a Model
-In order to handle dinamically geospatial attributes during CRUD operations, you need to:
+In order to handle dynamically geospatial attributes during CRUD operations, you need to:
 - substitute the Eloquent Model abstract object with a custom Model
 - define which attribute belongs to which geospatial type, defining the `$geometries` attribute (you can find [here](https://github.com/eleven-lab/laravel-geo/blob/master/src/Eloquent/Model.php#L15-L21) the available types)
 
