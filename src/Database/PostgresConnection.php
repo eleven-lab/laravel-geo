@@ -6,6 +6,7 @@ use CrEOF\Geo\WKB\Parser;
 use ElevenLab\PHPOGC\OGCObject;
 use ElevenLab\PHPOGC\DataTypes\Point;
 use ElevenLab\PHPOGC\DataTypes\Polygon;
+use ElevenLab\PHPOGC\DataTypes\MultiPolygon;
 use Illuminate\Database\Query\Expression;
 use ElevenLab\GeoLaravel\Database\Schema\PostgresBuilder;
 use Illuminate\Database\PostgresConnection as IlluminatePostgresConnection;
@@ -105,13 +106,13 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param Polygon $polygon
+     * @param Polygon|MultiPolygon|LineString $geometry
      * @param Point $point
      * @return bool
      */
-    public function contains(Polygon $polygon, Point $point)
+    public function contains($geometry, Point $point)
     {
-        return (bool)$this->select("select ST_Contains({$this->geoFromText($polygon)}::geometry,{$this->geoFromText($point)}::geometry) as contains")[0]->contains;
+        return (bool)$this->select("select ST_Contains({$this->geoFromText($geometry)}::geometry,{$this->geoFromText($point)}::geometry) as contains")[0]->contains;
     }
 
     /**
@@ -145,12 +146,12 @@ class PostgresConnection extends IlluminatePostgresConnection
     }
 
     /**
-     * @param Polygon $polygon
+     * @param Polygon|MultiPolygon|LineString $geometry
      * @return mixed|null
      */
-    public function centroid(Polygon $polygon)
+    public function centroid($geometry)
     {
-        $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($polygon)}::geometry)) as centroid")[0]->centroid;
+        $difference = $this->select("select ST_AsBinary(ST_Centroid({$this->geoFromText($geometry)}::geometry)) as centroid")[0]->centroid;
 
         $wkb_parser = new Parser;
         return OGCObject::buildOGCObject($wkb_parser->parse(stream_get_contents($difference)));
